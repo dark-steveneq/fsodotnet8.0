@@ -603,9 +603,9 @@
              <param name="obj">The <see cref="T:Microsoft.Xna.Framework.Color" /> to compare.</param>
              <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
             </member>
-        <member name="P:Microsoft.Xna.Framework.Color.TransparentBlack">
+        <member name="P:Microsoft.Xna.Framework.Color.Transparent">
              <summary>
-             TransparentBlack color (R:0,G:0,B:0,A:0).
+             Transparent color (R:0,G:0,B:0,A:0).
              </summary>
             </member>
         <member name="P:Microsoft.Xna.Framework.Color.Transparent">

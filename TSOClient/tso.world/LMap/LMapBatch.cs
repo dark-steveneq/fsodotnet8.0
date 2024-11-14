@@ -345,7 +345,7 @@ namespace FSO.LotView.LMap
             if (LightMapDirection != null)
             {
                 GD.SetRenderTarget(LightMapDirection);
-                GD.Clear(Color.TransparentBlack);
+                GD.Clear(Color.Transparent);
             }
 
             for (int i = 0; i < rooms.Count; i++)

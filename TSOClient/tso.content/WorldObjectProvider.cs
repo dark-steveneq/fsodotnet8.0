@@ -12,6 +12,7 @@ using System.IO;
 using FSO.Common;
 using FSO.Common.Utils;
 using FSO.Content.Interfaces;
+using System.Reflection;
 
 namespace FSO.Content
 {
@@ -74,7 +75,7 @@ namespace FSO.Content
             //init local objects, piff clones
 
             //Directory.CreateDirectory(Path.Combine(FSOEnvironment.ContentDir, "Objects"));
-            string[] paths = Directory.GetFiles(Path.Combine(FSOEnvironment.ContentDir, "Objects"), "*.iff", SearchOption.AllDirectories);
+            string[] paths = Directory.GetFiles(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FSOEnvironment.ContentDir), "Objects"), "*.iff", SearchOption.AllDirectories);
             for (int i = 0; i < paths.Length; i++)
             {
                 string entry = paths[i];

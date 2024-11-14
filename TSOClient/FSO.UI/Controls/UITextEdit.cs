@@ -14,7 +14,6 @@ using FSO.Common.Rendering.Framework.IO;
 using FSO.Common.Utils;
 using FSO.Common.Rendering.Framework;
 using FSO.Common;
-using Microsoft.Xna.Framework.GamerServices;
 
 namespace FSO.Client.UI.Controls
 {
@@ -366,6 +365,7 @@ namespace FSO.Client.UI.Controls
             {
                 m_cursorBlink = true;
                 m_cursorBlinkLastTime = GameFacade.LastUpdateState.Time.TotalGameTime.Ticks;
+                /*
                 if (FSOEnvironment.SoftwareKeyboard && FSOEnvironment.SoftwareDepth)
                 {
                     try
@@ -381,6 +381,7 @@ namespace FSO.Client.UI.Controls
                     }
                     catch (Exception e) { }
                 }
+                */
             }
             else
             {

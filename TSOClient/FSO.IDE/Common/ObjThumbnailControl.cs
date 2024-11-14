@@ -12,7 +12,7 @@ namespace FSO.IDE.Common
             if (FSOUI == null)
             {
                 var mainCont = new UIExternalContainer(128, 128);
-                mainCont.ClearColor = Color.TransparentBlack;
+                mainCont.ClearColor = Color.Transparent;
                 Renderer = new UIThumbnailRenderer(GUID);
                 mainCont.Add(Renderer);
                 GameFacade.Screens.AddExternal(mainCont);

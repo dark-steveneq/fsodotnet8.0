@@ -1,5 +1,4 @@
-﻿using Microsoft.Owin;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Channels;
 using System.Web;

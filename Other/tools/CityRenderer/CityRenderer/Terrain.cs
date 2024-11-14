@@ -439,7 +439,7 @@ namespace CityRenderer
             m_GraphicsDevice.DepthStencilBuffer = DSBuffer;
             m_GraphicsDevice.SetRenderTarget(0, RTarget);
 
-            m_GraphicsDevice.Clear(Color.TransparentBlack);
+            m_GraphicsDevice.Clear(Color.Transparent);
 
             spriteBatch.Begin();
 

@@ -21,27 +21,39 @@ namespace FSO.Server.Servers.Api.JsonWebToken
 
         public JWTUser DecodeToken(string token)
         {
-            var payload = JWT.JsonWebToken.Decode(token, Config.Key, true);
+            //var payload = JWT.JsonWebToken.Decode(token, Config.Key, true);
+            var payload = JWT.Builder.JwtBuilder.Create()
+                .WithAlgorithm(new JWT.Algorithms.HMACSHA384Algorithm())
+                .WithSecret(Config.Key)
+                .MustVerifySignature()
+                .Decode(token);
             Dictionary<string, string> payloadParsed = JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<JWTUser>(payloadParsed["data"]);
+            return JsonConvert.DeserializeObject<JWTUser>(payloadParsed["data"]);     
         }
 
         public JWTInstance CreateToken(JWTUser data)
         {
-            var tokenData = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            var tokenData = JsonConvert.SerializeObject(data);
             return CreateToken(tokenData, Config.TokenDuration);
         }
 
         private JWTInstance CreateToken(string data, int expiresIn)
         {
             var expires = Epoch.Now + expiresIn;
+            /*
             var payload = new Dictionary<string, object>()
             {
                 { "exp", expires },
                 { "data", data }
             };
-
             var token = JWT.JsonWebToken.Encode(payload, Config.Key, JWT.JwtHashAlgorithm.HS384);
+            */
+            var token = JWT.Builder.JwtBuilder.Create()
+                .WithAlgorithm(new JWT.Algorithms.HMACSHA384Algorithm())
+                .WithSecret(Config.Key)
+                .AddClaim("exp", expires)
+                .AddClaim("data", data)
+                .Encode();
             return new JWTInstance { Token = token, ExpiresIn = expiresIn };
         }
     }

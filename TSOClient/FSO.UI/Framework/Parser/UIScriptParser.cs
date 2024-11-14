@@ -4,7 +4,7 @@ namespace FSO.Client.UI.Framework.Parser
 {
 	using System.IO;
 	using System.Collections.Generic;
-	using GOLDEngine;
+	using GOLD;
 
 	class UIScriptParser
     {
@@ -90,7 +90,7 @@ namespace FSO.Client.UI.Framework.Parser
             //The resulting tree will be a pure representation of the language 
             //and will be ready to implement.
 
-            GOLDEngine.ParseMessage response;
+            ParseMessage response;
             bool done;                      //Controls when we leave the loop
             bool accepted = false;          //Was the parse successful?
 
@@ -104,44 +104,44 @@ namespace FSO.Client.UI.Framework.Parser
 
                 switch (response)
                 {
-                    case GOLDEngine.ParseMessage.LexicalError:
+                    case ParseMessage.LexicalError:
                         //Cannot recognize token
                         done = true;
                         break;
 
-                    case GOLDEngine.ParseMessage.SyntaxError:
+                    case ParseMessage.SyntaxError:
                         //Expecting a different token
                         done = true;
                         break;
 
-                    case GOLDEngine.ParseMessage.Reduction:
+                    case ParseMessage.Reduction:
                         //Create a customized object to store the reduction
 
-                        CreateNewObject(parser.CurrentReduction as GOLDEngine.Reduction);
+                        CreateNewObject(parser.CurrentReduction as Reduction);
                         break;
 
-                    case GOLDEngine.ParseMessage.Accept:
+                    case ParseMessage.Accept:
                         //Accepted!
                         //program = parser.CurrentReduction   //The root node!                 
                         done = true;
                         accepted = true;
                         break;
 
-                    case GOLDEngine.ParseMessage.TokenRead:
+                    case ParseMessage.TokenRead:
                         //You don't have to do anything here.
                         break;
 
-                    case GOLDEngine.ParseMessage.InternalError:
+                    case ParseMessage.InternalError:
                         //INTERNAL ERROR! Something is horribly wrong.
                         done = true;
                         break;
 
-                    case GOLDEngine.ParseMessage.NotLoadedError:
+                    case ParseMessage.NotLoadedError:
                         //This error occurs if the CGT was not loaded.                   
                         done = true;
                         break;
 
-                    case GOLDEngine.ParseMessage.GroupError:
+                    case ParseMessage.GroupError:
                         //GROUP ERROR! Unexpected end of file
                         done = true;
                         break;
@@ -151,15 +151,16 @@ namespace FSO.Client.UI.Framework.Parser
             return accepted;
         }
 
-        private object CreateNewObject(GOLDEngine.Reduction r)
+        private object CreateNewObject(Reduction r)
         {
-			object result = r.ToText();
 
-			for (int i = 0; i < r.Count; i++)
+			object result = r.ToString();
+
+			for (int i = 0; i < r.Count(); i++)
 			{
 				if (!DataMap.ContainsKey(r[i]))
 				{
-					DataMap[r[i]] = r[i].ToText();
+					DataMap[r[i]] = r[i].ToString();
 				}
 			}
 

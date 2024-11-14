@@ -1,14 +1,12 @@
 ﻿using System;
 using FSO.Server.Common;
 using Microsoft.Owin.Hosting;
-using FSO.Server.Api;
 using System.Web.Http;
 using Owin;
 using System.Collections.Specialized;
 using Ninject;
 using FSO.Server.Domain;
 
-using static FSO.Server.Api.Api;
 using static FSO.Server.Common.ApiAbstract;
 
 namespace FSO.Server.Servers.UserApi
@@ -78,27 +76,29 @@ namespace FSO.Server.Servers.UserApi
         public void Configuration(IAppBuilder builder, ServerConfiguration config)
         {
             HttpConfiguration http = new HttpConfiguration();
-            WebApiConfig.Register(http);
+            //WebApiConfig.Register(http);
 
             var userApiConfig = config.Services.UserApi;
 
-            var settings = new NameValueCollection();
-            settings.Add("maintainance", userApiConfig.Maintainance.ToString());
-            settings.Add("authTicketDuration", userApiConfig.AuthTicketDuration.ToString());
-            settings.Add("regkey", userApiConfig.Regkey);
-            settings.Add("secret", config.Secret);
-            settings.Add("updateUrl", userApiConfig.UpdateUrl);
-            settings.Add("cdnUrl", userApiConfig.CDNUrl);
-            settings.Add("connectionString", config.Database.ConnectionString);
-            settings.Add("NFSdir", config.SimNFS);
-            settings.Add("smtpHost", userApiConfig.SmtpHost);
-            settings.Add("smtpUser", userApiConfig.SmtpUser);
-            settings.Add("smtpPassword", userApiConfig.SmtpPassword);
-            settings.Add("smtpPort", userApiConfig.SmtpPort.ToString());
-            settings.Add("useProxy", userApiConfig.UseProxy.ToString());
+            var settings = new NameValueCollection
+            {
+                { "maintainance", userApiConfig.Maintainance.ToString() },
+                { "authTicketDuration", userApiConfig.AuthTicketDuration.ToString() },
+                { "regkey", userApiConfig.Regkey },
+                { "secret", config.Secret },
+                { "updateUrl", userApiConfig.UpdateUrl },
+                { "cdnUrl", userApiConfig.CDNUrl },
+                { "connectionString", config.Database.ConnectionString },
+                { "NFSdir", config.SimNFS },
+                { "smtpHost", userApiConfig.SmtpHost },
+                { "smtpUser", userApiConfig.SmtpUser },
+                { "smtpPassword", userApiConfig.SmtpPassword },
+                { "smtpPort", userApiConfig.SmtpPort.ToString() },
+                { "useProxy", userApiConfig.UseProxy.ToString() }
+            };
 
-            var api = new FSO.Server.Api.Api();
-            api.Init(settings);
+            //var api = new FSO.Server.Api.Api();
+            //api.Init(settings);
 
             builder.UseWebApi(http);
         }

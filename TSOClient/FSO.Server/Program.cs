@@ -1,9 +1,11 @@
-﻿using FSO.Server.Database;
+﻿using CommandLine;
+using FSO.Server.Database;
 using FSO.Server.DataService;
 using FSO.Server.Utils;
 using Ninject;
 using Ninject.Parameters;
 using System;
+using System.Reflection;
 
 namespace FSO.Server
 {
@@ -15,40 +17,71 @@ namespace FSO.Server
             object toolOptions = null;
 
             string[] a2 = args;
-            if (args.Length == 0) a2 = new string[] { "run" };
+            if (args.Length == 0) a2 = ["--run"];
+            switch (a2[0])
+            {
+                case "--run":
+                    toolType = typeof(ToolRunServer);
+                    //toolOptions = subOptions;
+                    break;
+                case "--db-init":
+                    toolType = typeof(ToolInitDatabase);
+                    //toolOptions = subOptions;
+                    break;
+                case "--import-nhood":
+                    toolType = typeof(ToolImportNhood);
+                    //toolOptions = subOptions;
+                    break;
+                case "--restore-lots":
+                    toolType = typeof(ToolRestoreLots);
+                    //toolOptions = subOptions;
+                    break;
+                default:
+                    Console.WriteLine("Commands:");
+                    Console.WriteLine("  --run");
+                    Console.WriteLine("  --db-init");
+                    Console.WriteLine("  --import-nhood");
+                    Console.WriteLine("  --restore-lots");
+                    Environment.Exit(1);
+                    break;
+            }
 
-            var options = new ProgramOptions();
-            var switchIsValid = new CommandLine.Parser().ParseArguments(a2, options,
-                (verb, subOptions) =>
-                {
-                    switch (verb)
+            /*
+            var result = CommandLine.Parser.Default.ParseArguments<ProgramOptions>(a2)
+                .WithParsed(options => {
+                    switch (options.ToString())
                     {
                         case "run":
                             toolType = typeof(ToolRunServer);
-                            toolOptions = subOptions;
+                            //toolOptions = subOptions;
                             break;
                         case "db-init":
                             toolType = typeof(ToolInitDatabase);
-                            toolOptions = subOptions;
+                            //toolOptions = subOptions;
                             break;
                         case "import-nhood":
                             toolType = typeof(ToolImportNhood);
-                            toolOptions = subOptions;
+                            //toolOptions = subOptions;
                             break;
                         case "restore-lots":
                             toolType = typeof(ToolRestoreLots);
-                            toolOptions = subOptions;
+                            //toolOptions = subOptions;
                             break;
                         default:
-                            Console.Write(options.GetUsage(verb));
+                            Console.WriteLine("Use --help");
+                            Environment.Exit(1);
                             break;
                     }
-                }
-            );
+                })
+                .WithNotParsed(action => {
+                    Environment.Exit(1);
+                });
+            */
+ 
 
-            if (!switchIsValid || toolType == null)
+            if (toolType == null)
             {
-                Environment.Exit(CommandLine.Parser.DefaultExitCodeFail);
+                Environment.Exit(1);
             }
 
             var kernel = new StandardKernel(

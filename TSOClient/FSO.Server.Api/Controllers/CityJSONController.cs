@@ -2,11 +2,11 @@
 using FSO.Server.Common;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class CityJSONController : ApiController
+    public class CityJSONController : ControllerBase
     {
         private static object ModelLock = new object { };
         private static CityInfoModel LastModel = new CityInfoModel();

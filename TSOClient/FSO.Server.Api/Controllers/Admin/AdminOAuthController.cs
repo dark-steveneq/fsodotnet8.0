@@ -3,11 +3,11 @@ using FSO.Server.Common;
 using FSO.Server.Servers.Api.JsonWebToken;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
-    public class AdminOAuthController : ApiController
+    public class AdminOAuthController : ControllerBase
     {
         [HttpPost]
         public HttpResponseMessage Post([FromBody] AuthRequest auth)

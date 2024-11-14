@@ -65,7 +65,7 @@ namespace FSO.Client.UI.Panels
             ResultsBox.SetSize(510, 230);
             ResultsBox.RowHeight = 40;
             ResultsBox.NumVisibleRows = 6;
-            ResultsBox.SelectionFillColor = Color.TransparentBlack;
+            ResultsBox.SelectionFillColor = Color.Transparent;
             Add(ResultsBox);
 
             var seat = new UIImage(GetTexture(0x19700000002));

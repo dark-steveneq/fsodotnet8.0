@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Threading;
 using System.Xml;
 
@@ -40,7 +42,8 @@ namespace FSO.Server.Watchdog
 
             while (restart)
             {
-                var setup = AppDomain.CurrentDomain.SetupInformation;
+                //AppDomainSetup setup = AppDomain.CurrentDomain.SetupInformation;
+                AppDomainSetup setup = new AppDomainSetup();
                 setup.ConfigurationFile = Path.Combine(Path.GetDirectoryName(setup.ConfigurationFile), "server.exe.config");
                 var childDomain = AppDomain.CreateDomain("serverDomain", null, setup);
                 int result = 3;
@@ -54,7 +57,7 @@ namespace FSO.Server.Watchdog
                     Console.WriteLine(e.ToString());
                     e.ToString();
                 }
-                AppDomain.Unload(childDomain);
+                //AppDomain.Unload(childDomain);
 
                 if (result > 1)
                 {

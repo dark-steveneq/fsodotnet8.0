@@ -6,11 +6,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class InitialConnectController : ApiController
+    public class InitialConnectController : ControllerBase
     {
         private static Func<HttpResponseMessage> ERROR_MISSING_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("501", "Token not found"));
         private static Func<HttpResponseMessage> ERROR_EXPIRED_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("502", "Token has expired"));

@@ -7,10 +7,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Web.Http;
 using System.Runtime.Caching;
 using FSO.Server.Api.Utils;
 using FSO.Common.Enum;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
@@ -39,7 +39,7 @@ namespace FSO.Server.Api.Controllers
         }
     }
 
-    public class LotInfoController : ApiController
+    public class LotInfoController : ControllerBase
     {
         public static ConcurrentDictionary<int, ShardLocationCache> LotLocationCache = new ConcurrentDictionary<int, ShardLocationCache>();
 

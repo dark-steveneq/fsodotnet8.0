@@ -6,11 +6,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Linq;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
-    public class AdminTasksController : ApiController
+    public class AdminTasksController : ControllerBase
     {
 
         public HttpResponseMessage Get(int limit, int offset)

@@ -1,19 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{635E68FA-3905-4943-B4F5-D463A8C02E87}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FSO.Client</RootNamespace>
-    <AssemblyName>FSO.Client</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFramework>net8.0-windows</TargetFramework>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,30 +18,19 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>bin\WindowsGL\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>bin\WindowsGL\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
@@ -61,243 +40,27 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
     <OutputPath>bin\x86\ServerRelease\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controllers\BulletinActionController.cs" />
-    <Compile Include="Controllers\GizmoTop100Controller.cs" />
-    <Compile Include="Controllers\InboxController.cs" />
-    <Compile Include="Controllers\JoinLotProgressController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\MessagingController.cs" />
-    <Compile Include="Controllers\MessagingWindowController.cs" />
-    <Compile Include="Controllers\CoreGameScreenController.cs" />
-    <Compile Include="Controllers\GizmoController.cs" />
-    <Compile Include="Controllers\GizmoSearchController.cs" />
-    <Compile Include="Controllers\LoadingScreenController.cs" />
-    <Compile Include="Controllers\NeighborhoodActionController.cs" />
-    <Compile Include="Controllers\Panels\BookmarksController.cs" />
-    <Compile Include="Controllers\Panels\BulletinDialogController.cs" />
-    <Compile Include="Controllers\Panels\GenericSearchController.cs" />
-    <Compile Include="Controllers\Panels\LotAdmitController.cs" />
-    <Compile Include="Controllers\Panels\LotPageController.cs" />
-    <Compile Include="Controllers\Panels\NeighPageController.cs" />
-    <Compile Include="Controllers\Panels\PersonPageController.cs" />
-    <Compile Include="Controllers\Panels\RatingListController.cs" />
-    <Compile Include="Controllers\Panels\RatingSummaryController.cs" />
-    <Compile Include="Controllers\Panels\RelationshipDialogController.cs" />
-    <Compile Include="Controllers\Panels\SecureTradeController.cs" />
-    <Compile Include="Controllers\RoommateRequestController.cs" />
-    <Compile Include="Controllers\TerrainController.cs" />
-    <Compile Include="Controllers\UpdateController.cs" />
-    <Compile Include="FSOFacade.cs" />
-    <Compile Include="FSOProgram.cs" />
-    <Compile Include="GameStartProxy.cs" />
-    <Compile Include="Model\UserReference.cs" />
-    <Compile Include="GameContent\CacheModule.cs" />
-    <Compile Include="Network\ClientDataService.cs" />
-    <Compile Include="Network\IClientDataService.cs" />
-    <Compile Include="Network\NetworkStatus.cs" />
-    <Compile Include="Network\Sandbox\FSOSandboxClient.cs" />
-    <Compile Include="Network\Sandbox\FSOSandboxProtocol.cs" />
-    <Compile Include="Network\Sandbox\FSOSandboxProtocolDecoder.cs" />
-    <Compile Include="Network\Sandbox\FSOSandboxProtocolEncoder.cs" />
-    <Compile Include="Network\Sandbox\FSOSandboxServer.cs" />
-    <Compile Include="Network\Topics.cs" />
-    <Compile Include="Network\TopicSubscription.cs" />
-    <Compile Include="Network\VMDataServiceNameCache.cs" />
-    <Compile Include="Regulators\LotConnectionRegulator.cs" />
-    <Compile Include="Regulators\GenericActionRegulator.cs" />
-    <Compile Include="Regulators\PurchaseLotRegulator.cs" />
-    <Compile Include="Rendering\City\CityCamera2D.cs" />
-    <Compile Include="Rendering\City\CityCamera3D.cs" />
-    <Compile Include="Rendering\City\CityContent.cs" />
-    <Compile Include="Rendering\City\CityFacadeLock.cs" />
-    <Compile Include="Rendering\City\CityFoliage.cs" />
-    <Compile Include="Rendering\City\CityGeometry.cs" />
-    <Compile Include="Rendering\City\CityMapData.cs" />
-    <Compile Include="Rendering\City\CityNeighGeom.cs" />
-    <Compile Include="Rendering\City\Graph\VoronoiCellGraph.cs" />
-    <Compile Include="Rendering\City\ICityCamera.cs" />
-    <Compile Include="Rendering\City\LotThumbContent.cs" />
-    <Compile Include="Rendering\City\Model\CityNeighbourhood.cs" />
-    <Compile Include="Rendering\City\Plugins\AbstractCityPlugin.cs" />
-    <Compile Include="Rendering\City\Plugins\MapPainterPlugin.cs" />
-    <Compile Include="Rendering\City\Plugins\NeighbourhoodEditPlugin.cs" />
-    <Compile Include="Rendering\City\TLayerVertex.cs" />
-    <Compile Include="UI\Controls\UIMapWaypoint.cs" />
-    <Compile Include="UI\Panels\EODs\UICooldownEventEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIGameshowBuzzerHostEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIGameshowBuzzerPlayerEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIGameshowBuzzerEOD.cs" />
-    <Compile Include="UI\Panels\UIAbstractCatalogMode.cs" />
-    <Compile Include="UI\Panels\UICatalogSearchPanel.cs" />
-    <Compile Include="UI\Panels\UIMotiveTooltip.cs" />
-    <Compile Include="UI\Panels\Upgrades\UIUpgradeItem.cs" />
-    <Compile Include="UI\Panels\Upgrades\UIUpgradeList.cs" />
-    <Compile Include="UI\Panels\Upgrades\UIUpgradeThermo.cs" />
-    <Compile Include="UI\Profile\UIJobInfo.cs" />
-    <Compile Include="UI\Controls\UIRatingDisplay.cs" />
-    <Compile Include="UI\Controls\UISlotsImage.cs" />
-    <Compile Include="UI\Controls\UIAvatarThumbnail.cs" />
-    <Compile Include="UI\Controls\UIInvisibleButton.cs" />
-    <Compile Include="UI\Controls\UILotButton.cs" />
-    <Compile Include="UI\Controls\UIPersonButton.cs" />
-    <Compile Include="UI\Controls\UISkillBar.cs" />
-    <Compile Include="UI\Controls\UIValidationMessages.cs" />
-    <Compile Include="UI\Hints\UIHint.cs" />
-    <Compile Include="UI\Hints\UIHintListItem.cs" />
-    <Compile Include="UI\Hints\UIHintManager.cs" />
-    <Compile Include="UI\Hints\UIHintWindow.cs" />
-    <Compile Include="UI\Model\UIIconCache.cs" />
-    <Compile Include="UI\Panels\Chat\UIChatCategoryDialog.cs" />
-    <Compile Include="UI\Panels\Chat\UIChatCategoryList.cs" />
-    <Compile Include="UI\Panels\EODs\Archetypes\UIBasicEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIBandEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIBulletinEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIDJStationEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIBlackjackEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIGameCompDrawACardPluginEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIDebugEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIDresserEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIHoldEmCasinoEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UINCDanceFloorEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UINewspaperEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIPaperChaseEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIAbstractRackEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIPermissionDoorEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIRackEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIRackOwnerEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIRouletteEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIScoreboardEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UISecureTradeEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UISlotsEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UITimerPluginEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UITrunkEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UITwoPersonJobObjectMazeEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIWarGameEOD.cs" />
-    <Compile Include="UI\Panels\EODs\Utils\UIEODLobby.cs" />
-    <Compile Include="UI\Panels\EODs\Utils\UIEODLobbyController.cs" />
-    <Compile Include="UI\Panels\EODs\Utils\UIManageEODObjectPanel.cs" />
-    <Compile Include="UI\Panels\EODs\Utils\UIPlayingCard.cs" />
-    <Compile Include="UI\Panels\LotControls\UIAvatarDataServiceUpdater.cs" />
-    <Compile Include="UI\Panels\LotControls\UIRoofer.cs" />
-    <Compile Include="UI\Panels\LotControls\UITerrainFlatten.cs" />
-    <Compile Include="UI\Panels\LotControls\UIGrassPaint.cs" />
-    <Compile Include="UI\Panels\LotControls\UITerrainRaiser.cs" />
-    <Compile Include="UI\Panels\MessageStore\UIMessageStore.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIBulletinBoard.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIBulletinDialog.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIBulletinPost.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UILargeBulletinSummary.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIAbstractStickyContainer.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIBigPersonButton.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIDonatorDialog.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIFullRatingItem.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UILotThumbButtonAuto.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIManageDonatorDialog.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIMediumBulletinSummary.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UINeighBanner.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UINeighPage.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UINominationSelectContainer.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIPropertySelectContainer.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIRatingContainer.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIRatingList.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIRatingSummaryPanel.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UISmallBulletinSummary.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UITop10Pedestal.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIVoteCandidate.cs" />
-    <Compile Include="UI\Panels\Neighborhoods\UIVoteContainer.cs" />
-    <Compile Include="UI\Panels\UIEmojiSuggestions.cs" />
-    <Compile Include="UI\Panels\UIGraphicsOptionsDialog.cs" />
-    <Compile Include="UI\Hints\UIHintAlert.cs" />
-    <Compile Include="UI\Panels\UILotControlTouchHelper.cs" />
-    <Compile Include="UI\Panels\UILotSkillModeDialog.cs" />
-    <Compile Include="UI\Panels\UINetStatusTray.cs" />
-    <Compile Include="UI\Panels\UISandboxSelector.cs" />
-    <Compile Include="UI\Panels\UINeighborhoodSelectionPanel.cs" />
-    <Compile Include="UI\Panels\UISortedContainer.cs" />
-    <Compile Include="UI\Panels\UITimeOutDialog.cs" />
-    <Compile Include="UI\Panels\UIAsyncPriceDialog.cs" />
-    <Compile Include="UI\Panels\UIBonusDialog.cs" />
-    <Compile Include="UI\Panels\UIBookmarks.cs" />
-    <Compile Include="UI\Panels\UIModMenu.cs" />
-    <Compile Include="UI\Panels\UIDebugMenu.cs" />
-    <Compile Include="UI\Panels\UIEnvPanel.cs" />
-    <Compile Include="UI\Panels\UIGizmoPIP.cs" />
-    <Compile Include="UI\Panels\UIHouseMode.cs" />
-    <Compile Include="UI\Panels\UIJoinLotProgress.cs" />
-    <Compile Include="UI\Panels\UILotCategoryDialog.cs" />
-    <Compile Include="UI\Panels\UILotPage.cs" />
-    <Compile Include="UI\Panels\UILotPurchaseDialog.cs" />
-    <Compile Include="UI\Panels\UIMessageTray.cs" />
-    <Compile Include="UI\Panels\UIPersonPage.cs" />
-    <Compile Include="UI\Controls\UIVMPersonButton.cs" />
-    <Compile Include="UI\Panels\EODs\EODLiveModeOpt.cs" />
-    <Compile Include="UI\Panels\EODs\UIDanceFloorEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UIEODController.cs" />
-    <Compile Include="UI\Panels\EODs\UIPizzaMakerEOD.cs" />
-    <Compile Include="UI\Panels\EODs\UISignsEOD.cs" />
-    <Compile Include="UI\Panels\LotControls\UICheatHandler.cs" />
-    <Compile Include="UI\Panels\UIChatBalloon.cs" />
-    <Compile Include="UI\Panels\UIPersonGrid.cs" />
-    <Compile Include="UI\Panels\UIPropertyLog.cs" />
-    <Compile Include="UI\Panels\UIChatDialog.cs" />
-    <Compile Include="UI\Panels\UIRelationshipDialog.cs" />
-    <Compile Include="UI\Panels\UISetupBackground.cs" />
-    <Compile Include="UI\Panels\UITerrainHighlight.cs" />
-    <Compile Include="UI\Panels\UIWebDownloaderDialog.cs" />
-    <Compile Include="UI\Panels\WorldUI\UIHeadlineRenderer.cs" />
-    <Compile Include="UI\Panels\WorldUI\UIMoneyHeadline.cs" />
-    <Compile Include="UI\Screens\IGameScreen.cs" />
-    <Compile Include="UI\Screens\SandboxGameScreen.cs" />
-    <Compile Include="UI\Screens\TSOVersionPatchScreen.cs" />
-    <Compile Include="UI\UIRelationshipBar.cs" />
-    <Compile Include="Utils\ControllerUtils.cs" />
-    <Compile Include="Utils\Endian.cs" />
-    <Compile Include="Utils\GameLocator\ILocator.cs" />
-    <Compile Include="Utils\GameLocator\LinuxLocator.cs" />
-    <Compile Include="Utils\GameLocator\WindowsLocator.cs" />
-    <Compile Include="Utils\MonogameLinker.cs" />
-    <Compile Include="Utils\PalMapper.cs" />
-    <Compile Include="Utils\TestFunctions\ProjectionTest.cs" />
-    <Compile Include="Utils\ThreeDMesh.cs" />
     <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll" Condition="Exists('..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll')">
       <Link>Monogame\Linux\MonoGame.Framework.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -374,67 +137,7 @@
       <Link>Monogame\Windows\SharpDX.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Controllers\AbstractController.cs" />
-    <Compile Include="Controllers\ConnectCASController.cs" />
-    <Compile Include="Controllers\ConnectCityController.cs" />
-    <Compile Include="Controllers\DisconnectController.cs" />
-    <Compile Include="Controllers\PersonSelectionController.cs" />
-    <Compile Include="Controllers\PersonSelectionEditController.cs" />
-    <Compile Include="GameController.cs" />
-    <Compile Include="Network\Network.cs" />
-    <Compile Include="Network\NetworkModule.cs" />
-    <Compile Include="Regulators\CreateASimRegulator.cs" />
-    <Compile Include="Regulators\CityConnectionRegulator.cs" />
-    <Compile Include="Regulators\LoginRegulator.cs" />
-    <Compile Include="Regulators\RegulatorsModule.cs" />
-    <Compile Include="Rendering\City\Blend.cs" />
-    <Compile Include="Rendering\City\LotTileEntry.cs" />
-    <Compile Include="Rendering\City\MeshVertex.cs" />
-    <Compile Include="Rendering\City\Terrain.cs" />
-    <Compile Include="UI\Controls\Catalog\UICatalog.cs" />
-    <Compile Include="UI\Controls\Catalog\UICatalogItem.cs" />
-    <Compile Include="UI\Controls\UIInteraction.cs" />
-    <Compile Include="UI\Controls\UIMotiveDisplay.cs" />
-    <Compile Include="UI\Controls\UISim.cs" />
-    <Compile Include="UI\Panels\LotControls\UICustomLotControl.cs" />
-    <Compile Include="UI\Panels\LotControls\UIFloorPainter.cs" />
-    <Compile Include="UI\Panels\LotControls\UIWallPainter.cs" />
-    <Compile Include="UI\Panels\LotControls\UIWallPlacer.cs" />
-    <Compile Include="UI\Panels\UIBuildMode.cs" />
-    <Compile Include="UI\Panels\UIChatPanel.cs" />
-    <Compile Include="UI\Panels\UIQueryPanel.cs" />
-    <Compile Include="UI\Panels\UIBuyMode.cs" />
-    <Compile Include="UI\Panels\UICitySelector.cs" />
-    <Compile Include="UI\Panels\UIExitDialog.cs" />
-    <Compile Include="UI\Panels\UIGameTitle.cs" />
-    <Compile Include="UI\Panels\UIGizmo.cs" />
-    <Compile Include="UI\Panels\UIInbox.cs" />
-    <Compile Include="UI\Panels\UIInteractionQueue.cs" />
-    <Compile Include="UI\Panels\UILiveMode.cs" />
-    <Compile Include="UI\Panels\UILoginDialog.cs" />
-    <Compile Include="UI\Panels\UILoginProgress.cs" />
-    <Compile Include="UI\Panels\UILotControl.cs" />
-    <Compile Include="UI\Panels\UIMessageWindow.cs" />
-    <Compile Include="UI\Panels\UIMessageController.cs" />
-    <Compile Include="UI\Panels\UIObjectHolder.cs" />
-    <Compile Include="UI\Panels\UIOptions.cs" />
-    <Compile Include="UI\Panels\UIPieMenu.cs" />
-    <Compile Include="UI\Panels\UISelectHouseView.cs" />
-    <Compile Include="UI\Panels\UIUCP.cs" />
-    <Compile Include="UI\Screens\TransitionScreen.cs" />
-    <Compile Include="UI\Screens\CoreGameScreen.cs" />
-    <Compile Include="UI\Screens\Credits.cs" />
-    <Compile Include="UI\Screens\DebugTypeFaceScreen.cs" />
-    <Compile Include="UI\Screens\EALogo.cs" />
-    <Compile Include="UI\Screens\LoadingScreen.cs" />
-    <Compile Include="UI\Screens\LoginScreen.cs" />
-    <Compile Include="UI\Screens\MaxisLogo.cs" />
-    <Compile Include="UI\Screens\PersonSelection.cs" />
-    <Compile Include="UI\Screens\PersonSelectionEdit.cs" />
-    <Compile Include="Utils\ErrorMessage.cs" />
-    <Compile Include="TSOGame.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -551,58 +254,12 @@
     <Content Include="Content\UI\hints\english.dir\ui_nhood_rules.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
-    <None Include="Resources\Icon.bmp" />
-    <None Include="Resources\ico256.fw.png" />
     <Content Include="sdl2.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Utils\GameLocator\MacOSLocator.cs" />
     <Content Include="Monogame\MacOS\libxammac.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MIConvexHull, Version=1.0.17.1019, Culture=neutral, PublicKeyToken=bdc96d69606221fd, processorArchitecture=MSIL">
-      <HintPath>..\packages\MIConvexHull.1.1.17.1019\lib\netstandard1.0\MIConvexHull.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mina.NET, Version=2.0.11.0, Culture=neutral, PublicKeyToken=bc4dde96e5154fe5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mina.2.0.11\lib\net40\Mina.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Portable.Ninject.3.3.1\lib\net40-client\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.5.7\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.WindowsGL.3.4.0.459\lib\net40\OpenTK.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
-    <Reference Include="GOLDEngine">
-      <HintPath>Dependencies\GOLDEngine.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dependencies\GOLDEngine.dll" />
@@ -642,13 +299,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\OpenTK.dll.config">
-      <Link>OpenTK.dll.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Monogame\MacOS\OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -657,97 +307,34 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj">
-      <Project>{6d6009f4-0afb-4806-89d7-7945f20270f5}</Project>
-      <Name>MonoGame.Framework.Net.WindowsGL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.WindowsGL.csproj">
-      <Project>{6d75e618-19ca-4c51-9546-f10965fbc0b8}</Project>
-      <Name>MonoGame.Framework.WindowsGL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\mp3sharp\mp3sharp\Mp3Sharp.csproj">
-      <Project>{834cab58-648d-47cc-ac6f-d01c08c809a4}</Project>
-      <Name>Mp3Sharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj">
-      <Project>{eabea510-3e53-4f19-9f0b-75c5ca9dfa3b}</Project>
-      <Name>MSDFData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\VoronoiLib\VoronoiLib.csproj">
-      <Project>{5d6b850b-3084-4c45-a8d7-7ccf67260b21}</Project>
-      <Name>VoronoiLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj">
-      <Project>{c051793d-1a9c-4554-9bb8-bafdc01a096a}</Project>
-      <Name>FSO.Common.DatabaseService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Common.Domain\FSO.Common.Domain.csproj">
-      <Project>{9848faf5-444a-48cc-a26a-8115d8c4fb52}</Project>
-      <Name>FSO.Common.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Patcher\FSO.Patcher.csproj">
-      <Project>{4e43ce64-343f-4c53-a055-bbf0f4986a16}</Project>
-      <Name>FSO.Patcher</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Server.Clients\FSO.Server.Clients.csproj">
-      <Project>{329e0aee-7871-40a7-b5af-8c0d0086ef71}</Project>
-      <Name>FSO.Server.Clients</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Server.DataService\FSO.Common.DataService.csproj">
-      <Project>{88c69e02-78d4-4d71-9c26-43a9b118285a}</Project>
-      <Name>FSO.Common.DataService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj">
-      <Project>{a08ade32-27e2-44f4-bc52-11a16c56baa8}</Project>
-      <Name>FSO.Server.Protocol</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSO.UI\FSO.UI.csproj">
-      <Project>{73e2ad5b-720b-4ef3-9b7c-55931d0ec693}</Project>
-      <Name>FSO.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj">
-      <Project>{C42962A1-8796-4F47-9DCD-79ED5904D8CA}</Project>
-      <Name>FSO.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj">
-      <Project>{C0068DF7-F2E8-4399-846D-556BF9A35C00}</Project>
-      <Name>FSO.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.debug\FSO.Debug.csproj">
-      <Project>{43FBD6A2-4C4D-479C-A1A8-ED4CB591BDE4}</Project>
-      <Name>FSO.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj">
-      <Project>{18583453-A970-4AC5-83B1-2D6BFDF94C24}</Project>
-      <Name>FSO.Files</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj">
-      <Project>{5EDDEFD2-C850-49C1-812D-DDEFF09125EF}</Project>
-      <Name>FSO.SimAntics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj">
-      <Project>{072781D8-51EC-4143-9CAE-DAF50177D3AD}</Project>
-      <Name>FSO.HIT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj">
-      <Project>{FD7957F7-A1E0-4D00-8F6C-3FA555EAA163}</Project>
-      <Name>FSO.Vitaboy.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj">
-      <Project>{9D9558A9-755E-43F9-8BB6-B26F365F5042}</Project>
-      <Name>FSO.Vitaboy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.world\FSO.LotView.csproj">
-      <Project>{B1A6E4C2-E080-4C34-A604-D11B5296A9B8}</Project>
-      <Name>FSO.LotView</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.WindowsGL.csproj" />
+    <ProjectReference Include="..\..\Other\libs\mp3sharp\mp3sharp\Mp3Sharp.csproj" />
+    <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
+    <ProjectReference Include="..\..\Other\libs\VoronoiLib\VoronoiLib.csproj" />
+    <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj" />
+    <ProjectReference Include="..\FSO.Common.Domain\FSO.Common.Domain.csproj" />
+    <ProjectReference Include="..\FSO.Patcher\FSO.Patcher.csproj" />
+    <ProjectReference Include="..\FSO.Server.Clients\FSO.Server.Clients.csproj" />
+    <ProjectReference Include="..\FSO.Server.DataService\FSO.Common.DataService.csproj" />
+    <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj" />
+    <ProjectReference Include="..\FSO.UI\FSO.UI.csproj" />
+    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
+    <ProjectReference Include="..\tso.debug\FSO.Debug.csproj" />
+    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
+    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj" />
+    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
+    <ProjectReference Include="..\tso.world\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -771,13 +358,74 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
+    <PackageReference Include="MIConvexHull" Version="1.1.17.1019" />
+    <PackageReference Include="Mina" Version="2.0.11" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="4.5.7" />
+    <PackageReference Include="Portable.Ninject" Version="3.3.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="CityServerInformation.cs" />
+    <Compile Remove="GameContent\ContentManager.cs" />
+    <Compile Remove="MessagesCache.cs" />
+    <Compile Remove="Network\CharacterCreationStatus.cs" />
+    <Compile Remove="Network\CityInfo.cs" />
+    <Compile Remove="Network\Encryption\ARC4.cs" />
+    <Compile Remove="Network\Encryption\SaltedHash.cs" />
+    <Compile Remove="Network\LotPacketHandlers.cs" />
+    <Compile Remove="Network\LotPacketSenders.cs" />
+    <Compile Remove="Network\NetworkClient.cs" />
+    <Compile Remove="Network\PacketHandlers.cs" />
+    <Compile Remove="Network\PacketHeaders.cs" />
+    <Compile Remove="Network\PacketStream.cs" />
+    <Compile Remove="Network\PacketType.cs" />
+    <Compile Remove="Network\ProcessedPacket.cs" />
+    <Compile Remove="Rendering\City\CityCamera.cs" />
+    <Compile Remove="Rendering\City\CityData.cs" />
+    <Compile Remove="Rendering\City\CityGeom.cs" />
+    <Compile Remove="Rendering\City\CitySceneElement.cs" />
+    <Compile Remove="Rendering\City\CityVertex.cs" />
+    <Compile Remove="Rendering\City\ICityGeom.cs" />
+    <Compile Remove="Rendering\City\NioGeom.cs" />
+    <Compile Remove="Rendering\City\RhysGeom.cs" />
+    <Compile Remove="Rendering\City\TerrainVertex.cs" />
+    <Compile Remove="Rendering\Lot\Components\CubeComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\DummyZSprite.cs" />
+    <Compile Remove="Rendering\Lot\Components\FloorComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\House2DComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\House3DComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\ObjectComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\TerrainComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\WallComponent.cs" />
+    <Compile Remove="Rendering\Lot\DataModel\HouseData.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchRenderMode.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchSorter.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchSprite.cs" />
+    <Compile Remove="Rendering\Lot\House2DLayer.cs" />
+    <Compile Remove="Rendering\Lot\House2DScene.cs" />
+    <Compile Remove="Rendering\Lot\House3DScene.cs" />
+    <Compile Remove="Rendering\Lot\HouseBatch.cs" />
+    <Compile Remove="Rendering\Lot\HouseRenderer.cs" />
+    <Compile Remove="Rendering\Lot\HouseScene.cs" />
+    <Compile Remove="Rendering\Lot\IWorldObject.cs" />
+    <Compile Remove="Rendering\Lot\Model\HouseModel.cs" />
+    <Compile Remove="Rendering\Lot\Model\HouseRenderState.cs" />
+    <Compile Remove="Rendering\Sim\SimModelBinding.cs" />
+    <Compile Remove="Rendering\Sim\SimRenderer.cs" />
+    <Compile Remove="UI\Screens\LotScreen.cs" />
+    <Compile Remove="UI\Screens\LotScreenNew.cs" />
+  </ItemGroup>
 </Project>

@@ -13,6 +13,8 @@ using FSO.Content.TS1;
 using FSO.Content.Framework;
 using FSO.Vitaboy;
 using FSO.Content.Upgrades;
+using System;
+using System.Reflection;
 
 namespace FSO.Content
 {
@@ -316,7 +318,7 @@ namespace FSO.Content
         /// <param name="fileList">The list of files to scan for.</param>
         private void _ScanFiles(string dir, List<string> fileList, string baseDir)
         {
-            var fullPath = dir;
+            var fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), dir);
             var files = Directory.GetFiles(fullPath);
             foreach (var file in files)
             {
@@ -337,6 +339,10 @@ namespace FSO.Content
         /// <returns>The path combined with the client's directory.</returns>
         public string GetPath(string path)
         {
+            if (path[0] == '/')
+            {
+                path = path.Substring(1);
+            }
             return Path.Combine(BasePath, path);
         }
 

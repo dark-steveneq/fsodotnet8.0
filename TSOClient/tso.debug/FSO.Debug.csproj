@@ -1,249 +1,62 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{43FBD6A2-4C4D-479C-A1A8-ED4CB591BDE4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FSO.Debug</RootNamespace>
-    <AssemblyName>FSO.Debug</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
     <OutputPath>bin\x86\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Content\ContentBrowser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Content\ContentBrowser.Designer.cs">
-      <DependentUpon>ContentBrowser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content\Preview\IContentPreview.cs" />
-    <Compile Include="Content\Preview\TexturePreview.cs">
+    <Compile Update="Content\Preview\TexturePreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Content\Preview\TexturePreview.Designer.cs">
-      <DependentUpon>TexturePreview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content\Preview\VMRoutineInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Content\Preview\VMRoutineInspector.Designer.cs">
-      <DependentUpon>VMRoutineInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\VMRoutineDisplay.cs">
+    <Compile Update="Controls\VMRoutineDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\VMRoutineDisplay.Designer.cs">
-      <DependentUpon>VMRoutineDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ActionQueue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ActionQueue.Designer.cs">
-      <DependentUpon>ActionQueue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ActionQueue.resx">
-      <DependentUpon>ActionQueue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\ContentBrowser.resx">
-      <DependentUpon>ContentBrowser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\Preview\TexturePreview.resx">
-      <DependentUpon>TexturePreview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\Preview\VMRoutineInspector.resx">
-      <DependentUpon>VMRoutineInspector.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\VMRoutineDisplay.resx">
-      <DependentUpon>VMRoutineDisplay.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Simantics.resx">
-      <DependentUpon>Simantics.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Simantics.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Simantics.Designer.cs">
-      <DependentUpon>Simantics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content\Preview\MeshPreviewComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\TargaImage\TargaImage.csproj">
-      <Project>{56f4bd87-2404-4263-80d5-6fa2161eb0a4}</Project>
-      <Name>TargaImage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj">
-      <Project>{C42962A1-8796-4F47-9DCD-79ED5904D8CA}</Project>
-      <Name>FSO.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj">
-      <Project>{C0068DF7-F2E8-4399-846D-556BF9A35C00}</Project>
-      <Name>FSO.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj">
-      <Project>{18583453-A970-4AC5-83B1-2D6BFDF94C24}</Project>
-      <Name>FSO.Files</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj">
-      <Project>{5EDDEFD2-C850-49C1-812D-DDEFF09125EF}</Project>
-      <Name>FSO.SimAntics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj">
-      <Project>{FD7957F7-A1E0-4D00-8F6C-3FA555EAA163}</Project>
-      <Name>FSO.Vitaboy.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj">
-      <Project>{9D9558A9-755E-43F9-8BB6-B26F365F5042}</Project>
-      <Name>FSO.Vitaboy</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\users.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\box-add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\search.png" />
+    <ProjectReference Include="..\..\Other\libs\TargaImage\TargaImage.csproj" />
+    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
+    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
+    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\SciLexer.dll">
@@ -253,10 +66,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libs\ScintillaNET.dll" />
-    <None Include="Resources\Icondsel.png" />
-    <None Include="Resources\iconsel.png" />
-    <None Include="Resources\actionSel.bmp" />
-    <None Include="Resources\filter.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -280,12 +89,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Vitaboy.cs" />
+    <Compile Remove="Vitaboy.Designer.cs" />
+    <EmbeddedResource Remove="Vitaboy.resx" />
+  </ItemGroup>
 </Project>

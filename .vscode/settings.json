@@ -1,0 +1,4 @@
+{
+    "dotnet.preferCSharpExtension": false,
+    "dotnet.defaultSolution": "TSOClient/FreeSO.sln"
+}

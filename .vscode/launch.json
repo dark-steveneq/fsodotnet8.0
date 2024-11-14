@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: FSO.Windows Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/TSOClient/FSO.Windows/FSO.Windows.csproj"
+        },
+        {
+            "name": "C#: FSO.Server Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/TSOClient/FSO.Server/FSO.Server.csproj",
+        }
+    ]
+}

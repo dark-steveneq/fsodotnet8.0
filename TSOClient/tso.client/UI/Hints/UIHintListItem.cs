@@ -16,7 +16,7 @@ namespace FSO.Client.UI.Hints
         public bool Category;
         public string Name;
 
-        public Color Col = Color.TransparentBlack;
+        public Color Col = Color.Transparent;
         public int Index;
 
         public List<UIHintListItem> ChildItems;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
@@ -13,7 +13,7 @@ namespace FSO.Server.Api.Controllers
     /// Controller for user registrations.
     /// Supports email confirmation if enabled in config.json.
     /// </summary>
-    public class RegistrationController : ApiController
+    public class RegistrationController : ControllerBase
     {
         private const int REGISTER_THROTTLE_SECS = 60;
         private const int EMAIL_CONFIRMATION_EXPIRE = 2 * 60 * 60; // 2 hrs

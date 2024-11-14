@@ -315,15 +315,17 @@ namespace FSO.Common.DataService
                 }
             }
         }
-
-        private uint GetId(object item)
+        
+        // YOLO
+        private int GetId(object item)
         {
             var keyField = GetKeyField(item.GetType());
-            var id = (uint)keyField.GetValue(item);
+            var id = (int)keyField.GetValue(item);
 
             return id;
         }
 
+        /*
         public List<OUTPUT> EnrichList<OUTPUT, INPUT, DSENTITY>(List<INPUT> input, Func<INPUT, uint> idFunction, Func<INPUT, DSENTITY, OUTPUT> outputConverter)
         {
             var result = new List<OUTPUT>();
@@ -372,6 +374,7 @@ namespace FSO.Common.DataService
 
             return result;
         }
+        */
 
         protected override Task<object> Get(IDataServiceProvider provider, object key)
         {

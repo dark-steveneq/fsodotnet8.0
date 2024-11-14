@@ -4,11 +4,11 @@ using FSO.Server.Protocol.CitySelector;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class AvatarDataController : ApiController
+    public class AvatarDataController : ControllerBase
     {
         public HttpResponseMessage Get()
         {

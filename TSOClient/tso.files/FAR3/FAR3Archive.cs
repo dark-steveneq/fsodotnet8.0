@@ -37,7 +37,7 @@ namespace FSO.Files.FAR3
                 }
                 catch (Exception ex)
                 {
-                    throw new FAR3Exception("Could not open the specified archive - " + Path + "! (FAR3Archive())");
+                    throw new FAR3Exception("Could not open the specified archive (" + Path + ") - " + ex);
                 }
 
                 string Header = Encoding.ASCII.GetString(m_Reader.ReadBytes(8));

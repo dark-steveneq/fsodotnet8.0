@@ -1,22 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C0068DF7-F2E8-4399-846D-556BF9A35C00}</ProjectGuid>
+    <TargetFramework>TargetFramework</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FSO.Content</RootNamespace>
-    <AssemblyName>FSO.Content</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFramework>net8.0</TargetFramework>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,115 +18,36 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
     <OutputPath>bin\x86\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio.cs" />
-    <Compile Include="AvatarAnimationProvider.cs" />
-    <Compile Include="AvatarAppearanceProvider.cs" />
-    <Compile Include="AvatarBindingProvider.cs" />
-    <Compile Include="AvatarCollectionsProvider.cs" />
-    <Compile Include="AvatarOutfitProvider.cs" />
-    <Compile Include="AvatarPurchasables.cs" />
-    <Compile Include="AvatarSkeletonProvider.cs" />
-    <Compile Include="AvatarThumbnailProvider.cs" />
-    <Compile Include="AvatarTextureProvider.cs" />
-    <Compile Include="ChangeManager.cs" />
-    <Compile Include="Codecs\AnimationCodec.cs" />
-    <Compile Include="Codecs\AppearanceCodec.cs" />
-    <Compile Include="Codecs\CFPCodec.cs" />
-    <Compile Include="Codecs\BCFCodec.cs" />
-    <Compile Include="Codecs\BindingCodec.cs" />
-    <Compile Include="Codecs\CMXCodex.cs" />
-    <Compile Include="Codecs\CollectionCodec.cs" />
-    <Compile Include="Codecs\HandgroupCodec.cs" />
-    <Compile Include="Codecs\IffCodec.cs" />
-    <Compile Include="Codecs\IniCodec.cs" />
-    <Compile Include="Codecs\BMFCodec.cs" />
-    <Compile Include="Codecs\MeshCodec.cs" />
-    <Compile Include="Codecs\OTFCodec.cs" />
-    <Compile Include="Codecs\OutfitCodec.cs" />
-    <Compile Include="Codecs\PurchasableOutfitCodec.cs" />
-    <Compile Include="Codecs\SFXCodec.cs" />
-    <Compile Include="Codecs\SkeletonCodec.cs" />
-    <Compile Include="Codecs\SKNCodec.cs" />
-    <Compile Include="Codecs\SmartCodec.cs" />
-    <Compile Include="Codecs\TextureCodec.cs" />
-    <Compile Include="ContentPreloader.cs" />
     <Content Include="ContentSrc\Effects\2DWorldBatchiOS.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -405,64 +312,6 @@
     <Content Include="Content\UI\uitext\english.dir\_f123_bulletinsystempoststrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Framework\CompositeProvider.cs" />
-    <Compile Include="Framework\FAR1Provider.cs" />
-    <Compile Include="Framework\FAR3Provider.cs" />
-    <Compile Include="Framework\FileProvider.cs" />
-    <Compile Include="Framework\IContentCodec.cs" />
-    <Compile Include="Framework\PackingslipProvider.cs" />
-    <Compile Include="Content.cs" />
-    <Compile Include="AvatarMeshProvider.cs" />
-    <Compile Include="Framework\RuntimeProvider.cs" />
-    <Compile Include="Framework\TS1Provider.cs" />
-    <Compile Include="Framework\TSOAvatarContentProvider.cs" />
-    <Compile Include="HandgroupProvider.cs" />
-    <Compile Include="IniProvider.cs" />
-    <Compile Include="CityMapsProvider.cs" />
-    <Compile Include="Interfaces\AbstractObjectProvider.cs" />
-    <Compile Include="Interfaces\IAudioProvider.cs" />
-    <Compile Include="Interfaces\IObjectCatalog.cs" />
-    <Compile Include="Interfaces\IObjectProvider.cs" />
-    <Compile Include="Model\AudioReference.cs" />
-    <Compile Include="Model\AudioType.cs" />
-    <Compile Include="Model\CityMap.cs" />
-    <Compile Include="Model\HITEventRegistration.cs" />
-    <Compile Include="Model\HITResourceGroup.cs" />
-    <Compile Include="Model\RackOutfit.cs" />
-    <Compile Include="Model\RackOutfits.cs" />
-    <Compile Include="Model\TextureRef.cs" />
-    <Compile Include="Model\WallStyle.cs" />
-    <Compile Include="Model\Floor.cs" />
-    <Compile Include="Model\Wall.cs" />
-    <Compile Include="RackOutfitsProvider.cs" />
-    <Compile Include="RCMeshProvider.cs" />
-    <Compile Include="ResAction.cs" />
-    <Compile Include="TS1\CustomUIProvider.cs" />
-    <Compile Include="TS1\TS1Audio.cs" />
-    <Compile Include="TS1\TS1AvatarTextureProvider.cs" />
-    <Compile Include="TS1\TS1BCFProvider.cs" />
-    <Compile Include="TS1\TS1BMFProvider.cs" />
-    <Compile Include="TS1\TS1JobProvider.cs" />
-    <Compile Include="TS1\TS1NeighbourProvider.cs" />
-    <Compile Include="TS1\TS1ObjectProvider.cs" />
-    <Compile Include="Upgrades\Model\ObjectUpgradeConfig.cs" />
-    <Compile Include="Upgrades\Model\Runtime\RuntimeTuningGroup.cs" />
-    <Compile Include="Upgrades\Model\Runtime\RuntimeUpgradeFile.cs" />
-    <Compile Include="Upgrades\Model\UpgradeGroup.cs" />
-    <Compile Include="Upgrades\Model\UpgradeIff.cs" />
-    <Compile Include="Upgrades\Model\UpgradeLevel.cs" />
-    <Compile Include="Upgrades\Model\UpgradesFile.cs" />
-    <Compile Include="Upgrades\Model\UpgradeSubstitution.cs" />
-    <Compile Include="Upgrades\ObjectUpgradeProvider.cs" />
-    <Compile Include="WorldFloorProvider.cs" />
-    <Compile Include="WorldGlobalProvider.cs" />
-    <Compile Include="WorldObjectCatalog.cs" />
-    <Compile Include="WorldObjectGlobals.cs" />
-    <Compile Include="WorldObjectProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIGraphicsProvider.cs" />
-    <Compile Include="WorldRoofProvider.cs" />
-    <Compile Include="WorldWallProvider.cs" />
     <Content Include="Content\uigraphics\eod\eod_news_bar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -471,22 +320,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\TargaImagePCL\TargaImagePCL.csproj">
-      <Project>{d8232422-9d79-4200-a981-eb70ed82ccf3}</Project>
-      <Name>TargaImagePCL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj">
-      <Project>{C42962A1-8796-4F47-9DCD-79ED5904D8CA}</Project>
-      <Name>FSO.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj">
-      <Project>{18583453-A970-4AC5-83B1-2D6BFDF94C24}</Project>
-      <Name>FSO.Files</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj">
-      <Project>{9D9558A9-755E-43F9-8BB6-B26F365F5042}</Project>
-      <Name>FSO.Vitaboy</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\Other\libs\TargaImagePCL\TargaImagePCL.csproj" />
+    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -580,31 +417,28 @@
     <Content Include="ContentSrc\Effects\2DWorldBatch.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="app.config" />
-    <None Include="ContentSrc\Effects\2dWorldBatch.mgfx">
+    <None Update="ContentSrc\Effects\2dWorldBatch.mgfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="ContentSrc\Effects\colorpoly2D.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ContentSrc\Effects\colorpoly2D.mgfx">
+    <None Update="ContentSrc\Effects\colorpoly2D.mgfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ContentSrc\Effects\compileForMono.bat">
+    <None Update="ContentSrc\Effects\compileForMono.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="ContentSrc\Effects\PixShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ContentSrc\Effects\PixShader.mgfx">
+    <None Update="ContentSrc\Effects\PixShader.mgfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="ContentSrc\Effects\VerShader.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ContentSrc\Effects\SpriteEffects.fx" />
-    <None Include="ContentSrc\Effects\SpriteEffectsiOS.fx" />
-    <None Include="ContentSrc\Effects\VerShader.mgfx">
+    <None Update="ContentSrc\Effects\VerShader.mgfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="ContentSrc\Effects\Vitaboy.fx">
@@ -638,8 +472,6 @@
     <Content Include="Content\iOS\Effects\Vitaboy.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="ContentSrc\TSOClientContentDX.mgcb" />
-    <None Include="ContentSrc\TSOClientContentiOS.mgcb" />
     <Content Include="Content\OGL\Effects\gradpoly2D.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -805,10 +637,9 @@
     <Content Include="Content\3D\floor\pool_hq_9.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Content\FSODataDefinition.dat">
+    <None Update="Content\FSODataDefinition.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\iOS\Textures\gridTexture.xnb" />
     <Content Include="Content\OGL\Effects\2DWorldBatchiOS.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -896,16 +727,16 @@
     <Content Include="Content\Patch\jobobjband.str.piff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Content\UI\uiscripts\fsoneighpage.uis">
+    <None Update="Content\UI\uiscripts\fsoneighpage.uis">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\UI\uitext\english.dir\_f110_manageeodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f110_manageeodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\UI\uitext\english.dir\_f111_casinoeodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f111_casinoeodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\UI\uitext\english.dir\_f112_misceodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f112_misceodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Content\UI\emojis.json">
@@ -914,13 +745,13 @@
     <Content Include="Content\UI\customemojis.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Content\UI\uitext\english.dir\_f110_manageeodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f110_manageeodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\UI\uitext\english.dir\_f111_casinoeodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f111_casinoeodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\UI\uitext\english.dir\_f112_misceodstrings.cst">
+    <None Update="Content\UI\uitext\english.dir\_f112_misceodstrings.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Content\MeshReplace\**\*.*">
@@ -968,7 +799,6 @@
     <Content Include="Content\UI\uitext\english.dir\_f127_gameshoweod.cst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Blueprints\empty_lot.xml">
@@ -981,12 +811,8 @@
     <Folder Include="Content\DX\Textures\" />
     <Folder Include="Content\OGL\Textures\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
 </Project>

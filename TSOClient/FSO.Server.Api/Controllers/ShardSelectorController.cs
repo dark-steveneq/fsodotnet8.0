@@ -5,11 +5,11 @@ using FSO.Server.Protocol.CitySelector;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class ShardSelectorController : ApiController
+    public class ShardSelectorController : ControllerBase
     {
         private static Func<HttpResponseMessage> ERROR_SHARD_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("503", "Shard not found"));
         private static Func<HttpResponseMessage> ERROR_AVATAR_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("504", "Avatar not found"));

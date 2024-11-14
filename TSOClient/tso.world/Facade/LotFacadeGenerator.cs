@@ -80,7 +80,7 @@ namespace FSO.LotView.Facade
             var tex = new RenderTarget2D(gd, MAX_WALL_WIDTH * WALL_WIDTH, CeilToFour(Math.Max(1, WallBins.Count * (WALL_HEIGHT + GAP * 2) - GAP * 2)), false, SurfaceFormat.Color, DepthFormat.Depth24);
             gd.SetRenderTarget(tex);
             gd.DepthStencilState = DepthStencilState.Default;
-            gd.Clear(Color.TransparentBlack);
+            gd.Clear(Color.Transparent);
             //ace, let's draw each wall
             var state = world.State;
 
@@ -266,7 +266,7 @@ namespace FSO.LotView.Facade
             var dim = FLOOR_RES_PER_TILE * FLOOR_TILES;
             var tex = new RenderTarget2D(gd, dim * 3, dim * 2, false, SurfaceFormat.Color, DepthFormat.Depth24);
             gd.SetRenderTarget(tex);
-            gd.Clear(Color.TransparentBlack);
+            gd.Clear(Color.Transparent);
             var lookat = Matrix.CreateLookAt(new Vector3(bp.Width * 1.5f, 200, bp.Height * 1.5f), new Vector3(bp.Width * 1.5f, 0, bp.Height * 1.5f), new Vector3(0, 0, 1));
             var baseO = Matrix.CreateOrthographic(FLOOR_TILES * 3f, FLOOR_TILES * 3f, 0, 400);
 

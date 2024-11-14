@@ -19,6 +19,7 @@ namespace FSO.Common.DataService.Framework
         protected Dictionary<string, Struct> StructsByName = new Dictionary<string, Struct>();
         protected Dictionary<uint, Struct> StructById = new Dictionary<uint, Struct>();
         protected Dictionary<string, Type> ModelsByName = new Dictionary<string, Type>();
+        private ITypeSerializer _typeSerializerImplementation;
 
         public DataServiceModelTypeSerializer(TSODataDefinition model){
             this.Model = model;

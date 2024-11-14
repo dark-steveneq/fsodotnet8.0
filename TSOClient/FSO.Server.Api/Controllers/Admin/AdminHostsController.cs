@@ -1,12 +1,12 @@
 ﻿using FSO.Server.Api.Utils;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
-    public class AdminHostsController : ApiController
+    public class AdminHostsController : ControllerBase
     {
         public HttpResponseMessage Get()
         {

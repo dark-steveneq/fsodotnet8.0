@@ -36,7 +36,7 @@ namespace FSO.Common.Utils
 
         public static void SetPPXTarget(RenderTarget2D color, RenderTarget2D depth, bool clear)
         {
-            SetPPXTarget(color, depth, clear, Color.TransparentBlack);
+            SetPPXTarget(color, depth, clear, Color.Transparent);
         }
 
         public static void SetPPXTarget(RenderTarget2D color, RenderTarget2D depth, bool clear, Color clearColor)

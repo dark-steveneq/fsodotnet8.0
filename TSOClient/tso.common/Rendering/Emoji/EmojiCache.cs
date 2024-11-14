@@ -71,7 +71,7 @@ namespace FSO.Common.Rendering.Emoji
                                     GD.SetRenderTarget(EmojiTex);
                                     if (needClear)
                                     {
-                                        GD.Clear(Color.TransparentBlack);
+                                        GD.Clear(Color.Transparent);
                                         needClear = false;
                                     }
                                     EmojiBatch.Begin(blendState: BlendState.NonPremultiplied, sortMode: SpriteSortMode.Immediate);

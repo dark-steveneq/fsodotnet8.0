@@ -13,7 +13,7 @@ namespace FSO.Client.UI.Framework
         protected RenderTarget2D Target;
         public UIContainer DynamicOverlay = new UIContainer();
         public Point BackOffset;
-        public Color ClearColor = Color.TransparentBlack;
+        public Color ClearColor = Color.Transparent;
         public bool UseMip;
         public bool UseZ;
         public bool InternalBefore;

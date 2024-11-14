@@ -174,9 +174,9 @@ namespace FSO.LotView.LMap
                         //yes
                         //continue;
                         var conectr = pts.Pt2 + rightNorm;
-                        vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, conectr, Color.TransparentBlack, hc, p/2, ellipse);
-                        vertices[vert++] = GradVertex.ConeVert(rightpen1, pts.Pt2, conectr, Color.TransparentBlack, hc, p/2, ellipse);
-                        vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, conectr, Color.TransparentBlack, hc, p/2, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, conectr, Color.Transparent, hc, p/2, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(rightpen1, pts.Pt2, conectr, Color.Transparent, hc, p/2, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, conectr, Color.Transparent, hc, p/2, ellipse);
                         for (int i = 0; i < 3; i++) indices[index++] = baseIdx + i;
                         continue;
                     }
@@ -189,9 +189,9 @@ namespace FSO.LotView.LMap
                         //yes
                         //continue;
                         var conectr = pts.Pt0 + leftNorm;
-                        vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, conectr, Color.TransparentBlack, hc, p, ellipse);
-                        vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, conectr, Color.TransparentBlack, hc, p, ellipse);
-                        vertices[vert++] = GradVertex.ConeVert(leftpen2, pts.Pt0, conectr, Color.TransparentBlack, hc, p, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, conectr, Color.Transparent, hc, p, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, conectr, Color.Transparent, hc, p, ellipse);
+                        vertices[vert++] = GradVertex.ConeVert(leftpen2, pts.Pt0, conectr, Color.Transparent, hc, p, ellipse);
                         for (int i = 0; i < 3; i++) indices[index++] = baseIdx + i;
                         continue;
                     }
@@ -225,13 +225,13 @@ namespace FSO.LotView.LMap
 
                     //penumbras
 
-                    vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(leftpen2, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(leftpen2, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
 
-                    vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(rightpen1, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(rightpen1, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
 
                     for (int i = 0; i < 6; i++) indices[index++] = baseIdx + i;
                 }
@@ -251,15 +251,15 @@ namespace FSO.LotView.LMap
 
                     //penumbras: each penumbra becomes two tris as they intersect
 
-                    vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(inter, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(distant, pts.Pt0, leftpen2, Color.TransparentBlack, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(pts.Pt0, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(leftpen1, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(inter, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(distant, pts.Pt0, leftpen2, Color.Transparent, Color.White, p, ellipse);
 
-                    vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(inter, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
-                    vertices[vert++] = GradVertex.ConeVert(distant, pts.Pt2, rightpen1, Color.TransparentBlack, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(pts.Pt2, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(rightpen2, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(inter, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
+                    vertices[vert++] = GradVertex.ConeVert(distant, pts.Pt2, rightpen1, Color.Transparent, Color.White, p, ellipse);
 
                     indices[index++] = baseIdx; indices[index++] = baseIdx + 1; indices[index++] = baseIdx + 2;
                     indices[index++] = baseIdx + 1; indices[index++] = baseIdx + 3; indices[index++] = baseIdx + 2;

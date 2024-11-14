@@ -10,6 +10,7 @@ using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace FSO.Server
 {
@@ -51,7 +52,7 @@ namespace FSO.Server
         private ServerConfiguration GetConfiguration(IContext context)
         {
             //TODO: Allow config path to be overriden in a switch
-            var configPath = "config.json";
+            var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.json");
             if (!File.Exists(configPath))
             {
                 throw new Exception("Configuration file, config.json, missing");

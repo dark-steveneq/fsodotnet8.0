@@ -30,7 +30,7 @@ namespace FSO.Server.Servers.Lot.Lifecycle
         public CityConnections(LotServerConfiguration config, IKernel kernel)
         {
             Config = config;
-            try
+            if (OperatingSystem.IsWindows())
             {
                 CpuCounter = new PerformanceCounter();
                 CpuCounter.CategoryName = "Processor";
@@ -41,7 +41,8 @@ namespace FSO.Server.Servers.Lot.Lifecycle
                 {
                     var firstValue = CpuCounter.NextValue();
                 }
-            } catch
+            }
+            else
             {
                 LOG.Info("Performance counters are not supported on this platform, running without.");
             }

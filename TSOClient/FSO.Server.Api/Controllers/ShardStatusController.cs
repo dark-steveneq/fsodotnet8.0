@@ -3,11 +3,11 @@ using FSO.Server.Api.Utils;
 using FSO.Server.Protocol.CitySelector;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class ShardStatusController : ApiController
+    public class ShardStatusController : ControllerBase
     {
         public HttpResponseMessage Get()
         {

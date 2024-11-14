@@ -306,7 +306,7 @@ namespace FSO.Client.Rendering.City
             RenderTarget2D RTarget = new RenderTarget2D(gd, sizeX * RoadWidth, sizeY * RoadHeight, false, SurfaceFormat.Color, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
             gd.SetRenderTarget(RTarget);
 
-            gd.Clear(Color.TransparentBlack);
+            gd.Clear(Color.Transparent);
 
             spriteBatch.Begin();
 

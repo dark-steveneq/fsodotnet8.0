@@ -2,11 +2,11 @@
 using FSO.Server.Common;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
-    public class AdminShardsController : ApiController
+    public class AdminShardsController : ControllerBase
     {
 
         public HttpResponseMessage Get()

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using GOLDEngine;
+using GOLD;
 
 namespace FSO.Client.UI.Framework.Parser
 {
@@ -11,7 +11,7 @@ namespace FSO.Client.UI.Framework.Parser
         public List<UINode> Children { get; set; }
 
 
-		public static UIGroup FromReduction(GOLDEngine.Reduction r, Dictionary<Token, object> dataMap)
+		public static UIGroup FromReduction(Reduction r, Dictionary<Token, object> dataMap)
         {
             UIGroup result = new UIGroup();
 			// <Object> ::= BeginLiteral <Content> EndLiteral
@@ -27,7 +27,7 @@ namespace FSO.Client.UI.Framework.Parser
 
     public class UISharedProperties
     {
-        public static UISharedProperties FromReduction(GOLDEngine.Reduction r)
+        public static UISharedProperties FromReduction(Reduction r)
         {
             UISharedProperties result = new UISharedProperties();
             return result;

@@ -590,7 +590,17 @@ namespace FSO.Common.DataService
             provider.Init();
 
             var type = provider.GetValueType();
-            var structDef = DataDefinition.Structs.First(x => x.Name == type.Name);
+            Struct structDef;
+            try
+            {
+                structDef = DataDefinition.Structs.First(x => x.Name == type.Name);
+            }
+            catch (Exception ex)
+            {
+                structDef = new Struct();
+                structDef.ID = 0;
+                LOG.Info("Failed to find structDef " + type.Name + ", replacing with dummy data - " + ex.ToString());
+            }
 
             ProviderByTypeId.Add(structDef.ID, provider);
             ProviderByType.Add(type, provider);

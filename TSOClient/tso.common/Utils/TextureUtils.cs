@@ -152,7 +152,7 @@ namespace FSO.Common.Utils
             var old = gd.GetRenderTargets();
             var rt = new RenderTarget2D(gd, texture.Width, texture.Height);
             gd.SetRenderTarget(rt);
-            gd.Clear(Color.TransparentBlack);
+            gd.Clear(Color.Transparent);
             if (CopyBatch == null) CopyBatch = new SpriteBatch(gd);
             CopyBatch.Begin();
             CopyBatch.Draw(texture, Vector2.Zero, Color.White);
@@ -1009,7 +1009,7 @@ namespace FSO.Common.Utils
             lock (gd)
             {
                 gd.SetRenderTarget(renderTarget);
-                gd.Clear(Color.TransparentBlack);
+                gd.Clear(Color.Transparent);
                 SpriteBatch batch = new SpriteBatch(gd);
                 batch.Begin();
                 batch.Draw(texture, destinationRectangle, Color.White);

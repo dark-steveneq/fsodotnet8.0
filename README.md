@@ -1,51 +1,32 @@
-![image](http://freeso.org/wp-content/uploads/2016/03/freeso-logo.png?1)
+# FreeSO .NET 8.0 Port
+Port of the original .NET Framework 4.5 codebase to .NET 8.0
 
-A full reimplementation of The Sims Online, using Monogame. While FreeSO aims to be faithful to the original game, it includes many quality of life changes such as hardware rendering, custom dynamic lighting, hi-res output and >2 floor houses. If you simply wish to play, you can install FreeSO and the original TSO files using our installer on http://freeso.org, and it will connect to our official servers.
+This is not related in any way with [Riperiperi](https://github.com/riperiperi) or the FreeSO development team. This is a passion project that aims to make the engine workable for anyone who dares to do anything with it.
 
-FreeSO currently depends on the original game files (objects, avatars, ui) to function, which are available for download from EA servers. FreeSO is simply a game engine, and does not contain any copyrighted material in and of itself.
+# TODO
+## Client
+- Possibly rewrite UI script parser so that it doesn't use any abandoned libraries
+- Make sure runs on Linux
 
-![image](http://freeso.org/wp-content/uploads/2017/05/band.png)
+## Server
+- Make `FSO.Server` actually use `CommandLineParser`
+- Mina.NET: Remove `BinaryFormatter`
+- Port `FSO.Server.API`
+- Fix `FSO.Server.Watchdog`
+- Remove `FSO.Server.Core`
+- Make a Docker container
+- Write documentation
 
-# The Sims 1 via Simitone
+## Other
+- Rename project folders
+- Remove unused projects
+- Document each project
 
-FreeSO is additionally a base project for an ongoing re-implementation of The Sims 1's engine, [Simitone](https://github.com/riperiperi/Simitone), targetted mainly at mobile devices. 
+# RFC
+- Isolate client from server
 
-The content system, HIT VM and SimAntics VM included within this repo support both TSO and TS1 game files - meaning that TS1 will still run in a limited sense under TSO's UI frontend within FreeSO. [Simitone](https://github.com/riperiperi/Simitone) fully restores TS1 gameplay by tying the neighbourhood and game systems together with a suitable UI frontend.
-
-# 3D Mode
-
-![image](https://cdn.discordapp.com/attachments/355135351234494464/355396364349210625/unknown.png)
-
-The FreeSO engine additionally supports an experimental 3D mode, which allows you to see the game from a different perspective. 3D meshes are reconstructed at runtime from the z-buffers included with object sprites. FreeSO also generates 3D geometry for walls and floors at runtime, and switches to an alternate camera with different controls when the mode is enabled. 
-
-The mode can be enabled via the launch parameter `-3d`. See the blog for more information. (http://freeso.org/the-impossible/)
-
-# Volcanic
-
-Volcanic is an extension of FreeSO that allows users to view, modify and save game objects alongside a live instance of the SimAntics VM. It features a vast array of resource editors for objects - the most prominent being the script editor. It allows for easy creation of new objects, and debugging of existing ones. Volcanic also functions when the FSO engine has loaded TS1 objects and other resources.
-
-![image](https://i.gyazo.com/431b8e3cb1547563bb2d64a380fb76e6.gif)
-![image](https://i.gyazo.com/ba013836812ce97c9b555f72be50b1db.gif)
-
-# Contributing
-You can contribute to FreeSO by testing cutting edge features in the latest releases, filing bugs, and joining in the discussion on our forums!
-
-* [Getting Started](https://github.com/riperiperi/FreeSO/wiki)
-* [Project Structure](https://github.com/riperiperi/FreeSO/wiki/Project-structure)
-* [Coding Standards](https://github.com/riperiperi/FreeSO/wiki/Coding-standards)
-* [Pull Requests](https://github.com/riperiperi/FreeSO/pulls): [Open](https://github.com/riperiperi/FreeSO/pulls)/[Closed](https://github.com/riperiperi/FreeSO/issues?q=is%3Apr+is%3Aclosed)
-* [Translation](http://forum.freeso.org/forums/translations.32/)
-* [Forums](http://forum.freeso.org)
-* [Blog](http://freeso.org)
-* [Official Discord](https://discordapp.com/invite/xveESFj)
-
-Looking for something to do? Check out the issues tagged as [help wanted](https://github.com/riperiperi/FreeSO/labels/help%20wanted) to get started.
-
-Regarding translations, full object and UI translations should currently be released on the forums. This is far from perfect and is due to be reworked. Stay tuned!
-
-## Prerequisites
-* [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
-* [MonoGame](http://www.monogame.net): 3.5 for the iOS and Android VS2015 project types. (optional)
+# Development on Linux
+This project seems perfectly compilable (outside of compilation issues) on Linux using VSCode and `dotnet` CLI. If you're using an open source build of VSCode (like VSCodium) you should concider using the proprietary build since debugging is disabled on those because of the debugger's license
 
 # License
 > This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.

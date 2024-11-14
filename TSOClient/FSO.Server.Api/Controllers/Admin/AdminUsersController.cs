@@ -5,11 +5,11 @@ using FSO.Server.Database.DA.Users;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
-    public class AdminUsersController : ApiController
+    public class AdminUsersController : ControllerBase
     {
         //Get information about me, useful for the admin user interface to disable UI based on who you login as
         public HttpResponseMessage current()

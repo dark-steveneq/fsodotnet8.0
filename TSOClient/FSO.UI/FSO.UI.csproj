@@ -1,189 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73E2AD5B-720B-4EF3-9B7C-55931D0EC693}</ProjectGuid>
+    <TargetFramework>TargetFramework</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FSO.UI</RootNamespace>
-    <AssemblyName>FSO.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <AssemblyTitle>FSO.UI</AssemblyTitle>
+    <Product>FSO.UI</Product>
+    <Copyright>Copyright ©  2017</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GOLDEngine, Version=5.0.6070.308, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\GOLDEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="TargaImage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\TargaImage.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ContentStrings.cs" />
-    <Compile Include="Controls\Catalog\UICatalogFloorResProvider.cs" />
-    <Compile Include="Controls\Catalog\UICatalogResProvider.cs" />
-    <Compile Include="Controls\Catalog\UICatalogRoofResProvider.cs" />
-    <Compile Include="Controls\Catalog\UICatalogTerrainResProvider.cs" />
-    <Compile Include="Controls\Catalog\UICatalogWallpaperResProvider.cs" />
-    <Compile Include="Controls\Catalog\UICatalogWallResProvider.cs" />
-    <Compile Include="Controls\UINineSliceButton.cs" />
-    <Compile Include="Controls\UIAlert.cs" />
-    <Compile Include="Controls\UIBlocker.cs" />
-    <Compile Include="Controls\UIButton.cs" />
-    <Compile Include="Controls\UIClickableLabel.cs" />
-    <Compile Include="Controls\UICollectionViewer.cs" />
-    <Compile Include="Controls\UIColorPicker.cs" />
-    <Compile Include="Controls\UICustomTooltip.cs" />
-    <Compile Include="Controls\UIDialog.cs" />
-    <Compile Include="Controls\UIDynamicContainers.cs" />
-    <Compile Include="Controls\UIGridViewer.cs" />
-    <Compile Include="Controls\UIGridViewerRender.cs" />
-    <Compile Include="Controls\UIImage.cs" />
-    <Compile Include="Controls\UILabel.cs" />
-    <Compile Include="Controls\UIListBox.cs" />
-    <Compile Include="Controls\UIPaginationBar.cs" />
-    <Compile Include="Controls\UIProgressBar.cs" />
-    <Compile Include="Controls\UIRadioButton.cs" />
-    <Compile Include="Controls\UIRectangle.cs" />
-    <Compile Include="Controls\UISlider.cs" />
-    <Compile Include="Controls\UITextBox.cs" />
-    <Compile Include="Controls\UITextEdit.cs" />
-    <Compile Include="Debug\IDEHook.cs" />
-    <Compile Include="Framework\DoubleClick.cs" />
-    <Compile Include="Framework\Font.cs" />
-    <Compile Include="Framework\GameScreen.cs" />
-    <Compile Include="Framework\IUIAutoSize.cs" />
-    <Compile Include="Framework\IUIProcess.cs" />
-    <Compile Include="Framework\Matrix2D.cs" />
-    <Compile Include="Framework\MSDFFont.cs" />
-    <Compile Include="Framework\MSDFFontVert.cs" />
-    <Compile Include="Framework\MSDFRenderer.cs" />
-    <Compile Include="Framework\Parser\UIAttribute.cs" />
-    <Compile Include="Framework\Parser\UIScript.cs" />
-    <Compile Include="Framework\Parser\UIScriptModel.cs" />
-    <Compile Include="Framework\Parser\UIScriptParser.cs" />
-    <Compile Include="Framework\TextRenderer.cs" />
-    <Compile Include="Framework\TextStyle.cs" />
-    <Compile Include="Framework\UICachedContainer.cs" />
-    <Compile Include="Framework\UIContainer.cs" />
-    <Compile Include="Framework\UIDebounce.cs" />
-    <Compile Include="Framework\UIElement.cs" />
-    <Compile Include="Framework\UIExternalContainer.cs" />
-    <Compile Include="Framework\UIMaskedContainer.cs" />
-    <Compile Include="Framework\UIScreen.cs" />
-    <Compile Include="Framework\UISpriteBatch.cs" />
-    <Compile Include="Framework\UITween.cs" />
-    <Compile Include="GameFacade.cs" />
-    <Compile Include="GlobalSettings.cs" />
-    <Compile Include="IFSOProgram.cs" />
-    <Compile Include="IGameStartProxy.cs" />
-    <Compile Include="Model\DiscordRpc.cs" />
-    <Compile Include="Model\DiscordRpcEngine.cs" />
-    <Compile Include="Model\SlicedTextureRef.cs" />
-    <Compile Include="Model\UIElementState.cs" />
-    <Compile Include="Model\UIMusic.cs" />
-    <Compile Include="Model\UISounds.cs" />
-    <Compile Include="Panels\LotControls\ILotControl.cs" />
-    <Compile Include="Panels\LotControls\UICustomLotControl.cs" />
-    <Compile Include="Panels\LotControls\UIFloorPainter.cs" />
-    <Compile Include="Panels\LotControls\UIGrassPaint.cs" />
-    <Compile Include="Panels\LotControls\UIRoofer.cs" />
-    <Compile Include="Panels\LotControls\UITerrainFlatten.cs" />
-    <Compile Include="Panels\LotControls\UITerrainRaiser.cs" />
-    <Compile Include="Panels\LotControls\UIWallPainter.cs" />
-    <Compile Include="Panels\LotControls\UIWallPlacer.cs" />
-    <Compile Include="Panels\UI3DThumb.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIFileIDs.cs" />
-    <Compile Include="UILayer.cs" />
-    <Compile Include="Utils\CatThumbGenerator.cs" />
-    <Compile Include="Utils\DrawingUtils.cs" />
-    <Compile Include="Utils\MathCache.cs" />
-    <Compile Include="Utils\MathUtils.cs" />
-    <Compile Include="Utils\UIUtils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Framework\Parser\UIScript.egt" />
-    <None Include="Framework\Parser\UIScript.grm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj">
-      <Project>{6d6009f4-0afb-4806-89d7-7945f20270f5}</Project>
-      <Name>MonoGame.Framework.Net.WindowsGL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj">
-      <Project>{7de47032-a904-4c29-bd22-2d235e8d91ba}</Project>
-      <Name>MonoGame.Framework.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj">
-      <Project>{eabea510-3e53-4f19-9f0b-75c5ca9dfa3b}</Project>
-      <Name>MSDFData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj">
-      <Project>{c42962a1-8796-4f47-9dcd-79ed5904d8ca}</Project>
-      <Name>FSO.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj">
-      <Project>{c0068df7-f2e8-4399-846d-556bf9a35c00}</Project>
-      <Name>FSO.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj">
-      <Project>{18583453-a970-4ac5-83b1-2d6bfdf94c24}</Project>
-      <Name>FSO.Files</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj">
-      <Project>{5eddefd2-c850-49c1-812d-ddeff09125ef}</Project>
-      <Name>FSO.SimAntics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj">
-      <Project>{072781d8-51ec-4143-9cae-daf50177d3ad}</Project>
-      <Name>FSO.HIT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.world\FSO.LotView.csproj">
-      <Project>{b1a6e4c2-e080-4c34-a604-d11b5296a9b8}</Project>
-      <Name>FSO.LotView</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj" />
+    <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
+    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
+    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
+    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj" />
+    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj" />
+    <ProjectReference Include="..\tso.world\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\" />
@@ -197,12 +42,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="GoldEngine" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Debug\FSOExceptionDisplay.cs" />
+    <Compile Remove="Debug\FSOExceptionDisplay.Designer.cs" />
+    <Compile Remove="Debug\TSOClientFindAssetSearch.cs" />
+    <Compile Remove="Debug\TSOClientFindAssetSearch.Designer.cs" />
+    <Compile Remove="Debug\TSOClientTools.cs" />
+    <Compile Remove="Debug\TSOClientTools.Designer.cs" />
+    <Compile Remove="Debug\TSOClientUIInspector.cs" />
+    <Compile Remove="Debug\TSOClientUIInspector.Designer.cs" />
+    <Compile Remove="Debug\TSOEdith.cs" />
+    <Compile Remove="Debug\TSOEdith.Designer.cs" />
+    <Compile Remove="Debug\TSOSceneInspector.cs" />
+    <Compile Remove="Debug\TSOSceneInspector.Designer.cs" />
+  </ItemGroup>
 </Project>

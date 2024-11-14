@@ -1,22 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5EDDEFD2-C850-49C1-812D-DDEFF09125EF}</ProjectGuid>
+    <TargetFramework>TargetFramework</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FSO.SimAntics</RootNamespace>
-    <AssemblyName>FSO.SimAntics</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFramework>net8.0</TargetFramework>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,425 +18,50 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <AssemblyTitle>FSO.SimAntics</AssemblyTitle>
+    <Product>FSO.SimAntics</Product>
+    <Copyright>Copyright ©  2015</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;IDE_COMPAT</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;IDE_COMPAT</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
     <OutputPath>bin\x86\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="HandEvaluator, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSO.HandEvaluator.1.2.0\lib\net20\HandEvaluator.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mina.NET, Version=2.0.11.0, Culture=neutral, PublicKeyToken=bc4dde96e5154fe5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mina.2.0.11\lib\net40\Mina.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.WindowsGL.3.4.0.459\lib\net40\OpenTK.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq">
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Engine\Debug\VMSyncTrace.cs" />
-    <Compile Include="Engine\JitIdeas.cs" />
-    <Compile Include="Engine\Routing\VMIPathSegment.cs" />
-    <Compile Include="Engine\Routing\VMPathBezierSegment.cs" />
-    <Compile Include="Engine\Routing\VMPathLineSegment.cs" />
-    <Compile Include="Engine\Routing\VMRectRouter.cs" />
-    <Compile Include="Engine\TSOGlobalLink\IVMTSOGlobalLink.cs" />
-    <Compile Include="Engine\TSOGlobalLink\Model\VMGLOutfit.cs" />
-    <Compile Include="Engine\TSOGlobalLink\VMTS1GlobalLinkStub.cs" />
-    <Compile Include="Engine\TSOGlobalLink\VMTSOGlobalLinkStub.cs" />
-    <Compile Include="Engine\TSOGlobalLink\VMTSOStandaloneDatabase.cs" />
-    <Compile Include="Engine\VMDialogHandler.cs" />
-    <Compile Include="Engine\VMActionCallback.cs" />
-    <Compile Include="Engine\Scopes\VMAnimationScope.cs" />
-    <Compile Include="Engine\Scopes\VMSlotScope.cs" />
-    <Compile Include="Engine\Scopes\VMSuitScope.cs" />
-    <Compile Include="Engine\VMAmbientSound.cs" />
-    <Compile Include="Engine\VMDirectControlFrame.cs" />
-    <Compile Include="Engine\VMMemory.cs" />
-    <Compile Include="Engine\VMRoutingFrame.cs" />
-    <Compile Include="Engine\VMPrimitiveExitCode.cs" />
-    <Compile Include="Engine\VMPrimitiveHandler.cs" />
-    <Compile Include="Engine\VMPrimitiveOperand.cs" />
-    <Compile Include="Engine\VMQueuedAction.cs" />
-    <Compile Include="Engine\VMScheduler.cs" />
-    <Compile Include="Engine\VMSimanticsException.cs" />
-    <Compile Include="Engine\VMSlotParser.cs" />
-    <Compile Include="Engine\VMSuitProvider.cs" />
-    <Compile Include="Engine\VMStackFrame.cs" />
-    <Compile Include="Entities\VMAvatarMotiveDecay.cs" />
-    <Compile Include="Entities\VMEntityTuning.cs" />
-    <Compile Include="Entities\VMMultitileGroup.cs" />
-    <Compile Include="Entities\VMTS1MotiveDecay.cs" />
-    <Compile Include="Marshals\Hollow\VMHollowGameObjectMarshal.cs" />
-    <Compile Include="Marshals\Hollow\VMHollowMarshal.cs" />
-    <Compile Include="Marshals\Threads\VMDirectControlFrameMarshal.cs" />
-    <Compile Include="Marshals\Threads\VMQueuedActionMarshal.cs" />
-    <Compile Include="Marshals\Threads\VMRoutingFrameMarshal.cs" />
-    <Compile Include="Marshals\VMResourceIDMarshal.cs" />
-    <Compile Include="Marshals\VMRuntimeHeadlineMarshal.cs" />
-    <Compile Include="Marshals\Threads\VMStackFrameMarshal.cs" />
-    <Compile Include="Marshals\Threads\VMThreadMarshal.cs" />
-    <Compile Include="Marshals\VMAnimationStateMarshal.cs" />
-    <Compile Include="Marshals\VMArchitectureMarshal.cs" />
-    <Compile Include="Marshals\VMAvatarMarshal.cs" />
-    <Compile Include="Marshals\VMContextMarshal.cs" />
-    <Compile Include="Marshals\VMEntityMarshal.cs" />
-    <Compile Include="Marshals\VMGameObjectMarshal.cs" />
-    <Compile Include="Marshals\VMMarshal.cs" />
-    <Compile Include="Marshals\VMMultitileGroupMarshal.cs" />
-    <Compile Include="Marshals\VMStandaloneObjectMarshal.cs" />
-    <Compile Include="Model\Platform\VMAbstractEntityState.cs" />
-    <Compile Include="Model\Platform\VMAbstractLotState.cs" />
-    <Compile Include="Model\Platform\VMDefaultValidator.cs" />
-    <Compile Include="Model\Platform\VMFSOCommunityValidator.cs" />
-    <Compile Include="Model\Platform\VMIAvatarState.cs" />
-    <Compile Include="Model\Platform\VMIObjectState.cs" />
-    <Compile Include="Model\Platform\VMAbstractValidator.cs" />
-    <Compile Include="Model\Routing\VMEntityObstacle.cs" />
-    <Compile Include="Model\Routing\VMObstacleSet.cs" />
-    <Compile Include="Model\Routing\VMObstacleSetOld.cs" />
-    <Compile Include="Model\TS1Platform\VMTS1AvatarState.cs" />
-    <Compile Include="Model\TS1Platform\VMTS1EntityState.cs" />
-    <Compile Include="Model\TS1Platform\VMTS1LotState.cs" />
-    <Compile Include="Model\TS1Platform\VMTS1ObjectState.cs" />
-    <Compile Include="Model\TSOPlatform\IVMAvatarNameCache.cs" />
-    <Compile Include="Model\VMGenericTS1CallMode.cs" />
-    <Compile Include="Model\Routing\VMRouteFailCode.cs" />
-    <Compile Include="Model\Sound\VMSoundEntry.cs" />
-    <Compile Include="Model\Sound\VMSoundTransfer.cs" />
-    <Compile Include="Model\TSOPlatform\VMAsyncState.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOAvatarState.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOEntityState.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOJobUI.cs" />
-    <Compile Include="Model\VMBuildableAreaInfo.cs" />
-    <Compile Include="Model\VMInventoryItem.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOJobInfo.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOLotState.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOObjectState.cs" />
-    <Compile Include="Model\TSOPlatform\VMTSOSurroundingTerrain.cs" />
-    <Compile Include="Model\VMArchitectureTerrain.cs" />
-    <Compile Include="Model\VMBudget.cs" />
-    <Compile Include="Model\VMHeadlineRenderer.cs" />
-    <Compile Include="Model\VMLoadError.cs" />
-    <Compile Include="Model\VMOutfitReference.cs" />
-    <Compile Include="Model\VMPlaceRequestFlags.cs" />
-    <Compile Include="Model\VMPlatformState.cs" />
-    <Compile Include="Model\VMRoomMap.cs" />
-    <Compile Include="Model\Routing\VMFreeList.cs" />
-    <Compile Include="Model\Routing\VMObstacle.cs" />
-    <Compile Include="Model\Routing\VMWalkableRect.cs" />
-    <Compile Include="Model\VMArchitectureCommand.cs" />
-    <Compile Include="Model\VMDialogInfo.cs" />
-    <Compile Include="Model\VMPlacementError.cs" />
-    <Compile Include="Model\VMGenericTSOCallMode.cs" />
-    <Compile Include="Model\VMAnimationState.cs" />
-    <Compile Include="Model\VMBHAVOwnerPair.cs" />
-    <Compile Include="Model\VMMotive.cs" />
-    <Compile Include="Model\VMMotiveChange.cs" />
-    <Compile Include="Model\VMPersonDataVariable.cs" />
-    <Compile Include="Model\VMRoomInfo.cs" />
-    <Compile Include="Model\VMRuntimeHeadline.cs" />
-    <Compile Include="Model\VMObjectQueries.cs" />
-    <Compile Include="Model\VMStackObjectDefinitionVariable.cs" />
-    <Compile Include="Model\VMStackObjectVariable.cs" />
-    <Compile Include="Model\VMTuningCache.cs" />
-    <Compile Include="Model\VMWallLineBuilder.cs" />
-    <Compile Include="NetPlay\Drivers\VMClientDriver.cs" />
-    <Compile Include="NetPlay\Drivers\VMFSORDriver.cs" />
-    <Compile Include="NetPlay\Drivers\VMServerDriver.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\Data\VMEOD3x5Font.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\Data\VMEODFreshnessTracker.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\Data\VMEODGameCompDrawACardData.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\Data\VMEODRackData.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\Data\VMEODSignsData.cs" />
-    <Compile Include="NetPlay\EODs\Archetypes\VMBasicEOD.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODAbstractGameshowBuzzerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODGameshowBuzzerHostPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODBandPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODBulletinPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODCooldownEventPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODDancePlatformPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODDJStationPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODGameshowBuzzerPlayerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODHoldEmCasinoPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODNCDanceFloorPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODBlackjackPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODDresserPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODFNewspaperPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODGameCompDrawACardPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODNightclubControllerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODPermissionDoorPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODRackOwnerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODDanceFloorPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODHandler.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODPaperChasePlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODPizzaMakerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMAbstractEODRackPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODRackPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODRoulettePlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODScoreboardPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODSecureTradePlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODSignsPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODSlotsPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODStubPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODTimerPlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODTwoPersonJobObjectMazePlugin.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODWarGamePlugin.cs" />
-    <Compile Include="NetPlay\EODs\Model\VMEODEvent.cs" />
-    <Compile Include="NetPlay\EODs\Utils\AbstractMazeGenerator.cs" />
-    <Compile Include="NetPlay\EODs\Utils\AbstractPlayingCardsDeck.cs" />
-    <Compile Include="NetPlay\EODs\Utils\EODLobby.cs" />
-    <Compile Include="NetPlay\EODs\Utils\EODPersist.cs" />
-    <Compile Include="NetPlay\EODs\Handlers\VMEODTrunkPlugin.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetCheatCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetAdjHollowSyncCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetAsyncPriceCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetAsyncSaleCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetBatchGraphicCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChangeControlCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChangeEnvironmentCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChangeLotSizeCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChatEditChanCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChatParamCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetDirectControlCommand.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetDirectControlToggleCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetEODMessageCmd.cs" />
-    <Compile Include="NetPlay\EODs\Model\VMEODPluginThreadState.cs" />
-    <Compile Include="NetPlay\EODs\VMEODHost.cs" />
-    <Compile Include="NetPlay\EODs\VMEODServer.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMChangePermissionsCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMGenericDialogCommand.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetAsyncResponseCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetDialogResponseCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetDeleteObjectCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMBlueprintRestoreCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetBuyObjectCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetChatCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetEODEventCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetGotoCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetInteractionCancelCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetInteractionCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetInteractionResultCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetLockCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetMoveObjectCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetPingCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetPlaceInventoryCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSendToInventoryCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSetOutfitCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSetIgnoreCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSetRoofCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSetTimeCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSimJoinCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetArchitectureCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSimLeaveCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetSkillLockCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetTimeoutNotifyCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetTuningCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetUpdateInventoryCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetUpdatePersistStateCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMNetUpgradeCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMRequestResyncCmd.cs" />
-    <Compile Include="NetPlay\Model\Commands\VMStateSyncCmd.cs" />
-    <Compile Include="NetPlay\Model\VMChatEvent.cs" />
-    <Compile Include="NetPlay\Model\VMNetAvatarPersistState.cs" />
-    <Compile Include="NetPlay\Model\VMNetClient.cs" />
-    <Compile Include="NetPlay\Model\VMNetCommand.cs" />
-    <Compile Include="NetPlay\Model\VMNetCommandBodyAbstract.cs" />
-    <Compile Include="NetPlay\Model\VMNetMessage.cs" />
-    <Compile Include="NetPlay\Model\VMNetMessageType.cs" />
-    <Compile Include="NetPlay\Model\VMNetTick.cs" />
-    <Compile Include="NetPlay\Model\VMNetTickList.cs" />
-    <Compile Include="NetPlay\Model\VMSerializable.cs" />
-    <Compile Include="NetPlay\SandboxMode\BanList.cs" />
-    <Compile Include="NetPlay\VMNetDriver.cs" />
-    <Compile Include="Primitives\VMBurn.cs" />
-    <Compile Include="Primitives\VMDialogGlobalStrings.cs" />
-    <Compile Include="Primitives\VMDialogSemiGlobalStrings.cs" />
-    <Compile Include="Primitives\VMBreakPoint.cs" />
-    <Compile Include="Engine\VMChangeActionString.cs" />
-    <Compile Include="Primitives\VMDrop.cs" />
-    <Compile Include="Primitives\VMDropOnto.cs" />
-    <Compile Include="Primitives\VMFindBestAction.cs" />
-    <Compile Include="Primitives\VMFindBestObjectForFunction.cs" />
-    <Compile Include="Primitives\VMFindLocationFor.cs" />
-    <Compile Include="Primitives\VMGenericTS1Call.cs" />
-    <Compile Include="Primitives\VMGenericTSOCall.cs" />
-    <Compile Include="Primitives\VMGetDirectionTo.cs" />
-    <Compile Include="Primitives\VMGetDistanceTo.cs" />
-    <Compile Include="Primitives\VMGetTerrainInfo.cs" />
-    <Compile Include="Primitives\VMGosubFoundAction.cs" />
-    <Compile Include="Primitives\VMGrab.cs" />
-    <Compile Include="Primitives\VMIdleForInput.cs" />
-    <Compile Include="Primitives\VMInventoryOperations.cs" />
-    <Compile Include="Primitives\VMInvokePlugin.cs" />
-    <Compile Include="Primitives\VMLookTowards.cs" />
-    <Compile Include="Primitives\VMOnlineJobsCall.cs" />
-    <Compile Include="Primitives\VMReach.cs" />
-    <Compile Include="Primitives\VMRelationship.cs" />
-    <Compile Include="Primitives\VMRemoveObjectInstance.cs" />
-    <Compile Include="Primitives\VMPushInteraction.cs" />
-    <Compile Include="Primitives\VMAnimateSim.cs" />
-    <Compile Include="Primitives\VMChangeSuitOrAccessory.cs" />
-    <Compile Include="Primitives\VMCreateObjectInstance.cs" />
-    <Compile Include="Primitives\VMDialogPrivateStrings.cs" />
-    <Compile Include="Primitives\VMExpression.cs" />
-    <Compile Include="Primitives\VMGotoRelativePosition.cs" />
-    <Compile Include="Primitives\VMGotoRoutingSlot.cs" />
-    <Compile Include="Primitives\VMNotifyOutOfIdle.cs" />
-    <Compile Include="Primitives\VMPlaySound.cs" />
-    <Compile Include="Primitives\VMRefresh.cs" />
-    <Compile Include="Primitives\VMRunFunctionalTree.cs" />
-    <Compile Include="Primitives\VMRunTreeByName.cs" />
-    <Compile Include="Primitives\VMSetBalloonHeadline.cs" />
-    <Compile Include="Primitives\VMSetMotiveChange.cs" />
-    <Compile Include="Primitives\VMSetToNext.cs" />
-    <Compile Include="Primitives\VMShowString.cs" />
-    <Compile Include="Primitives\VMSnap.cs" />
-    <Compile Include="Primitives\VMSpecialEffect.cs" />
-    <Compile Include="Primitives\VMStopAllSounds.cs" />
-    <Compile Include="Primitives\VMSubRoutine.cs" />
-    <Compile Include="Primitives\VMRandomNumber.cs" />
-    <Compile Include="Engine\Translator\VMTranslator.cs" />
-    <Compile Include="Engine\VMPrimitiveRegistration.cs" />
-    <Compile Include="Engine\VMThread.cs" />
-    <Compile Include="Primitives\VMSleep.cs" />
-    <Compile Include="Primitives\VMSysLog.cs" />
-    <Compile Include="Primitives\VMTestObjectType.cs" />
-    <Compile Include="Primitives\VMTestSimInteractingWith.cs" />
-    <Compile Include="Primitives\VMTransferFunds.cs" />
-    <Compile Include="Primitives\VMTS1Budget.cs" />
-    <Compile Include="Primitives\VMTS1InventoryOperations.cs" />
-    <Compile Include="Primitives\VMTS1MakeNewCharacter.cs" />
-    <Compile Include="Test\CollisionTestUtils.cs" />
-    <Compile Include="Utils\SimitoneNeighbourGenerator.cs" />
-    <Compile Include="Utils\TimePropertyListItemSorter.cs" />
-    <Compile Include="Utils\VMArchitectureStats.cs" />
-    <Compile Include="Utils\VMArchitectureTools.cs" />
-    <Compile Include="Utils\VMCheatContext.cs" />
-    <Compile Include="Utils\VMLotRotate.cs" />
-    <Compile Include="Utils\VMLotTerrainRestoreTools.cs" />
-    <Compile Include="Utils\VMTS1Activator.cs" />
-    <Compile Include="Utils\VMTS1PurchasableOutfitHelper.cs" />
-    <Compile Include="Utils\VMWorldActivator.cs" />
-    <Compile Include="Utils\VMWorldExporter.cs" />
-    <Compile Include="VM.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\VMAvatar.cs" />
-    <Compile Include="VMArchitecture.cs" />
-    <Compile Include="VMCheatState.cs" />
-    <Compile Include="VMClock.cs" />
-    <Compile Include="VMContext.cs" />
-    <Compile Include="Entities\VMEntity.cs" />
-    <Compile Include="Entities\VMGameObject.cs" />
-    <Compile Include="Engine\Translator\VMRoutine.cs" />
-    <Compile Include="Engine\Translator\VMInstruction.cs" />
-    <Compile Include="Engine\Scopes\VMVariableScope.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\tso.world\FSO.LotView.csproj">
-      <Project>{B1A6E4C2-E080-4C34-A604-D11B5296A9B8}</Project>
-      <Name>FSO.LotView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj">
-      <Project>{C42962A1-8796-4F47-9DCD-79ED5904D8CA}</Project>
-      <Name>FSO.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj">
-      <Project>{C0068DF7-F2E8-4399-846D-556BF9A35C00}</Project>
-      <Name>FSO.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj">
-      <Project>{18583453-A970-4AC5-83B1-2D6BFDF94C24}</Project>
-      <Name>FSO.Files</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj">
-      <Project>{072781D8-51EC-4143-9CAE-DAF50177D3AD}</Project>
-      <Name>FSO.HIT</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj">
-      <Project>{FD7957F7-A1E0-4D00-8F6C-3FA555EAA163}</Project>
-      <Name>FSO.Vitaboy.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj">
-      <Project>{9D9558A9-755E-43F9-8BB6-B26F365F5042}</Project>
-      <Name>FSO.Vitaboy</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\tso.world\FSO.LotView.csproj" />
+    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
+    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
+    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj" />
+    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -475,16 +86,22 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <PackageReference Include="FreeSO.HandEvaluator" Version="1.2.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.0.0" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Engine\VMRouteFinder.cs" />
+  </ItemGroup>
 </Project>

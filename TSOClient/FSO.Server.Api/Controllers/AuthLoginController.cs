@@ -5,11 +5,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
-    public class AuthLoginController : ApiController
+    public class AuthLoginController : ControllerBase
     {
         private static Func<HttpResponseMessage> ERROR_020 = printError("INV-020", "Please enter your member name and password.");
         private static Func<HttpResponseMessage> ERROR_110 = printError("INV-110", "The member name or password you have entered is incorrect. Please try again.");
