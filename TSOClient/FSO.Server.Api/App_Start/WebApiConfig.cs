@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.
+﻿using System.Web.Http;
 
 namespace FSO.Server.Api
 {
@@ -9,9 +9,11 @@ namespace FSO.Server.Api
             // Web API configuration and services
 
             // Web API routes
+            /*
             var cors = new EnableCorsAttribute();
             cors.SupportsCredentials = true;
             config.EnableCors(cors);
+            */
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

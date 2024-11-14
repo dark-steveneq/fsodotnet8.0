@@ -68,7 +68,7 @@ namespace FSO.Server.Api.Controllers
 
                 var cookie = new CookieHeaderValue("fso", token.Token);
                 cookie.Expires = DateTimeOffset.Now.AddDays(1);
-                cookie.Domain = Request.RequestUri.Host;
+                cookie.Domain = Request.Host.ToString();
                 cookie.Path = "/";
 
                 response.Headers.AddCookies(new CookieHeaderValue[] { cookie });

@@ -11,6 +11,9 @@ using System.Runtime.Caching;
 using FSO.Server.Api.Utils;
 using FSO.Common.Enum;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg.Sig;
+using Microsoft.AspNetCore.Http;
+using System.Net.Sockets;
 
 namespace FSO.Server.Api.Controllers
 {
@@ -99,10 +102,9 @@ namespace FSO.Server.Api.Controllers
                 var lot = IDForLocation(shardid, id);
                 if (lot == null) return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-                FileStream stream;
                 try
                 {
-                    var ndat = File.ReadAllBytes(Path.Combine(api.Config.NFSdir, "Lots/" + lot.Value.ToString("x8") + "/thumb.png"));
+                    byte[] ndat = System.IO.File.ReadAllBytes(Path.Combine(api.Config.NFSdir, "Lots/" + lot.Value.ToString("x8") + "/thumb.png"));
                     MemoryCacher.Add("lt" + shardid + ":" + id, ndat, DateTime.Now.Add(new TimeSpan(1, 0, 0)));
 
                     HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -112,11 +114,11 @@ namespace FSO.Server.Api.Controllers
                         Public = true,
                         MaxAge = new TimeSpan(1, 0, 0),
                     };
-                    response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
                     return response;
                 }
-                catch (Exception e)
+                catch
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
@@ -172,7 +174,7 @@ namespace FSO.Server.Api.Controllers
                 try
                 {
                     var path = Path.Combine(api.Config.NFSdir, "Lots/" + lot.lot_id.ToString("x8") + "/state_" + lot.ring_backup_num.ToString() + ".fsov");
-                    stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Content = new StreamContent(stream);
                     /*response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -184,7 +186,7 @@ namespace FSO.Server.Api.Controllers
 
                     return response;
                 }
-                catch (Exception e)
+                catch
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
@@ -206,7 +208,7 @@ namespace FSO.Server.Api.Controllers
                 try
                 {
                     var path = Path.Combine(api.Config.NFSdir, "Lots/" + lot.Value.ToString("x8") + "/thumb.fsof");
-                    stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Content = new StreamContent(stream);
                     response.Headers.CacheControl = new CacheControlHeaderValue()
@@ -227,43 +229,35 @@ namespace FSO.Server.Api.Controllers
 
         [HttpPost]
         [Route("userapi/city/{shardid}/uploadfacade/{id}")]
-        public HttpResponseMessage UploadFacade(int shardid, uint id)
+        [Consumes("multipart/form-data")]
+        public HttpResponseMessage UploadFacade(int shardid, uint id, [FromForm] IFormFile file)
         {
             var api = Api.INSTANCE;
             api.DemandModerator(Request);
 
-            if (!Request.Content.IsMimeMultipartContent())
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            if (file.Length == 0) throw new Exception("Received empty file");
 
-            var provider = new MultipartMemoryStreamProvider();
-            var files = Request.Content.ReadAsMultipartAsync(provider).Result;
-
+            Stream received = file.OpenReadStream();
             byte[] data = null;
-            foreach (var file in provider.Contents)
-            {
-                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
-                data = file.ReadAsByteArrayAsync().Result;
-            }
-
-            if (data == null) return new HttpResponseMessage(HttpStatusCode.NotFound);
+            received.Read(data);
+            received.Close();
 
             using (var da = api.DAFactory.Get())
             {
                 var lot = da.Lots.GetByLocation(shardid, id);
                 if (lot == null) return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-                FileStream stream;
                 try
                 {
                     var path = Path.Combine(api.Config.NFSdir, "Lots/" + lot.lot_id.ToString("x8") + "/thumb.fsof");
-                    stream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Write);
+                    FileStream stream = System.IO.File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Write);
                     stream.Write(data, 0, data.Length);
 
                     HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Content = new StringContent("", Encoding.UTF8, "text/plain");
                     return response;
                 }
-                catch (Exception e)
+                catch
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }

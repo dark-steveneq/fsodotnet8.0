@@ -1,5 +1,6 @@
 ﻿using System;
 using FSO.Server.Common;
+using FSO.Server.Api;
 using Microsoft.Owin.Hosting;
 using System.Web.Http;
 using Owin;
@@ -46,6 +47,7 @@ namespace FSO.Server.Servers.UserApi
             if (CustomStartup != null) APIThread = CustomStartup(this, Config.Services.UserApi.Bindings[0]);
             else
             {
+                Server.Api.Api INSTANCE = new();
                 App = WebApp.Start(Config.Services.UserApi.Bindings[0], x =>
                 {
                     new UserApiStartup().Configuration(x, Config);
@@ -75,8 +77,8 @@ namespace FSO.Server.Servers.UserApi
     {
         public void Configuration(IAppBuilder builder, ServerConfiguration config)
         {
-            HttpConfiguration http = new HttpConfiguration();
-            //WebApiConfig.Register(http);
+            HttpConfiguration http = new();
+            WebApiConfig.Register(http);
 
             var userApiConfig = config.Services.UserApi;
 

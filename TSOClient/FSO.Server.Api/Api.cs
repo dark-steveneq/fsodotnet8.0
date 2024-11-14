@@ -8,6 +8,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Security;
+using Microsoft.AspNetCore.Http;
+using NLog.Fluent;
 
 namespace FSO.Server.Api
 {
@@ -66,7 +68,7 @@ namespace FSO.Server.Api
             Shards.AutoUpdate();
         }
 
-        public JWTUser RequireAuthentication(HttpRequestMessage request)
+        public JWTUser RequireAuthentication(HttpRequest request)
         {
             /*var http = HttpContext.Current;
             if (http == null)
@@ -74,23 +76,17 @@ namespace FSO.Server.Api
                 throw new SecurityException("Unable to get http context");
             }*/
             JWTUser result;
-            if (request.Headers.Authorization != null)
+            Log.Info(request.Headers.Authorization.ToString());
+            if (request.Headers.Authorization.ToString() != "Null")
             {
-                result = JWT.DecodeToken(request.Headers.Authorization.Parameter);
+                result = JWT.DecodeToken(request.Headers.Authorization);
             }
             else
             {
-                var cookies = request.Headers.GetCookies().FirstOrDefault();
-                if (cookies == null)
+                if (!request.Cookies.ContainsKey("fso"))
                     throw new SecurityException("Unable to find cookie");
 
-
-                var cookie = cookies["fso"];
-                if (cookie == null)
-                {
-                    throw new SecurityException("Unable to find cookie");
-                }
-                result = JWT.DecodeToken(cookie.Value);
+                result = JWT.DecodeToken(request.Cookies["fso"]);
             }
             if (result == null)
             {
@@ -198,12 +194,12 @@ namespace FSO.Server.Api
             if (!user.Claims.Contains("admin")) throw new Exception("Requires Admin level status");
         }
 
-        public void DemandModerator(HttpRequestMessage request)
+        public void DemandModerator(HttpRequest request)
         {
             DemandModerator(RequireAuthentication(request));
         }
 
-        public void DemandAdmin(HttpRequestMessage request)
+        public void DemandAdmin(HttpRequest request)
         {
             DemandAdmin(RequireAuthentication(request));
         }
