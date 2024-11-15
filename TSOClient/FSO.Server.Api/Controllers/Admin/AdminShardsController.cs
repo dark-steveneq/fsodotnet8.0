@@ -1,15 +1,18 @@
 ﻿using FSO.Server.Api.Utils;
 using FSO.Server.Common;
-using System.Net;
-using System.Net.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
+    [EnableCors("AdminAppPolicy")]
+    [Route("admin/shards")]
+    [ApiController]
     public class AdminShardsController : ControllerBase
     {
-
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IActionResult Get()
         {
             var api = Api.INSTANCE;
             api.DemandAdmin(Request);
@@ -21,8 +24,8 @@ namespace FSO.Server.Api.Controllers.Admin
             }
         }
 
-        [HttpPost]
-        public HttpResponseMessage shutdown([FromBody] ShutdownModel sd)
+        [HttpPost("shutdown")]
+        public IActionResult shutdown(ShutdownModel sd)
         {
             var api = Api.INSTANCE;
             api.DemandAdmin(Request);
@@ -36,8 +39,8 @@ namespace FSO.Server.Api.Controllers.Admin
             return ApiResponse.Json(HttpStatusCode.OK, true);
         }
 
-        [HttpPost]
-        public HttpResponseMessage announce([FromBody] AnnouncementModel an)
+        [HttpPost("announce")]
+        public IActionResult announce(AnnouncementModel an)
         {
             var api = Api.INSTANCE;
             api.DemandModerator(Request);

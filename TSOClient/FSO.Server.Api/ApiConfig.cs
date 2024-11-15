@@ -1,4 +1,6 @@
-﻿namespace FSO.Server.Api
+﻿using FSO.Server.Api.Services;
+
+namespace FSO.Server.Api
 {
     public class ApiConfig
     {
@@ -31,5 +33,10 @@
 
         public bool SmtpEnabled { get; set;  }
         public bool UseProxy { get; set; }
+
+        public int? UpdateID { get; set; }
+
+        public string BranchName { get; set; } = "dev";
+        public IUpdateUploader UpdateUploader { get; set; }
     }
 }

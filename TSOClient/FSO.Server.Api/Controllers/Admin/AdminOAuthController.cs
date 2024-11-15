@@ -1,17 +1,22 @@
 ﻿using FSO.Server.Api.Utils;
 using FSO.Server.Common;
 using FSO.Server.Servers.Api.JsonWebToken;
-using System.Collections.Generic;
-using System.Net.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
+    [EnableCors("AdminAppPolicy")]
+    [Route("admin/oauth/token")]
+    [ApiController]
     public class AdminOAuthController : ControllerBase
     {
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] AuthRequest auth)
+        public IActionResult Post([FromForm] AuthRequest auth)
         {
+            if (auth == null) Ok();
             if (auth.grant_type == "password")
             {
                 var api = Api.INSTANCE;
@@ -27,6 +32,17 @@ namespace FSO.Server.Api.Controllers.Admin
                         });
                     }
 
+                    var ip = ApiUtils.GetIP(Request);
+                    var accLock = da.Users.GetRemainingAuth(user.user_id, ip);
+                    if (accLock != null && (accLock.active || accLock.count >= AuthLoginController.LockAttempts) && accLock.expire_time > Epoch.Now)
+                    {
+                        return ApiResponse.Json(System.Net.HttpStatusCode.OK, new OAuthError
+                        {
+                            error = "unauthorized_client",
+                            error_description = "account_locked"
+                        });
+                    }
+
                     var authSettings = da.Users.GetAuthenticationSettings(user.user_id);
                     var isPasswordCorrect = PasswordHasher.Verify(auth.password, new PasswordHash
                     {
@@ -36,12 +52,25 @@ namespace FSO.Server.Api.Controllers.Admin
 
                     if (!isPasswordCorrect)
                     {
+                        var durations = AuthLoginController.LockDuration;
+                        var failDelay = 60 * durations[Math.Min(durations.Length - 1, da.Users.FailedConsecutive(user.user_id, ip))];
+                        if (accLock == null)
+                        {
+                            da.Users.NewFailedAuth(user.user_id, ip, (uint)failDelay);
+                        }
+                        else
+                        {
+                            var remaining = da.Users.FailedAuth(accLock.attempt_id, (uint)failDelay, AuthLoginController.LockAttempts);
+                        }
+
                         return ApiResponse.Json(System.Net.HttpStatusCode.OK, new OAuthError
                         {
                             error = "unauthorized_client",
                             error_description = "user_credentials_invalid"
                         });
                     }
+
+                    da.Users.SuccessfulAuth(user.user_id, ip);
 
                     JWTUser identity = new JWTUser();
                     identity.UserName = user.username;

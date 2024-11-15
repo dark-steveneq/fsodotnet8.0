@@ -1,16 +1,19 @@
 ﻿using FSO.Common.Utils;
 using FSO.Server.Api.Utils;
 using FSO.Server.Protocol.CitySelector;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
+    [EnableCors]
+    [Route("cityselector/app/AvatarDataServlet")]
+    [ApiController]
     public class AvatarDataController : ControllerBase
     {
-        public HttpResponseMessage Get()
+        public IActionResult Get()
         {
             var api = Api.INSTANCE;
             var user = api.RequireAuthentication(Request);

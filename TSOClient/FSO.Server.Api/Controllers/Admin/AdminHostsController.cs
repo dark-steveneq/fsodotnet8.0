@@ -1,14 +1,17 @@
 ﻿using FSO.Server.Api.Utils;
 using System.Net;
-using System.Net.Http;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
+    [EnableCors("AdminAppPolicy")]
+    [Route("admin/hosts")]
+    [ApiController]
     public class AdminHostsController : ControllerBase
     {
-        public HttpResponseMessage Get()
+        public IActionResult Get()
         {
             var api = Api.INSTANCE;
             api.DemandAdmin(Request);

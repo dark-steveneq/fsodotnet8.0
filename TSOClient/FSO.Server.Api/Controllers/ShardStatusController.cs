@@ -1,15 +1,19 @@
 ﻿using FSO.Common.Utils;
 using FSO.Server.Api.Utils;
 using FSO.Server.Protocol.CitySelector;
-using System.Net;
-using System.Net.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace FSO.Server.Api.Controllers
 {
+    [EnableCors]
+    [Route("cityselector/shard-status.jsp")]
+    [ApiController]
     public class ShardStatusController : ControllerBase
     {
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IActionResult Get()
         {
             var api = Api.INSTANCE;
 

@@ -1,50 +1,63 @@
 ﻿using FSO.Common.Utils;
 using FSO.Server.Database.DA.Utils;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Xml;
 
 namespace FSO.Server.Api.Utils
 {
     public class ApiResponse
     {
-        public static HttpResponseMessage Plain(HttpStatusCode code, string text)
+        public static IActionResult Plain(HttpStatusCode code, string text)
         {
-            var response = new HttpResponseMessage(code);
-            response.Content = new StringContent(text, Encoding.UTF8, "text/plain");
-            return response;
+            return new ContentResult
+            {
+                StatusCode = (int)code,
+                Content = text,
+                ContentType = "text/plain"
+            };
         }
 
-        public static HttpResponseMessage Json(HttpStatusCode code, object obj)
+        public static IActionResult Json(HttpStatusCode code, object obj)
         {
-            var response = new HttpResponseMessage(code);
-            response.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
-            return response;
+            return new ContentResult
+            {
+                StatusCode = (int)code,
+                Content = Newtonsoft.Json.JsonConvert.SerializeObject(obj),
+                ContentType = "application/json"
+            };
         }
 
-        public static HttpResponseMessage PagedList<T>(HttpStatusCode code, PagedList<T> list)
+        public static IActionResult PagedList<T>(HttpRequest request, HttpStatusCode code, PagedList<T> list)
         {
-            var response = new HttpResponseMessage(code);
-            response.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(list), Encoding.UTF8, "application/json");
-            response.Headers.Add("X-Total-Count", list.Total.ToString());
-            response.Headers.Add("X-Offset", list.Offset.ToString());
-            return response;
+            request.HttpContext.Response.Headers.Add("X-Total-Count", list.Total.ToString());
+            request.HttpContext.Response.Headers.Add("X-Offset", list.Offset.ToString());
+
+            return new ContentResult
+            {
+                StatusCode = (int)code,
+                Content = Newtonsoft.Json.JsonConvert.SerializeObject(list),
+                ContentType = "application/json"
+            };
         }
 
-        public static HttpResponseMessage Xml(HttpStatusCode code, IXMLEntity xml)
+        public static IActionResult Xml(HttpStatusCode code, IXMLEntity xml)
         {
             var doc = new XmlDocument();
             var firstChild = xml.Serialize(doc);
             doc.AppendChild(firstChild);
 
-            var response = new HttpResponseMessage(code);
-            response.Content = new StringContent(doc.OuterXml, Encoding.UTF8, "text/xml");
-            return response;
+            return new ContentResult
+            {
+                StatusCode = (int)code,
+                Content = doc.OuterXml,
+                ContentType = "text/xml"
+            };
         }
 
-        public static Func<HttpResponseMessage> XmlFuture(HttpStatusCode code, IXMLEntity xml)
+        public static Func<IActionResult> XmlFuture(HttpStatusCode code, IXMLEntity xml)
         {
             var doc = new XmlDocument();
             var firstChild = xml.Serialize(doc);
@@ -53,9 +66,12 @@ namespace FSO.Server.Api.Utils
 
             return () =>
             {
-                var response = new HttpResponseMessage(code);
-                response.Content = new StringContent(serialized, Encoding.UTF8, "text/xml");
-                return response;
+                return new ContentResult
+                {
+                    StatusCode = (int)code,
+                    Content = serialized,
+                    ContentType = "text/xml"
+                };
             };
         }
     }

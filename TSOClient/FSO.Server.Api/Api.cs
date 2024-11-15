@@ -1,27 +1,30 @@
-﻿using FSO.Server.Api.Utils;
+﻿using FSO.Server.Api.Services;
+using FSO.Server.Api.Utils;
 using FSO.Server.Common;
+using FSO.Server.Common.Config;
 using FSO.Server.Database.DA;
 using FSO.Server.Domain;
 using FSO.Server.Servers.Api.JsonWebToken;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Net.Http;
 using System.Security;
-using Microsoft.AspNetCore.Http;
-using NLog.Fluent;
 
 namespace FSO.Server.Api
 {
     public class Api : ApiAbstract
     {
         public static Api INSTANCE;
-        
+
         public IDAFactory DAFactory;
         public ApiConfig Config;
         public JWTFactory JWT;
         public Shards Shards;
         public IGluonHostPool HostPool;
+        public IUpdateUploader UpdateUploader;
+        public IUpdateUploader UpdateUploaderClient;
+        public GithubConfig Github;
 
         public Api()
         {
@@ -39,9 +42,11 @@ namespace FSO.Server.Api
             Config.CDNUrl = appSettings["cdnUrl"];
             Config.NFSdir = appSettings["nfsdir"];
             Config.UseProxy = bool.Parse(appSettings["useProxy"]);
+            Config.UpdateID = (appSettings["updateID"] == "") ? (int?)null : int.Parse(appSettings["updateID"]);
+            Config.BranchName = appSettings["branchName"] ?? "beta";
 
             // new smtp config vars
-            if(appSettings["smtpHost"]!=null&&
+            if (appSettings["smtpHost"]!=null&&
                 appSettings["smtpUser"]!=null&&
                 appSettings["smtpPassword"]!=null&&
                 appSettings["smtpPort"]!=null)
@@ -62,31 +67,32 @@ namespace FSO.Server.Api
             {
                 ConnectionString = appSettings["connectionString"]
             });
-
-
+            
             Shards = new Shards(DAFactory);
             Shards.AutoUpdate();
         }
 
         public JWTUser RequireAuthentication(HttpRequest request)
         {
-            /*var http = HttpContext.Current;
-            if (http == null)
-            {
-                throw new SecurityException("Unable to get http context");
-            }*/
             JWTUser result;
-            Log.Info(request.Headers.Authorization.ToString());
-            if (request.Headers.Authorization.ToString() != "Null")
+            
+            if (!string.IsNullOrEmpty(request.Headers["Authorization"]))
             {
-                result = JWT.DecodeToken(request.Headers.Authorization);
+                result = JWT.DecodeToken(GetAuthParam(request.Headers["Authorization"]));
             }
             else
             {
-                if (!request.Cookies.ContainsKey("fso"))
+                var cookies = request.Cookies;
+                if (cookies == null)
                     throw new SecurityException("Unable to find cookie");
 
-                result = JWT.DecodeToken(request.Cookies["fso"]);
+
+                var cookie = cookies["fso"];
+                if (string.IsNullOrEmpty(cookie))
+                {
+                    throw new SecurityException("Unable to find cookie");
+                }
+                result = JWT.DecodeToken(cookie);
             }
             if (result == null)
             {
@@ -94,6 +100,13 @@ namespace FSO.Server.Api
             }
 
             return result;
+        }
+
+        public string GetAuthParam(string auth)
+        {
+            var ind = auth.IndexOf(' ');
+            if (ind == -1) return auth;
+            return auth.Substring(ind + 1);
         }
 
         /// <summary>

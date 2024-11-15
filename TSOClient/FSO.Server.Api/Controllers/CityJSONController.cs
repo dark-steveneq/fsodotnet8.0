@@ -1,18 +1,22 @@
 ﻿using FSO.Server.Api.Utils;
 using FSO.Server.Common;
-using System.Net;
-using System.Net.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace FSO.Server.Api.Controllers
 {
+    [EnableCors]
+    [ApiController]
     public class CityJSONController : ControllerBase
     {
         private static object ModelLock = new object { };
         private static CityInfoModel LastModel = new CityInfoModel();
         private static uint LastModelUpdate;
 
-        public HttpResponseMessage Get(int shardid)
+        [HttpGet]
+        [Route("userapi/city/{shardid}/city.json")]
+        public IActionResult Get(int shardid)
         {
             var api = Api.INSTANCE;
 
@@ -42,7 +46,7 @@ namespace FSO.Server.Api.Controllers
 
         [HttpGet]
         [Route("userapi/city/thumbwork.json")]
-        public HttpResponseMessage ThumbWork()
+        public IActionResult ThumbWork()
         {
             var api = Api.INSTANCE;
             api.DemandModerator(Request);

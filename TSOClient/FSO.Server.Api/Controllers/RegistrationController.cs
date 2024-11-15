@@ -1,11 +1,11 @@
 ﻿using FSO.Server.Api.Utils;
 using FSO.Server.Common;
 using FSO.Server.Database.DA.EmailConfirmation;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
@@ -13,6 +13,10 @@ namespace FSO.Server.Api.Controllers
     /// Controller for user registrations.
     /// Supports email confirmation if enabled in config.json.
     /// </summary>
+
+    [EnableCors]
+    [Route("userapi/registration")]
+    [ApiController]
     public class RegistrationController : ControllerBase
     {
         private const int REGISTER_THROTTLE_SECS = 60;
@@ -25,8 +29,7 @@ namespace FSO.Server.Api.Controllers
 
         #region Registration
         [HttpPost]
-        [Route("userapi/registration")]
-        public HttpResponseMessage CreateUser(RegistrationModel user)
+        public IActionResult CreateUser([FromForm] RegistrationModel user)
         {
             var api = Api.INSTANCE;
 
@@ -44,7 +47,7 @@ namespace FSO.Server.Api.Controllers
             user.username = user.username ?? "";
             user.username = user.username.ToLowerInvariant();
             user.email = user.email ?? "";
-            user.key = user.key ?? "";
+            //user.key = user.key ?? "";
 
             string failReason = null;
             if (user.username.Length < 3) failReason = "user_short";
@@ -70,6 +73,7 @@ namespace FSO.Server.Api.Controllers
                 });
             }
 
+            /*
             if (!string.IsNullOrEmpty(api.Config.Regkey) && api.Config.Regkey != user.key)
             {
                 return ApiResponse.Json(HttpStatusCode.OK, new RegistrationError()
@@ -78,6 +82,7 @@ namespace FSO.Server.Api.Controllers
                     error_description = failReason
                 });
             }
+            */
 
             using (var da = api.DAFactory.Get())
             {
@@ -128,7 +133,7 @@ namespace FSO.Server.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("userapi/registration/request")]
-        public HttpResponseMessage CreateToken(ConfirmationCreateTokenModel model)
+        public IActionResult CreateToken(ConfirmationCreateTokenModel model)
         {
             Api api = Api.INSTANCE;
 
@@ -226,7 +231,7 @@ namespace FSO.Server.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("userapi/registration/confirm")]
-        public HttpResponseMessage CreateUserWithToken(RegistrationUseTokenModel user)
+        public IActionResult CreateUserWithToken(RegistrationUseTokenModel user)
         {
             Api api = Api.INSTANCE;
 
@@ -341,7 +346,7 @@ namespace FSO.Server.Api.Controllers
         #region Password reset
         [HttpPost]
         [Route("userapi/password")]
-        public HttpResponseMessage ChangePassword(PasswordResetModel model)
+        public IActionResult ChangePassword(PasswordResetModel model)
         {
             Api api = Api.INSTANCE;
 
@@ -410,7 +415,7 @@ namespace FSO.Server.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("userapi/password/confirm")]
-        public HttpResponseMessage ConfirmPwd(PasswordResetUseTokenModel model)
+        public IActionResult ConfirmPwd(PasswordResetUseTokenModel model)
         {
             Api api = Api.INSTANCE;
 
@@ -456,7 +461,7 @@ namespace FSO.Server.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("userapi/password/request")]
-        public HttpResponseMessage CreatePwdToken(ConfirmationCreateTokenModel model)
+        public IActionResult CreatePwdToken(ConfirmationCreateTokenModel model)
         {  
             Api api = Api.INSTANCE;
 
@@ -555,7 +560,6 @@ namespace FSO.Server.Api.Controllers
         public string username { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        public string key { get; set; }
     }
 
     /// <summary>

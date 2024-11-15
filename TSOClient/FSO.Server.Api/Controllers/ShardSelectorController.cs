@@ -2,22 +2,23 @@
 using FSO.Server.Common;
 using FSO.Server.Database.DA.Shards;
 using FSO.Server.Protocol.CitySelector;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
+    [Route("cityselector/app/ShardSelectorServlet")]
+    [ApiController]
     public class ShardSelectorController : ControllerBase
     {
-        private static Func<HttpResponseMessage> ERROR_SHARD_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("503", "Shard not found"));
-        private static Func<HttpResponseMessage> ERROR_AVATAR_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("504", "Avatar not found"));
-        private static Func<HttpResponseMessage> ERROR_AVATAR_NOT_YOURS = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("505", "You do not own this avatar!"));
-        private static Func<HttpResponseMessage> ERROR_BANNED = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("506", "Your account has been banned."));
-        private static Func<HttpResponseMessage> ERROR_MAINTAINANCE = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("507", "The server is currently undergoing maintainance. Please try again later."));
+        private static Func<IActionResult> ERROR_SHARD_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("503", "Shard not found"));
+        private static Func<IActionResult> ERROR_AVATAR_NOT_FOUND = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("504", "Avatar not found"));
+        private static Func<IActionResult> ERROR_AVATAR_NOT_YOURS = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("505", "You do not own this avatar!"));
+        private static Func<IActionResult> ERROR_BANNED = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("506", "Your account has been banned."));
+        private static Func<IActionResult> ERROR_MAINTAINANCE = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("507", "The server is currently undergoing maintainance. Please try again later."));
 
-        public HttpResponseMessage Get(string shardName, string avatarId)
+        public IActionResult Get(string shardName, string avatarId)
         {
             var api = Api.INSTANCE;
 

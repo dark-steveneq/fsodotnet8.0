@@ -2,29 +2,25 @@
 using FSO.Server.Common;
 using FSO.Server.Protocol.CitySelector;
 using FSO.Server.Servers.Api.JsonWebToken;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers
 {
+    [Route("cityselector/app/InitialConnectServlet")]
+    [ApiController]
     public class InitialConnectController : ControllerBase
     {
-        private static Func<HttpResponseMessage> ERROR_MISSING_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("501", "Token not found"));
-        private static Func<HttpResponseMessage> ERROR_EXPIRED_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("502", "Token has expired"));
+        private static Func<IActionResult> ERROR_MISSING_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("501", "Token not found"));
+        private static Func<IActionResult> ERROR_EXPIRED_TOKEN = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("502", "Token has expired"));
 
-        public HttpResponseMessage Get()
-        {
-            return ERROR_MISSING_TOKEN();
-        }
-
-        public HttpResponseMessage Get(string ticket, string version)
+        [HttpGet]
+        public IActionResult Get(string ticket, string version)
         {
             var api = Api.INSTANCE;
 
-            if (ticket == null || ticket == ""){
+            if (ticket == null || ticket == "" || version == null){
                 return ERROR_MISSING_TOKEN();
             }
 
@@ -58,20 +54,35 @@ namespace FSO.Server.Api.Controllers
                 var shardOne = api.Shards.GetById(1);
 
                 var token = api.JWT.CreateToken(session);
-                var response = ApiResponse.Xml(HttpStatusCode.OK, new UserAuthorized()
+
+                IActionResult response;
+                if (shardOne.UpdateID != null)
                 {
-                    FSOBranch = shardOne.VersionName,
-                    FSOVersion = shardOne.VersionNumber,
-                    FSOUpdateUrl = api.Config.UpdateUrl,
-                    FSOCDNUrl = api.Config.CDNUrl
+                    var update = db.Updates.GetUpdate(shardOne.UpdateID.Value);
+                    response = ApiResponse.Xml(HttpStatusCode.OK, new UserAuthorized()
+                    {
+                        FSOBranch = shardOne.VersionName,
+                        FSOVersion = shardOne.VersionNumber,
+                        FSOUpdateUrl = update.full_zip,
+                        FSOCDNUrl = api.Config.CDNUrl
+                    });
+                }
+                else
+                {
+                    response = ApiResponse.Xml(HttpStatusCode.OK, new UserAuthorized()
+                    {
+                        FSOBranch = shardOne.VersionName,
+                        FSOVersion = shardOne.VersionNumber,
+                        FSOUpdateUrl = api.Config.UpdateUrl,
+                        FSOCDNUrl = api.Config.CDNUrl
+                    });
+                }
+                Response.Cookies.Append("fso", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
+                {
+                    Expires = DateTimeOffset.Now.AddDays(1),
+                    Domain = Request.Host.Host,
+                    Path = "/"
                 });
-
-                var cookie = new CookieHeaderValue("fso", token.Token);
-                cookie.Expires = DateTimeOffset.Now.AddDays(1);
-                cookie.Domain = Request.Host.ToString();
-                cookie.Path = "/";
-
-                response.Headers.AddCookies(new CookieHeaderValue[] { cookie });
                 //HttpContext.Current.Response.SetCookie(new HttpCookie("fso", token.Token));
                 return response;
             }

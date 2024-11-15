@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
@@ -74,8 +74,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSODroid", "FSODroid\FSODroid.csproj", "{E55C12A4-84C8-482C-B132-932C0180FA44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Server.Core", "FSO.Server.Core\FSO.Server.Core.csproj", "{90F68665-1BAA-4F25-A168-B06C8F220749}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Server.Api.Core", "FSO.Server.Api.Core\FSO.Server.Api.Core.csproj", "{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSDFData", "..\Other\libs\MSDFData\MSDFData.csproj", "{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}"
 EndProject
@@ -1331,42 +1329,6 @@ Global
 		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhone.Build.0 = Debug|Any CPU
 		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|Any CPU.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|iPhone.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|iPhone.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Android|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|Any CPU.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|iPhone.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|iPhone.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.iOS|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|iPhone.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|Any CPU.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|iPhone.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|iPhone.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.ServerRelease|iPhoneSimulator.Build.0 = Release|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|Any CPU.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|iPhone.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|iPhone.Build.0 = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{D8C25C1E-D2F1-4FC1-840F-50DCFFC75186}.Windows|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|Any CPU.ActiveCfg = Release|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|Any CPU.Build.0 = Release|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|iPhone.ActiveCfg = Release|Any CPU

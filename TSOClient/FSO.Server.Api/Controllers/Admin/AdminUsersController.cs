@@ -2,17 +2,20 @@
 using FSO.Server.Common;
 using FSO.Server.Database.DA.Inbox;
 using FSO.Server.Database.DA.Users;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
+    [EnableCors("AdminAppPolicy")]
+    [Route("admin/users")]
+    [ApiController]
     public class AdminUsersController : ControllerBase
     {
         //Get information about me, useful for the admin user interface to disable UI based on who you login as
-        public HttpResponseMessage current()
+        public IActionResult current()
         {
             var api = Api.INSTANCE;
 
@@ -31,7 +34,8 @@ namespace FSO.Server.Api.Controllers.Admin
 
 
         //Get the attributes of a specific user
-        public HttpResponseMessage Get(string id)
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
         {
             if (id == "current") return current();
             var api = Api.INSTANCE;
@@ -51,7 +55,7 @@ namespace FSO.Server.Api.Controllers.Admin
         /// <returns></returns>
         [HttpPost]
         [Route("admin/unban")]
-        public HttpResponseMessage UnbanUser([FromBody] string user_id)
+        public IActionResult UnbanUser([FromBody] string user_id)
         {
             Api api = Api.INSTANCE;
 
@@ -87,7 +91,7 @@ namespace FSO.Server.Api.Controllers.Admin
         /// <returns></returns>
         [HttpPost]
         [Route("admin/mail")]
-        public HttpResponseMessage SendMail(MailCreateModel mail)
+        public IActionResult SendMail(MailCreateModel mail)
         {
             Api api = Api.INSTANCE;
 
@@ -95,7 +99,7 @@ namespace FSO.Server.Api.Controllers.Admin
 
             using (var da = api.DAFactory.Get())
             {
-                Database.DA.Avatars.DbAvatar recipient = da.Avatars.Get(uint.Parse(mail.target_id));
+                User recipient = da.Users.GetById(uint.Parse(mail.target_id));
 
                 if (recipient == null)
                 {
@@ -152,7 +156,7 @@ namespace FSO.Server.Api.Controllers.Admin
         /// <returns></returns>
         [HttpPost]
         [Route("admin/kick")]
-        public HttpResponseMessage KickUser([FromBody] string user_id)
+        public IActionResult KickUser([FromBody] string user_id)
         {
             Api api = Api.INSTANCE;
 
@@ -172,7 +176,7 @@ namespace FSO.Server.Api.Controllers.Admin
         /// <returns></returns>
         [HttpPost]
         [Route("admin/ban")]
-        public HttpResponseMessage BanUser(BanCreateModel ban)
+        public IActionResult BanUser(BanCreateModel ban)
         {
             Api api = Api.INSTANCE;
 
@@ -248,12 +252,12 @@ namespace FSO.Server.Api.Controllers.Admin
             }
         }
 
-        public HttpResponseMessage Get() { return Get(20, 0, "register_date"); }
-        public HttpResponseMessage Get(int offset) { return Get(20, offset, "register_date"); }
-
         //List users
-        public HttpResponseMessage Get(int limit, int offset, string order)
+        [HttpGet]
+        public IActionResult Get(int limit, int offset, string order)
         {
+            if (limit == 0) limit = 20;
+            if (order == null) order = "register_date";
             var api = Api.INSTANCE;
             api.DemandModerator(Request);
             using (var da = api.DAFactory.Get())
@@ -265,12 +269,13 @@ namespace FSO.Server.Api.Controllers.Admin
                 }
 
                 var result = da.Users.All((int)offset, (int)limit);
-                return ApiResponse.PagedList<User>(HttpStatusCode.OK, result);
+                return ApiResponse.PagedList<User>(Request, HttpStatusCode.OK, result);
             }
         }
 
         //Create a new user
-        public HttpResponseMessage Post(UserCreateModel user)
+        [HttpPost]
+        public IActionResult Post(UserCreateModel user)
         {
             var api = Api.INSTANCE;
             var nuser = api.RequireAuthentication(Request);

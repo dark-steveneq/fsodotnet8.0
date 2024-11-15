@@ -4,16 +4,19 @@ using FSO.Server.Protocol.Gluon.Packets;
 using Newtonsoft.Json;
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace FSO.Server.Api.Controllers.Admin
 {
+    [EnableCors("AdminAppPolicy")]
+    [Route("admin/tasks")]
+    [ApiController]
     public class AdminTasksController : ControllerBase
     {
-
-        public HttpResponseMessage Get(int limit, int offset)
+        [HttpGet]
+        public IActionResult Get(int limit, int offset)
             {
             var api = Api.INSTANCE;
                 api.DemandAdmin(Request);
@@ -27,12 +30,12 @@ namespace FSO.Server.Api.Controllers.Admin
                     }
 
                     var result = da.Tasks.All((int)offset, (int)limit);
-                    return ApiResponse.PagedList<DbTask>(HttpStatusCode.OK, result);
+                    return ApiResponse.PagedList<DbTask>(Request, HttpStatusCode.OK, result);
                 }
             }
 
-        [HttpPost]
-        public HttpResponseMessage request([FromBody] TaskRequest task)
+        [HttpPost("request")]
+        public IActionResult request([FromBody] TaskRequest task)
         {
             var api = Api.INSTANCE;
             api.DemandAdmin(Request);
