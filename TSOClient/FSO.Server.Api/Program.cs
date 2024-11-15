@@ -24,9 +24,10 @@ namespace FSO.Server.Api
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls(args[0])
-                .ConfigureLogging(x =>
+                .ConfigureLogging(configure =>
                 {
-                    x.SetMinimumLevel(LogLevel.None);
+                    //x.SetMinimumLevel(LogLevel.None);
+                    configure.AddRinLogger();
                 })
                 .UseKestrel(options =>
                 {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ZstdSharp.Unsafe;
 
 namespace FSO.Server.Api
 {
@@ -21,21 +22,21 @@ namespace FSO.Server.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
+            var par = services.AddCors(options => {
                options.AddDefaultPolicy(
-                   builder =>
-                   {
-
+                   builder => {
                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("content-disposition");
                    });
 
                 options.AddPolicy("AdminAppPolicy",
-                    builder =>
-                    {
+                    builder => {
                         builder.WithOrigins("https://freeso.org", "http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithExposedHeaders("content-disposition");
                     });
-            }).AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).AddMvc().AddMvcOptions((MvcOptions opts) => {
+                opts.EnableEndpointRouting = true;
+            }).AddRinMvcSupport();
+
+            services.AddRin();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +44,10 @@ namespace FSO.Server.Api
         {
             if (env.IsDevelopment())
             {
+                app.UseRin();
+                app.UseRinMvcSupport();
                 app.UseDeveloperExceptionPage();
+                app.UseRinDiagnosticsHandler();
             }
             else
             {
@@ -51,7 +55,6 @@ namespace FSO.Server.Api
             }
             app.UseCors();
             //app.UseHttpsRedirection();
-            app.UseMvc();
             AppLifetime = appLifetime;
         }
 
