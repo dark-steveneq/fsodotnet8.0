@@ -42,9 +42,9 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.3.103.48" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.104.36" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
     <PackageReference Include="Octokit" Version="0.36.0" />
-    <PackageReference Include="Rin" Version="2.6.0" />
-    <PackageReference Include="Rin.Mvc" Version="2.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FSO.Server.Common\FSO.Server.Common.csproj" />

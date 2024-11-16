@@ -21,16 +21,14 @@
 				"cron":"0 3 * * *", 
 				"task":"prune_database", 
 				"timeout":3600,
-				"parameter":{
-				}
+				"parameter":{}
 			},
 			{
 				"cron":"0 4 * * *", 
 				"task":"bonus", 
 				"timeout":3600,
 				"shard_id": 1,
-				"parameter":{
-				}
+				"parameter":{}
 			}
 		],
 

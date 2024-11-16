@@ -1,40 +1,34 @@
 ﻿using FSO.Server.Common;
-using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FSO.Server.Api
 {
     public class Program
     {
         public static void Main(string[] args)
-        {
-            var host = CreateWebHostBuilder(args).Build();
-            host.Run();
-        }
+        {}
 
-        public static IAPILifetime RunAsync(string[] args)
+        public static IAPILifetime StartUserApi(string[] urls)
         {
-            var host = CreateWebHostBuilder(args).Build();
-            var lifetime = new APIControl((IApplicationLifetime)host.Services.GetService(typeof(IApplicationLifetime)));
-            host.Start();
+            var builder = WebApplication.CreateBuilder();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.WebHost.UseUrls(urls);
+            var app = builder.Build();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseCors();
+            app.UseRouting();
+            app.MapControllers();
+
+            var lifetime = new APIControl((IApplicationLifetime)app.Services.GetService(typeof(IApplicationLifetime)));
+            app.RunAsync();
             return lifetime;
         }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseUrls(args[0])
-                .ConfigureLogging(configure =>
-                {
-                    //x.SetMinimumLevel(LogLevel.None);
-                    configure.AddRinLogger();
-                })
-                .UseKestrel(options =>
-                {
-                    options.Limits.MaxRequestBodySize = 500000000;
-                })
-                .SuppressStatusMessages(true)
-                .UseStartup<Startup>();
     }
 
     public class APIControl : IAPILifetime

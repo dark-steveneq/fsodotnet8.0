@@ -69,7 +69,7 @@ namespace FSO.Server.Servers.UserApi
             api.Github = userApiConfig.GithubConfig;
             api.HostPool = GetGluonHostPool();
             
-            APIThread = FSO.Server.Api.Program.RunAsync(new string[] { Config.Services.UserApi.Bindings[0] });
+            APIThread = FSO.Server.Api.Program.StartUserApi(Config.Services.UserApi.Bindings.ToArray());
         }
 
         public IGluonHostPool GetGluonHostPool()
