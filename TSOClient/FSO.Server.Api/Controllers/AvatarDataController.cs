@@ -9,7 +9,6 @@ using System.Net;
 namespace FSO.Server.Api.Controllers
 {
     [EnableCors]
-    [Route("cityselector/app/AvatarDataServlet")]
     [ApiController]
     public class AvatarDataController : ControllerBase
     {

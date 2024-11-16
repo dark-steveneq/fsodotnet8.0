@@ -8,7 +8,6 @@ using System.Net;
 
 namespace FSO.Server.Api.Controllers
 {
-    [Route("cityselector/app/ShardSelectorServlet")]
     [ApiController]
     public class ShardSelectorController : ControllerBase
     {
@@ -19,6 +18,7 @@ namespace FSO.Server.Api.Controllers
         private static Func<IActionResult> ERROR_MAINTAINANCE = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("507", "The server is currently undergoing maintainance. Please try again later."));
 
         [HttpGet]
+        [Route("cityselector/app/ShardSelectorServlet")]
         public IActionResult Get(string shardName, string avatarId)
         {
             var api = Api.INSTANCE;
