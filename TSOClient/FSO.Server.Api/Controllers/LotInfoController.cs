@@ -13,29 +13,6 @@ using Microsoft.AspNetCore.Cors;
 
 namespace FSO.Server.Api.Controllers
 {
-
-    public static class MemoryCacher
-    {
-        public static MemoryCache Default = new MemoryCache(new MemoryCacheOptions());
-        public static object GetValue(string key)
-        {
-            MemoryCache memoryCache = Default;
-            return memoryCache.Get(key);
-        }
-
-        public static bool Add(string key, object value, DateTimeOffset absExpiration)
-        {
-            MemoryCache memoryCache = Default;
-            return memoryCache.Set(key, value, absExpiration) == value;
-        }
-
-        public static void Delete(string key)
-        {
-            MemoryCache memoryCache = Default;
-            memoryCache.Remove(key);
-        }
-    }
-
     [EnableCors]
     [ApiController]
     public class LotInfoController : ControllerBase
@@ -69,7 +46,7 @@ namespace FSO.Server.Api.Controllers
                         return da.Lots.GetByLocation(shardid, ikey).lot_id;
                     }
                 });
-            } catch (NullReferenceException e)
+            } catch
             {
                 return null;
             }
@@ -174,6 +151,7 @@ namespace FSO.Server.Api.Controllers
             }
         }
         //get the lots by ids
+        [HttpGet]
         [Route("userapi/lots")]
         public IActionResult GetByIDs([FromQuery(Name = "ids")]string idsString)
         {
@@ -572,7 +550,7 @@ namespace FSO.Server.Api.Controllers
                     stream.Write(data, 0, data.Length);
                     return Ok();
                 }
-                catch (Exception e)
+                catch
                 {
                     return NotFound();
                 }
@@ -619,6 +597,29 @@ namespace FSO.Server.Api.Controllers
                 }
             }
             */
+        }
+    }
+
+
+    public static class MemoryCacher
+    {
+        public static MemoryCache Default = new MemoryCache(new MemoryCacheOptions());
+        public static object GetValue(string key)
+        {
+            MemoryCache memoryCache = Default;
+            return memoryCache.Get(key);
+        }
+
+        public static bool Add(string key, object value, DateTimeOffset absExpiration)
+        {
+            MemoryCache memoryCache = Default;
+            return memoryCache.Set(key, value, absExpiration) == value;
+        }
+
+        public static void Delete(string key)
+        {
+            MemoryCache memoryCache = Default;
+            memoryCache.Remove(key);
         }
     }
 

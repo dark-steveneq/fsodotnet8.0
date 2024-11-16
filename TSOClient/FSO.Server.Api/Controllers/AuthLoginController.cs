@@ -8,9 +8,9 @@ using System.Text;
 
 namespace FSO.Server.Api.Controllers
 {
-    [Route("AuthLogin")]
+    [Route("[controller]")]
     [ApiController]
-    public class AuthLoginController : ControllerBase
+    public class AuthLoginController : Controller
     {
         private static Func<IActionResult> ERROR_020 = printError("INV-020", "Please enter your member name and password.");
         private static Func<IActionResult> ERROR_110 = printError("INV-110", "The member name or password you have entered is incorrect. Please try again.");
@@ -32,9 +32,8 @@ namespace FSO.Server.Api.Controllers
             1440
         };
 
-        // GET api/<controller>
         [HttpGet]
-        public IActionResult Get(string username, string password, string version, string clientid)
+        public IActionResult Index(string username, string password, string version, string clientid)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {

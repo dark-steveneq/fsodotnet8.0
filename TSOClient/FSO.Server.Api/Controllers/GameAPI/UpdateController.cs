@@ -11,7 +11,7 @@ namespace FSO.Server.Api.Core.Controllers.GameAPI
 
         // GET userapi/update
         // get recent PUBLISHED updates for the active branch, ordered by publish date
-        [HttpGet()]
+        [HttpGet]
         public IActionResult Get(int id)
         {
             var api = Api.INSTANCE;

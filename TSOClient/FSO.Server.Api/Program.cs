@@ -1,32 +1,43 @@
 ﻿using FSO.Server.Common;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace FSO.Server.Api
 {
     public class Program
     {
         public static void Main(string[] args)
-        {}
+        {
+            StartUserApi(["http://localhost:9000"], true);
+        }
 
         public static IAPILifetime StartUserApi(string[] urls)
         {
-            var builder = WebApplication.CreateBuilder();
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.WebHost.UseUrls(urls);
-            var app = builder.Build();
-            
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            app.UseCors();
-            app.UseRouting();
-            app.MapControllers();
+            return StartUserApi(urls, false);
+        }
+
+        public static IAPILifetime StartUserApi(string[] urls, bool sync)
+        {
+            var app = WebHost.CreateDefaultBuilder()
+                .UseUrls(urls)
+                .ConfigureLogging(conf => {
+                    conf.SetMinimumLevel(LogLevel.None);
+                })
+                .UseKestrel(options =>
+                {
+                    options.Limits.MaxRequestBodySize = 500000000;
+                })
+                .SuppressStatusMessages(true)
+                .UseStartup<Startup>().Build();
 
             var lifetime = new APIControl((IApplicationLifetime)app.Services.GetService(typeof(IApplicationLifetime)));
-            app.RunAsync();
+            if (sync)
+                app.Run();
+            else
+                app.RunAsync();
             return lifetime;
         }
     }

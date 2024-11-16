@@ -11,7 +11,8 @@ namespace FSO.Server.Api.Controllers.Admin
     [ApiController]
     public class AdminHostsController : ControllerBase
     {
-        public IActionResult Get()
+        [HttpGet]
+        public IActionResult Index()
         {
             var api = Api.INSTANCE;
             api.DemandAdmin(Request);

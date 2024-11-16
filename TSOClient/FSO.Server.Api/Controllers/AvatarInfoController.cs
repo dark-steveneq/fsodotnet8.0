@@ -14,6 +14,7 @@ namespace FSO.Server.Api.Controllers
     public class AvatarInfoController : ControllerBase
     {
         //get the avatars by user_id
+        [HttpGet]
         [Route("userapi/user/avatars")]
         public IActionResult GetByUser()
         {
@@ -74,6 +75,7 @@ namespace FSO.Server.Api.Controllers
         }
         //get the avatars by ids
         [Route("userapi/avatars")]
+        [HttpGet]
         public IActionResult GetByIDs([FromQuery(Name = "ids")]string idsString)
         {
             var api = Api.INSTANCE;

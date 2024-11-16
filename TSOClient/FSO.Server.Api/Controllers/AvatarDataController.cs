@@ -13,7 +13,9 @@ namespace FSO.Server.Api.Controllers
     [ApiController]
     public class AvatarDataController : ControllerBase
     {
-        public IActionResult Get()
+        [Route("cityselector/app/AvatarDataServlet")]
+        [HttpGet]
+        public IActionResult Index()
         {
             var api = Api.INSTANCE;
             var user = api.RequireAuthentication(Request);

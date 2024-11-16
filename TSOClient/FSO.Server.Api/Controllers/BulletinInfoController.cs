@@ -12,7 +12,7 @@ namespace FSO.Server.Api.Controllers
     [ApiController]
     public class BulletinInfoController : ControllerBase
     {
-        [HttpGet("nhoodId")]
+        [HttpGet]
         [Route("userapi/neighborhood/{nhoodId}/bulletins")]
         public IActionResult GetByNhoodAndAfter(uint nhoodId, [FromQuery(Name = "after")]uint after)
         {
@@ -73,6 +73,7 @@ namespace FSO.Server.Api.Controllers
                 return ApiResponse.Json(HttpStatusCode.OK, bulletinJson);
             }
         }
+
         [HttpGet]
         [Route("userapi/neighborhood/{nhoodId}/bulletins/type/{bulletinType}")]
         public IActionResult GetByNhoodAndType(uint nhoodId,DbBulletinType bulletinType)

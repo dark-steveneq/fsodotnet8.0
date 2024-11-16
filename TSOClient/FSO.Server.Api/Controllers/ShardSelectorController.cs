@@ -18,6 +18,7 @@ namespace FSO.Server.Api.Controllers
         private static Func<IActionResult> ERROR_BANNED = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("506", "Your account has been banned."));
         private static Func<IActionResult> ERROR_MAINTAINANCE = ApiResponse.XmlFuture(HttpStatusCode.OK, new XMLErrorMessage("507", "The server is currently undergoing maintainance. Please try again later."));
 
+        [HttpGet]
         public IActionResult Get(string shardName, string avatarId)
         {
             var api = Api.INSTANCE;

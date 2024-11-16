@@ -14,6 +14,7 @@ namespace FSO.Server.Api.Controllers.Admin
     [ApiController]
     public class AdminUsersController : ControllerBase
     {
+        [HttpGet]
         //Get information about me, useful for the admin user interface to disable UI based on who you login as
         public IActionResult current()
         {
@@ -253,6 +254,7 @@ namespace FSO.Server.Api.Controllers.Admin
         }
 
         //List users
+        [Route("admin/users")]
         [HttpGet]
         public IActionResult Get(int limit, int offset, string order)
         {
@@ -274,6 +276,7 @@ namespace FSO.Server.Api.Controllers.Admin
         }
 
         //Create a new user
+        [Route("admin/users")]
         [HttpPost]
         public IActionResult Post(UserCreateModel user)
         {
