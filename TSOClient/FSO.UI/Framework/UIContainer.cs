@@ -192,9 +192,7 @@ namespace FSO.Client.UI.Framework
             if (!File.Exists(path))
                 path = Path.Combine(GlobalSettings.Default.StartupPath, @"gamedata/uiscripts/" + uiScript);
             
-            var script = new UIScript(GameFacade.GraphicsDevice, this);
-            script.Parse(path);
-            return script;
+            return new UIScript(GameFacade.GraphicsDevice, this, path);
         }
 
         private Texture2D AlphaBlendedScene;

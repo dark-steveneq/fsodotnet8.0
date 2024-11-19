@@ -1,142 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <TargetFramework>net8.0</TargetFramework>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>bin\WindowsGL\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\WindowsGL\Release\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>fso.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
-    <OutputPath>bin\x86\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <Optimize>true</Optimize>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
-    <OutputPath>bin\ServerRelease\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
-    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll" Condition="Exists('..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll')">
-      <Link>Monogame\Linux\MonoGame.Framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\WindowsGL\AnyCPU\Release\MonoGame.Framework.dll">
-      <Link>Monogame\WindowsGL\MonoGame.Framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Windows\AnyCPU\Release\MonoGame.Framework.dll">
-      <Link>Monogame\Windows\MonoGame.Framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.D3DCompiler.dll">
-      <Link>Monogame\Windows\SharpDX.D3DCompiler.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.D3DCompiler.xml">
-      <Link>Monogame\Windows\SharpDX.D3DCompiler.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct2D1.dll">
-      <Link>Monogame\Windows\SharpDX.Direct2D1.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct2D1.xml">
-      <Link>Monogame\Windows\SharpDX.Direct2D1.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct3D11.dll">
-      <Link>Monogame\Windows\SharpDX.Direct3D11.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct3D11.xml">
-      <Link>Monogame\Windows\SharpDX.Direct3D11.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.dll">
-      <Link>Monogame\Windows\SharpDX.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.DXGI.dll">
-      <Link>Monogame\Windows\SharpDX.DXGI.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.DXGI.xml">
-      <Link>Monogame\Windows\SharpDX.DXGI.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.MediaFoundation.dll">
-      <Link>Monogame\Windows\SharpDX.MediaFoundation.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.MediaFoundation.xml">
-      <Link>Monogame\Windows\SharpDX.MediaFoundation.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XAudio2.dll">
-      <Link>Monogame\Windows\SharpDX.XAudio2.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XAudio2.xml">
-      <Link>Monogame\Windows\SharpDX.XAudio2.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XInput.dll">
-      <Link>Monogame\Windows\SharpDX.XInput.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XInput.xml">
-      <Link>Monogame\Windows\SharpDX.XInput.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.xml">
-      <Link>Monogame\Windows\SharpDX.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,9 +39,6 @@
     <EmbeddedResource Include="IconNormal.bmp" />
     <EmbeddedResource Include="Icon.bmp" />
     <Content Include="MIConvexHull.xml" />
-    <Content Include="soft_oal.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\UI\hints\english.dir\land_money.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -254,57 +135,15 @@
     <Content Include="Content\UI\hints\english.dir\ui_nhood_rules.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sdl2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\libxammac.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\GOLDEngine.dll" />
     <Content Include="Dependencies\Nuclex.Fonts.Content.TrueTypeImporter.dll" />
     <Content Include="Dependencies\nunit.framework.dll" />
-    <Content Include="Dependencies\TargaImage.dll" />
-    <Content Include="Monogame\MacOS\Lidgren.Network.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\MonoGame.Framework.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\MonoGame.Framework.Net.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\MonoGame.Framework.Net.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\MonoGame.Framework.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\OpenTK.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\Tao.Sdl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NVorbis.dll" />
     <Content Include="NVorbis.XML" />
-    <Content Include="OpenTK.dll" />
     <Content Include="Resources\arrow-circle.png" />
     <Content Include="Resources\folder-export.png" />
     <Content Include="Resources\folder-horizontal.png" />
     <Content Include="Resources\magnifier-left.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Monogame\MacOS\OpenTK.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Monogame\MacOS\Tao.Sdl.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
@@ -314,10 +153,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.WindowsGL.csproj" />
     <ProjectReference Include="..\..\Other\libs\mp3sharp\mp3sharp\Mp3Sharp.csproj" />
     <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
+    <ProjectReference Include="..\..\Other\libs\FSOMina.NET/Mina.NET\Mina.NET.csproj" />
     <ProjectReference Include="..\..\Other\libs\VoronoiLib\VoronoiLib.csproj" />
     <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj" />
     <ProjectReference Include="..\FSO.Common.Domain\FSO.Common.Domain.csproj" />
@@ -328,7 +166,6 @@
     <ProjectReference Include="..\FSO.UI\FSO.UI.csproj" />
     <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
     <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
-    <ProjectReference Include="..\tso.debug\FSO.Debug.csproj" />
     <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
     <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj" />
     <ProjectReference Include="..\tso.sound\FSO.HIT.csproj" />
@@ -337,28 +174,7 @@
     <ProjectReference Include="..\tso.world\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
@@ -371,10 +187,8 @@
     <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
     <PackageReference Include="MIConvexHull" Version="1.1.17.1019" />
-    <PackageReference Include="Mina" Version="2.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="4.5.7" />
-    <PackageReference Include="Portable.Ninject" Version="3.3.1" />
     <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>

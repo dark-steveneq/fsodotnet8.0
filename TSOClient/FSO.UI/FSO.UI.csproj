@@ -20,8 +20,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj" />
     <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
     <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
     <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
@@ -34,7 +32,6 @@
     <Folder Include="Screens\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\GOLDEngine.dll" />
     <Content Include="Dependencies\Nuclex.Fonts.Content.TrueTypeImporter.dll" />
     <Content Include="Dependencies\nunit.framework.dll" />
     <Content Include="Dependencies\TargaImage.dll" />
@@ -43,10 +40,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GoldEngine" Version="1.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+    <PackageReference Include="U8XmlParser" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Debug\FSOExceptionDisplay.cs" />

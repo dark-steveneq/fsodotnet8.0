@@ -22,7 +22,6 @@ namespace FSO.Client.UI.Framework
         public byte[] RawImage; //last rendered raw data from render target
 
         private UpdateState State;
-        private bool DoRedraw = true;
 
         public MouseState mouse;
         public bool HasFocus = true;
@@ -86,7 +85,6 @@ namespace FSO.Client.UI.Framework
 
             State.UIState.Width = width;
             State.UIState.Height = height;
-            DoRedraw = true;
         }
 
         public override void PreDraw(UISpriteBatch batch)

@@ -288,6 +288,7 @@ namespace FSO.Client
             GameFacade.Focus = false;
         }
 
+        /*
         protected override void OnExiting(object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
@@ -299,6 +300,7 @@ namespace FSO.Client
             }
             GameThread.SetKilled();
         }
+        */
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load

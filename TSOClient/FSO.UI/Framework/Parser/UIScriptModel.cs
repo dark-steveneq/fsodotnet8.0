@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using GOLD;
 
 namespace FSO.Client.UI.Framework.Parser
 {
@@ -10,28 +8,10 @@ namespace FSO.Client.UI.Framework.Parser
         public UINode SharedProperties { get; set; }
         public List<UINode> Children { get; set; }
 
-
-		public static UIGroup FromReduction(Reduction r, Dictionary<Token, object> dataMap)
-        {
-            UIGroup result = new UIGroup();
-			// <Object> ::= BeginLiteral <Content> EndLiteral
-            var content = (List<UINode>)dataMap[r[1]];
-            var sharedProps = content.FirstOrDefault(x => x.Name == "SetSharedProperties");
-
-            result.SharedProperties = sharedProps;
-            result.Children = content.Where(x => x != sharedProps).ToList();
-
-            return result;
-        }
     }
 
     public class UISharedProperties
     {
-        public static UISharedProperties FromReduction(Reduction r)
-        {
-            UISharedProperties result = new UISharedProperties();
-            return result;
-        }
     }
 
     public class UINode
@@ -65,7 +45,7 @@ namespace FSO.Client.UI.Framework.Parser
             var att = Attributes[name];
             if (att != null)
             {
-                return UIScript.ParseRGB(att);
+                //return UIScript.ParseRGB(att);
             }
             return default(Color);
         }
