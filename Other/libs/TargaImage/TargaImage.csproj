@@ -17,12 +17,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\..\..\TSOClient\MonoTSOClient\tso.client\tso.client\bin\WindowsGL\Debug\</OutputPath>
-    <DocumentationFile>bin\Release\TargaImage.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
     <DocumentationFile>bin\Release\TargaImage.xml</DocumentationFile>

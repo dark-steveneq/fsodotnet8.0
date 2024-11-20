@@ -161,15 +161,15 @@
     <ProjectReference Include="..\FSO.SimAntics.JIT\FSO.SimAntics.JIT.csproj" />
     <ProjectReference Include="..\FSO.UI\FSO.UI.csproj" />
     <ProjectReference Include="..\FSO.Windows\FSO.Windows.csproj" />
-    <ProjectReference Include="..\tso.client\FSO.Client.csproj" />
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
-    <ProjectReference Include="..\tso.simantics\FSO.SimAntics.csproj" />
-    <ProjectReference Include="..\tso.sound\FSO.HIT.csproj" />
-    <ProjectReference Include="..\tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj" />
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
-    <ProjectReference Include="..\tso.world\FSO.LotView.csproj" />
+    <ProjectReference Include="..\FSO.Client\FSO.Client.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Content\FSO.Content.csproj" />
+    <ProjectReference Include="..\FSO.Files\FSO.Files.csproj" />
+    <ProjectReference Include="..\FSO.SimAntics\FSO.SimAntics.csproj" />
+    <ProjectReference Include="..\FSO.HIT\FSO.HIT.csproj" />
+    <ProjectReference Include="..\FSO.Vitaboy.Engine\FSO.Vitaboy.Engine.csproj" />
+    <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
+    <ProjectReference Include="..\FSO.World\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

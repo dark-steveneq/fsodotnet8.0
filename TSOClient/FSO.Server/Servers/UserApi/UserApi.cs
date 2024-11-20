@@ -44,22 +44,25 @@ namespace FSO.Server.Servers.UserApi
         {
             var config = this.Config;
             var userApiConfig = config.Services.UserApi;
-            var settings = new NameValueCollection();
-            settings.Add("maintainance", userApiConfig.Maintainance.ToString());
-            settings.Add("authTicketDuration", userApiConfig.AuthTicketDuration.ToString());
-            settings.Add("regkey", userApiConfig.Regkey);
-            settings.Add("secret", config.Secret);
-            settings.Add("updateUrl", userApiConfig.UpdateUrl);
-            settings.Add("cdnUrl", userApiConfig.CDNUrl);
-            settings.Add("connectionString", config.Database.ConnectionString);
-            settings.Add("NFSdir", config.SimNFS);
-            settings.Add("smtpHost", userApiConfig.SmtpHost);
-            settings.Add("smtpUser", userApiConfig.SmtpUser);
-            settings.Add("smtpPassword", userApiConfig.SmtpPassword);
-            settings.Add("smtpPort", userApiConfig.SmtpPort.ToString());
-            settings.Add("useProxy", userApiConfig.UseProxy.ToString());
-            settings.Add("updateID", config.UpdateID?.ToString() ?? "");
-            settings.Add("branchName", config.UpdateBranch);
+            var settings = new NameValueCollection
+            {
+                { "maintainance", userApiConfig.Maintainance.ToString() },
+                { "authTicketDuration", userApiConfig.AuthTicketDuration.ToString() },
+                { "regkey", userApiConfig.Regkey },
+                { "secret", config.Secret },
+                { "updateUrl", userApiConfig.UpdateUrl },
+                { "cdnUrl", userApiConfig.CDNUrl },
+                { "connectionString", config.Database.ConnectionString },
+                { "NFSdir", config.SimNFS },
+                { "smtpHost", userApiConfig.SmtpHost },
+                { "smtpUser", userApiConfig.SmtpUser },
+                { "smtpPassword", userApiConfig.SmtpPassword },
+                { "smtpPort", userApiConfig.SmtpPort.ToString() },
+                { "useProxy", userApiConfig.UseProxy.ToString() },
+                { "updateID", config.UpdateID?.ToString() ?? "" },
+                { "branchName", config.UpdateBranch }
+            };
+            
 
             var api = new FSO.Server.Api.Api();
             api.Init(settings);
@@ -87,39 +90,4 @@ namespace FSO.Server.Servers.UserApi
             var config = Config;
         }
     }
-
-    /*
-    public class UserApiStartup
-    {
-        public void Configuration(IAppBuilder builder, ServerConfiguration config)
-        {
-            HttpConfiguration http = new();
-            WebApiConfig.Register(http);
-
-            var userApiConfig = config.Services.UserApi;
-
-            var settings = new NameValueCollection
-            {
-                { "maintainance", userApiConfig.Maintainance.ToString() },
-                { "authTicketDuration", userApiConfig.AuthTicketDuration.ToString() },
-                { "regkey", userApiConfig.Regkey },
-                { "secret", config.Secret },
-                { "updateUrl", userApiConfig.UpdateUrl },
-                { "cdnUrl", userApiConfig.CDNUrl },
-                { "connectionString", config.Database.ConnectionString },
-                { "NFSdir", config.SimNFS },
-                { "smtpHost", userApiConfig.SmtpHost },
-                { "smtpUser", userApiConfig.SmtpUser },
-                { "smtpPassword", userApiConfig.SmtpPassword },
-                { "smtpPort", userApiConfig.SmtpPort.ToString() },
-                { "useProxy", userApiConfig.UseProxy.ToString() }
-            };
-
-            //var api = new FSO.Server.Api.Api();
-            //api.Init(settings);
-
-            builder.UseWebApi(http);
-        }
-    }
-    */
 }

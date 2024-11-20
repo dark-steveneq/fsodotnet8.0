@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FSO.Server.Common\FSO.Server.Common.csproj" />
     <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj" />
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.3.0" />

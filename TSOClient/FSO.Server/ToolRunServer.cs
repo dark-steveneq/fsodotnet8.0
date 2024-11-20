@@ -52,6 +52,7 @@ namespace FSO.Server
         public int Run()
         {
             LOG.Info("Starting server");
+            LOG.Info("Version: " + ServerVersion.Get().Name + "-" + ServerVersion.Get().Number);
             TimedReferenceController.SetMode(CacheType.PERMANENT);
 
             if (Config.Services == null)

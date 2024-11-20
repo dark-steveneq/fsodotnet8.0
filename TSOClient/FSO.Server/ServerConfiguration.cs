@@ -55,6 +55,7 @@ namespace FSO.Server
             var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.json");
             if (!File.Exists(configPath))
             {
+                Console.WriteLine("Configuration file path: " + configPath);
                 throw new Exception("Configuration file, config.json, missing");
             }
 

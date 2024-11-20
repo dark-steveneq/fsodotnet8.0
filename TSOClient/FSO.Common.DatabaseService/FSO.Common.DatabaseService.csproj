@@ -27,7 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FSO.Server.Clients\FSO.Server.Clients.csproj" />
     <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj" />
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Common.Logging" Version="3.4.1" />

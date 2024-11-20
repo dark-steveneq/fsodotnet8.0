@@ -12,7 +12,7 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 
 -- Default shard
-INSERT INTO fso_shards VALUES (1, 'Alphaville', 1, '0001', 'up', '127.0.0.1:33', '127.0.0.1:33') ON DUPLICATE KEY UPDATE shard_id = shard_id;
+INSERT INTO fso_shards VALUES (1, 'Charvatia', 1, '0009', 'up', '127.0.0.1:33', '127.0.0.1:33') ON DUPLICATE KEY UPDATE shard_id = shard_id;
 
 CREATE TABLE IF NOT EXISTS `fso_shard_tickets` (
 	`ticket_id` VARCHAR(36) NOT NULL,

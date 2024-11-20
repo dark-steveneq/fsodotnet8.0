@@ -28,10 +28,10 @@
     <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj" />
     <ProjectReference Include="..\FSO.Server.Common\FSO.Server.Common.csproj" />
     <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj" />
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
-    <ProjectReference Include="..\tso.content\FSO.Content.csproj" />
-    <ProjectReference Include="..\tso.files\FSO.Files.csproj" />
-    <ProjectReference Include="..\tso.vitaboy.model\FSO.Vitaboy.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Content\FSO.Content.csproj" />
+    <ProjectReference Include="..\FSO.Files\FSO.Files.csproj" />
+    <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

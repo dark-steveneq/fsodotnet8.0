@@ -24,7 +24,7 @@ namespace FSO.Server.Api
             var app = WebHost.CreateDefaultBuilder()
                 .UseUrls(urls)
                 .ConfigureLogging(conf => {
-                    conf.SetMinimumLevel(LogLevel.None);
+                    //conf.SetMinimumLevel(LogLevel.None);
                 })
                 .UseKestrel(options =>
                 {

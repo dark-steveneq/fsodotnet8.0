@@ -18,7 +18,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tso.common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JWT" Version="10.1.1" />

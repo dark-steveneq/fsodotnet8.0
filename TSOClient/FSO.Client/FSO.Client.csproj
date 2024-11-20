@@ -1,0 +1,431 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\WindowsGL\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\WindowsGL\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>fso.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|x86'">
+    <OutputPath>bin\x86\ServerRelease\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <Optimize>true</Optimize>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
+    <OutputPath>bin\ServerRelease\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <Optimize>true</Optimize>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll" Condition="Exists('..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Linux\AnyCPU\Release\MonoGame.Framework.dll')">
+      <Link>Monogame\Linux\MonoGame.Framework.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\WindowsGL\AnyCPU\Release\MonoGame.Framework.dll">
+      <Link>Monogame\WindowsGL\MonoGame.Framework.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\obj\Windows\AnyCPU\Release\MonoGame.Framework.dll">
+      <Link>Monogame\Windows\MonoGame.Framework.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.D3DCompiler.dll">
+      <Link>Monogame\Windows\SharpDX.D3DCompiler.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.D3DCompiler.xml">
+      <Link>Monogame\Windows\SharpDX.D3DCompiler.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct2D1.dll">
+      <Link>Monogame\Windows\SharpDX.Direct2D1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct2D1.xml">
+      <Link>Monogame\Windows\SharpDX.Direct2D1.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct3D11.dll">
+      <Link>Monogame\Windows\SharpDX.Direct3D11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.Direct3D11.xml">
+      <Link>Monogame\Windows\SharpDX.Direct3D11.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.dll">
+      <Link>Monogame\Windows\SharpDX.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.DXGI.dll">
+      <Link>Monogame\Windows\SharpDX.DXGI.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\SharpDX.DXGI.xml">
+      <Link>Monogame\Windows\SharpDX.DXGI.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.MediaFoundation.dll">
+      <Link>Monogame\Windows\SharpDX.MediaFoundation.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.MediaFoundation.xml">
+      <Link>Monogame\Windows\SharpDX.MediaFoundation.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XAudio2.dll">
+      <Link>Monogame\Windows\SharpDX.XAudio2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XAudio2.xml">
+      <Link>Monogame\Windows\SharpDX.XAudio2.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XInput.dll">
+      <Link>Monogame\Windows\SharpDX.XInput.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.XInput.xml">
+      <Link>Monogame\Windows\SharpDX.XInput.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Other\libs\FSOMonoGame\ThirdParty\Dependencies\SharpDX\net40\SharpDX.xml">
+      <Link>Monogame\Windows\SharpDX.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Content Include="Content\UI\hints\images\hint_city.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\images\hint_help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\images\hint_moneytrio.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fso.ico" />
+    <EmbeddedResource Include="IconNormal.bmp" />
+    <EmbeddedResource Include="Icon.bmp" />
+    <Content Include="MIConvexHull.xml" />
+    <Content Include="soft_oal.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_money.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_money_2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_skill_gameplay.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\screen_city_1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_lot_page.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_job0.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_job1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_job2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_entertainment.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_games.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_offbeat.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_owner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_residence.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_romance.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_services.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_shopping.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_skills.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_welcome.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\screen_cas.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\screen_login.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\screen_sas.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\screen_sascity.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_buildmode.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_querypanel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\vm_firstvisitor.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\land_community.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_donator.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_mayor_buildbuy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_mayor_donators.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_bulletin_board.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_neigh_page.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\hints\english.dir\ui_nhood_rules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sdl2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\libxammac.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\GOLDEngine.dll" />
+    <Content Include="Dependencies\Nuclex.Fonts.Content.TrueTypeImporter.dll" />
+    <Content Include="Dependencies\nunit.framework.dll" />
+    <Content Include="Dependencies\TargaImage.dll" />
+    <Content Include="Monogame\MacOS\Lidgren.Network.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\MonoGame.Framework.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\MonoGame.Framework.Net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\MonoGame.Framework.Net.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\MonoGame.Framework.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\OpenTK.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\Tao.Sdl.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NVorbis.dll" />
+    <Content Include="NVorbis.XML" />
+    <Content Include="OpenTK.dll" />
+    <Content Include="Resources\arrow-circle.png" />
+    <Content Include="Resources\folder-export.png" />
+    <Content Include="Resources\folder-horizontal.png" />
+    <Content Include="Resources\magnifier-left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Monogame\MacOS\OpenTK.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monogame\MacOS\Tao.Sdl.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
+    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.WindowsGL.csproj" />
+    <ProjectReference Include="..\..\Other\libs\mp3sharp\mp3sharp\Mp3Sharp.csproj" />
+    <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
+    <ProjectReference Include="..\..\Other\libs\VoronoiLib\VoronoiLib.csproj" />
+    <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj" />
+    <ProjectReference Include="..\FSO.Common.Domain\FSO.Common.Domain.csproj" />
+    <ProjectReference Include="..\FSO.Patcher\FSO.Patcher.csproj" />
+    <ProjectReference Include="..\FSO.Server.Clients\FSO.Server.Clients.csproj" />
+    <ProjectReference Include="..\FSO.Server.DataService\FSO.Common.DataService.csproj" />
+    <ProjectReference Include="..\FSO.Server.Protocol\FSO.Server.Protocol.csproj" />
+    <ProjectReference Include="..\FSO.UI\FSO.UI.csproj" />
+    <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
+    <ProjectReference Include="..\FSO.Content\FSO.Content.csproj" />
+    <ProjectReference Include="..\FSO.Debug\FSO.Debug.csproj" />
+    <ProjectReference Include="..\FSO.Files\FSO.Files.csproj" />
+    <ProjectReference Include="..\FSO.SimAntics\FSO.SimAntics.csproj" />
+    <ProjectReference Include="..\FSO.HIT\FSO.HIT.csproj" />
+    <ProjectReference Include="..\FSO.Vitaboy.Engine\FSO.Vitaboy.Engine.csproj" />
+    <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
+    <ProjectReference Include="..\FSO.LotView\FSO.LotView.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
+    <PackageReference Include="MIConvexHull" Version="1.1.17.1019" />
+    <PackageReference Include="Mina" Version="2.0.11" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="4.5.7" />
+    <PackageReference Include="Portable.Ninject" Version="3.3.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="CityServerInformation.cs" />
+    <Compile Remove="GameContent\ContentManager.cs" />
+    <Compile Remove="MessagesCache.cs" />
+    <Compile Remove="Network\CharacterCreationStatus.cs" />
+    <Compile Remove="Network\CityInfo.cs" />
+    <Compile Remove="Network\Encryption\ARC4.cs" />
+    <Compile Remove="Network\Encryption\SaltedHash.cs" />
+    <Compile Remove="Network\LotPacketHandlers.cs" />
+    <Compile Remove="Network\LotPacketSenders.cs" />
+    <Compile Remove="Network\NetworkClient.cs" />
+    <Compile Remove="Network\PacketHandlers.cs" />
+    <Compile Remove="Network\PacketHeaders.cs" />
+    <Compile Remove="Network\PacketStream.cs" />
+    <Compile Remove="Network\PacketType.cs" />
+    <Compile Remove="Network\ProcessedPacket.cs" />
+    <Compile Remove="Rendering\City\CityCamera.cs" />
+    <Compile Remove="Rendering\City\CityData.cs" />
+    <Compile Remove="Rendering\City\CityGeom.cs" />
+    <Compile Remove="Rendering\City\CitySceneElement.cs" />
+    <Compile Remove="Rendering\City\CityVertex.cs" />
+    <Compile Remove="Rendering\City\ICityGeom.cs" />
+    <Compile Remove="Rendering\City\NioGeom.cs" />
+    <Compile Remove="Rendering\City\RhysGeom.cs" />
+    <Compile Remove="Rendering\City\TerrainVertex.cs" />
+    <Compile Remove="Rendering\Lot\Components\CubeComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\DummyZSprite.cs" />
+    <Compile Remove="Rendering\Lot\Components\FloorComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\House2DComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\House3DComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\ObjectComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\TerrainComponent.cs" />
+    <Compile Remove="Rendering\Lot\Components\WallComponent.cs" />
+    <Compile Remove="Rendering\Lot\DataModel\HouseData.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchRenderMode.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchSorter.cs" />
+    <Compile Remove="Rendering\Lot\Framework\HouseBatchSprite.cs" />
+    <Compile Remove="Rendering\Lot\House2DLayer.cs" />
+    <Compile Remove="Rendering\Lot\House2DScene.cs" />
+    <Compile Remove="Rendering\Lot\House3DScene.cs" />
+    <Compile Remove="Rendering\Lot\HouseBatch.cs" />
+    <Compile Remove="Rendering\Lot\HouseRenderer.cs" />
+    <Compile Remove="Rendering\Lot\HouseScene.cs" />
+    <Compile Remove="Rendering\Lot\IWorldObject.cs" />
+    <Compile Remove="Rendering\Lot\Model\HouseModel.cs" />
+    <Compile Remove="Rendering\Lot\Model\HouseRenderState.cs" />
+    <Compile Remove="Rendering\Sim\SimModelBinding.cs" />
+    <Compile Remove="Rendering\Sim\SimRenderer.cs" />
+    <Compile Remove="UI\Screens\LotScreen.cs" />
+    <Compile Remove="UI\Screens\LotScreenNew.cs" />
+  </ItemGroup>
+</Project>

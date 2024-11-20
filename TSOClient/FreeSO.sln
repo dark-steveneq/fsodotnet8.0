@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Client", "tso.client\FSO.Client.csproj", "{635E68FA-3905-4943-B4F5-D463A8C02E87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Client", "FSO.Client\FSO.Client.csproj", "{635E68FA-3905-4943-B4F5-D463A8C02E87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Common", "tso.common\FSO.Common.csproj", "{C42962A1-8796-4F47-9DCD-79ED5904D8CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Common", "FSO.Common\FSO.Common.csproj", "{C42962A1-8796-4F47-9DCD-79ED5904D8CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Content", "tso.content\FSO.Content.csproj", "{C0068DF7-F2E8-4399-846D-556BF9A35C00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Content", "FSO.Content\FSO.Content.csproj", "{C0068DF7-F2E8-4399-846D-556BF9A35C00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Debug", "tso.debug\FSO.Debug.csproj", "{43FBD6A2-4C4D-479C-A1A8-ED4CB591BDE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Debug", "FSO.Debug\FSO.Debug.csproj", "{43FBD6A2-4C4D-479C-A1A8-ED4CB591BDE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Files", "tso.files\FSO.Files.csproj", "{18583453-A970-4AC5-83B1-2D6BFDF94C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Files", "FSO.Files\FSO.Files.csproj", "{18583453-A970-4AC5-83B1-2D6BFDF94C24}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.SimAntics", "tso.simantics\FSO.SimAntics.csproj", "{5EDDEFD2-C850-49C1-812D-DDEFF09125EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.SimAntics", "FSO.SimAntics\FSO.SimAntics.csproj", "{5EDDEFD2-C850-49C1-812D-DDEFF09125EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.HIT", "tso.sound\FSO.HIT.csproj", "{072781D8-51EC-4143-9CAE-DAF50177D3AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.HIT", "FSO.HIT\FSO.HIT.csproj", "{072781D8-51EC-4143-9CAE-DAF50177D3AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Vitaboy.Engine", "tso.vitaboy.engine\FSO.Vitaboy.Engine.csproj", "{FD7957F7-A1E0-4D00-8F6C-3FA555EAA163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Vitaboy.Engine", "FSO.Vitaboy.Engine\FSO.Vitaboy.Engine.csproj", "{FD7957F7-A1E0-4D00-8F6C-3FA555EAA163}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Vitaboy", "tso.vitaboy.model\FSO.Vitaboy.csproj", "{9D9558A9-755E-43F9-8BB6-B26F365F5042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Vitaboy", "FSO.Vitaboy\FSO.Vitaboy.csproj", "{9D9558A9-755E-43F9-8BB6-B26F365F5042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.LotView", "tso.world\FSO.LotView.csproj", "{B1A6E4C2-E080-4C34-A604-D11B5296A9B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.LotView", "FSO.LotView\FSO.LotView.csproj", "{B1A6E4C2-E080-4C34-A604-D11B5296A9B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargaImage", "..\Other\libs\TargaImage\TargaImage.csproj", "{56F4BD87-2404-4263-80D5-6FA2161EB0A4}"
 EndProject
@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3Sharp", "..\Other\libs\m
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargaImagePCL", "..\Other\libs\TargaImagePCL\TargaImagePCL.csproj", "{D8232422-9D79-4200-A981-EB70ED82CCF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Server.Watchdog", "FSO.Server.Updater\FSO.Server.Watchdog.csproj", "{BEDCDF02-3349-4E64-9BFD-38C499303822}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Server.Watchdog", "FSO.Server.Watchdog\FSO.Server.Watchdog.csproj", "{BEDCDF02-3349-4E64-9BFD-38C499303822}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Patcher", "FSO.Patcher\FSO.Patcher.csproj", "{4E43CE64-343F-4C53-A055-BBF0F4986A16}"
 EndProject
@@ -72,8 +72,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Windows", "FSO.Windows\FSO.Windows.csproj", "{39201960-F96F-4039-84B1-1331D5DDE3C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSODroid", "FSODroid\FSODroid.csproj", "{E55C12A4-84C8-482C-B132-932C0180FA44}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.Server.Core", "FSO.Server.Core\FSO.Server.Core.csproj", "{90F68665-1BAA-4F25-A168-B06C8F220749}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSDFData", "..\Other\libs\MSDFData\MSDFData.csproj", "{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}"
 EndProject
@@ -1293,42 +1291,6 @@ Global
 		{E55C12A4-84C8-482C-B132-932C0180FA44}.Windows|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{E55C12A4-84C8-482C-B132-932C0180FA44}.Windows|iPhoneSimulator.Build.0 = Release|Any CPU
 		{E55C12A4-84C8-482C-B132-932C0180FA44}.Windows|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|Any CPU.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|Any CPU.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|iPhone.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|iPhone.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Android|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|Any CPU.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|Any CPU.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|iPhone.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|iPhone.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.iOS|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|iPhone.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|Any CPU.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|iPhone.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|iPhone.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.ServerRelease|iPhoneSimulator.Build.0 = Release|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|Any CPU.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhone.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhone.Build.0 = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{90F68665-1BAA-4F25-A168-B06C8F220749}.Windows|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|Any CPU.ActiveCfg = Release|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|Any CPU.Build.0 = Release|Any CPU
 		{EABEA510-3E53-4F19-9F0B-75C5CA9DFA3B}.Android|iPhone.ActiveCfg = Release|Any CPU
