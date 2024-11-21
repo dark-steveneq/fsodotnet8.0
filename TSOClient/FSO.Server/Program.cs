@@ -30,7 +30,10 @@ namespace FSO.Server
                     break;
                 case "--import-nhood":
                     toolType = typeof(ToolImportNhood);
-                    //toolOptions = subOptions;
+                    var opts = new ImportNhoodOptions();
+                    opts.ShardId = int.Parse(a2[1]);
+                    opts.JSON = a2[2];
+                    toolOptions = opts;
                     break;
                 case "--restore-lots":
                     toolType = typeof(ToolRestoreLots);

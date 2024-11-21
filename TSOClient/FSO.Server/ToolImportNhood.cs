@@ -3,7 +3,6 @@ using FSO.Common.Domain.Realestate;
 using FSO.Server.Database.DA;
 using FSO.Server.Database.DA.Neighborhoods;
 using Microsoft.Xna.Framework;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +12,6 @@ namespace FSO.Server
 {
     public class ToolImportNhood : ITool
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
         private IDAFactory DAFactory;
         private ImportNhoodOptions Options;
 
