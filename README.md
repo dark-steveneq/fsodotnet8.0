@@ -12,7 +12,7 @@ Currently only the server works. You can join it using the official FreeSO clien
 - Make sure runs on Linux
 
 ## Server
-- Fix crashing (sometimes?) when buying a lot
+- ~~Fix crashing (sometimes?) when buying a lot~~ (It's caused by missconfiguration)
 - Make `FSO.Server` actually use `CommandLineParser`
 - Mina.NET: Remove `BinaryFormatter`
 - ~~Port `FSO.Server.API`~~
