@@ -35,6 +35,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../FSO.Server.Config/FSO.Server.Config.csproj" />
     <ProjectReference Include="..\..\Other\libs\TargaImagePCL\TargaImagePCL.csproj" />
     <ProjectReference Include="..\FSO.Common.DatabaseService\FSO.Common.DatabaseService.csproj" />
     <ProjectReference Include="..\FSO.Common.Domain\FSO.Common.Domain.csproj" />
@@ -104,6 +105,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Owin.Hosting" Version="4.2.2" />
+    <PackageReference Include="SharpYaml" Version="2.1.1" />
     <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.1" />

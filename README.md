@@ -33,7 +33,7 @@ Currently only the server works. You can join it using the official FreeSO clien
 
 ## Other
 - ~~Rename project folders~~
-- Remove unused projects
+- ~~Remove unused projects~~
 - Document each project
 
 # RFC

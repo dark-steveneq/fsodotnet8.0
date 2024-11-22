@@ -18,18 +18,16 @@ namespace FSO.Server
         private static Logger LOG = LogManager.GetCurrentClassLogger();
         private IDAFactory DAFactory;
         private RestoreLotsOptions Options;
-        private ServerConfiguration Config;
 
         // avatar ids that we have verified exist
         private Dictionary<uint, uint> AvatarIDs = new Dictionary<uint, uint>();
         private Dictionary<uint, uint> PersistRemap = new Dictionary<uint, uint>();
         private uint OwnerID;
 
-        public ToolRestoreLots(ServerConfiguration config, RestoreLotsOptions options, IDAFactory factory)
+        public ToolRestoreLots(RestoreLotsOptions options, IDAFactory factory)
         {
             this.Options = options;
             this.DAFactory = factory;
-            this.Config = config;
         }
 
         private void Done()
@@ -99,7 +97,7 @@ namespace FSO.Server
             Console.WriteLine("Scanning content, please wait...");
 
             VMContext.InitVMConfig(false);
-            Content.Content.Init(Config.GameLocation, Content.ContentMode.SERVER);
+            Content.Content.Init(Config.Config.TSOPath, Content.ContentMode.SERVER);
 
             Console.WriteLine($"Starting property restore - scanning { Options.RestoreFolder }...");
 
@@ -200,7 +198,7 @@ namespace FSO.Server
                         Console.WriteLine($"Creating and populating data folder for lot...");
                         try
                         {
-                            lotFolder = Path.Combine(Config.SimNFS, $"Lots/{lot.lot_id.ToString("x8")}/");
+                            lotFolder = Path.Combine(Config.Config.UserContentPath, $"Lots/{lot.lot_id.ToString("x8")}/");
                             Directory.CreateDirectory(lotFolder);
                         }
                         catch (Exception e)

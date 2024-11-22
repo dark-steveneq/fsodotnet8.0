@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 
 namespace FSO.Server.Common
 {
@@ -16,9 +17,10 @@ namespace FSO.Server.Common
                 Number = "0"
             };
 
-            if (File.Exists("version.txt"))
+            var versionPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "version.txt");
+            if (File.Exists(versionPath))
             {
-                using (StreamReader Reader = new StreamReader(File.Open("version.txt", FileMode.Open, FileAccess.Read, FileShare.Read)))
+                using (StreamReader Reader = new StreamReader(File.Open(versionPath, FileMode.Open, FileAccess.Read, FileShare.Read)))
                 {
                     var str = Reader.ReadLine();
                     var split = str.LastIndexOf('-');

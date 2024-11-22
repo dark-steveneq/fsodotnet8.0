@@ -266,9 +266,10 @@ namespace FSO.Server.Servers.Api.Controllers
 
         private static string GetServerVersion()
         {
-            if (File.Exists("version.txt"))
+            var versionPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "version.txt");
+            if (File.Exists(versionPath))
             {
-                using (StreamReader Reader = new StreamReader(File.Open("version.txt", FileMode.Open, FileAccess.Read, FileShare.Read)))
+                using (StreamReader Reader = new StreamReader(File.Open(versionPath, FileMode.Open, FileAccess.Read, FileShare.Read)))
                 {
                     return Reader.ReadLine();
                 }

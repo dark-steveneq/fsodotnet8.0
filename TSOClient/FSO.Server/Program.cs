@@ -2,10 +2,10 @@
 using FSO.Server.Database;
 using FSO.Server.DataService;
 using FSO.Server.Utils;
+using FSO.Server.Config;
 using Ninject;
 using Ninject.Parameters;
 using System;
-using System.Reflection;
 
 namespace FSO.Server
 {
@@ -13,6 +13,7 @@ namespace FSO.Server
     {
         public static int Main(string[] args)
         {
+            Config.Config.LoadConfig();
             Type toolType = null;
             object toolOptions = null;
 
@@ -88,7 +89,6 @@ namespace FSO.Server
             }
 
             var kernel = new StandardKernel(
-                new ServerConfigurationModule(),
                 new DatabaseModule(),
                 new GlobalDataServiceModule(),
                 new GluonHostPoolModule()
@@ -96,14 +96,16 @@ namespace FSO.Server
 
             //If db init, allow @ variables in the query itself. We could always enable this but for added security
             //we are conditionally adding it only for db migrations
-            if (toolType == typeof(ToolInitDatabase))
-            {
-                var config = kernel.Get<ServerConfiguration>();
-                if (!config.Database.ConnectionString.EndsWith(";")){
-                    config.Database.ConnectionString += ";";
+            /*
+                if (toolType == typeof(ToolInitDatabase))
+                {
+                    var config = kernel.Get<ServerConfiguration>();
+                    if (!config.Database.EndsWith(";")){
+                        config.Database += ";";
+                    }
+                    config.Database += "Allow User Variables=True";
                 }
-                config.Database.ConnectionString += "Allow User Variables=True";
-            }
+            */
 
             var tool = (ITool)kernel.Get(toolType, new ConstructorArgument("options", toolOptions));
             return tool.Run();

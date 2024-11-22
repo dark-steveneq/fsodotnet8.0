@@ -52,7 +52,7 @@ namespace FSO.Server.Servers.UserApi
                 { "secret", config.Secret },
                 { "updateUrl", userApiConfig.UpdateUrl },
                 { "cdnUrl", userApiConfig.CDNUrl },
-                { "connectionString", config.Database.ConnectionString },
+                { "connectionString", config.GetConnectionString() },
                 { "NFSdir", config.SimNFS },
                 { "smtpHost", userApiConfig.SmtpHost },
                 { "smtpUser", userApiConfig.SmtpUser },

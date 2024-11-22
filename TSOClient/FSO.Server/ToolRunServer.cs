@@ -28,7 +28,6 @@ namespace FSO.Server
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();
 
-        private ServerConfiguration Config;
         private IKernel Kernel;
 
         private bool Running;
@@ -41,10 +40,9 @@ namespace FSO.Server
 
         private IGluonHostPool HostPool;
 
-        public ToolRunServer(RunServerOptions options, ServerConfiguration config, IKernel kernel, IGluonHostPool hostPool)
+        public ToolRunServer(RunServerOptions options, IKernel kernel, IGluonHostPool hostPool)
         {
             this.Options = options;
-            this.Config = config;
             this.Kernel = kernel;
             this.HostPool = hostPool;
         }
@@ -55,25 +53,26 @@ namespace FSO.Server
             LOG.Info("Version: " + ServerVersion.Get().Name + "-" + ServerVersion.Get().Number);
             TimedReferenceController.SetMode(CacheType.PERMANENT);
 
-            if (Config.Services == null)
+            if (Config.Config.Services == null)
             {
                 LOG.Warn("No services found in the configuration file, exiting");
                 return 1;
             }
 
-            if (!Directory.Exists(Config.GameLocation))
+            if (!Directory.Exists(Config.Config.TSOPath))
             {
                 LOG.Fatal("The directory specified as gameLocation in config.json does not exist");
                 return 1;
             }
 
-            Directory.CreateDirectory(Config.SimNFS);
-            Directory.CreateDirectory(Path.Combine(Config.SimNFS, "Lots/"));
-            Directory.CreateDirectory(Path.Combine(Config.SimNFS, "Objects/"));
+            Directory.CreateDirectory(Config.Config.UserContentPath);
+            Directory.CreateDirectory(Path.Combine(Config.Config.UserContentPath, "Lots/"));
+            Directory.CreateDirectory(Path.Combine(Config.Config.UserContentPath, "Objects/"));
 
             if (Content.Model.AbstractTextureRef.ImageFetchFunction == null)
                 Content.Model.AbstractTextureRef.ImageFetchFunction = Utils.CoreImageLoader.SoftImageFetch;
 
+            /*
             LOG.Info("Checking for scheduled updates...");
             if (AutoUpdateUtility.QueueUpdateIfRequired(Kernel, Config.UpdateBranch))
             {
@@ -91,11 +90,12 @@ namespace FSO.Server
                     Config.UpdateID = id;
                 }
             }
+            */
 
             //TODO: Some content preloading
             LOG.Info("Scanning content");
             VMContext.InitVMConfig(false);
-            Content.Content.Init(Config.GameLocation, Content.ContentMode.SERVER);
+            Content.Content.Init(Config.Config.TSOPath, Content.ContentMode.SERVER);
             Kernel.Bind<Content.Content>().ToConstant(Content.Content.Get());
             Kernel.Bind<MemoryCache>().ToConstant(new MemoryCache("fso_server"));
 
@@ -106,13 +106,13 @@ namespace FSO.Server
             CityServers = new List<CityServer>();
             Kernel.Bind<IServerNFSProvider>().ToConstant(new ServerNFSProvider(Config.SimNFS));
 
-            if (Config.Services.UserApi != null &&
-                Config.Services.UserApi.Enabled)
+            if (Config.Config.Services.UserAPI != null &&
+                Config.Config.Services.UserAPI.Enabled)
             {
                 var childKernel = new ChildKernel(
                     Kernel
                 );
-                var api = new UserApi(Config, childKernel);
+                var api = new UserApi(childKernel);
                 ActiveUApiServer = api;
                 Servers.Add(api);
                 api.OnRequestShutdown += RequestedShutdown;
@@ -121,14 +121,14 @@ namespace FSO.Server
                 api.OnRequestMailNotify += RequestedMailNotify;
             }
 
-            foreach (var cityServer in Config.Services.Cities)
+            foreach (var cityServer in Config.Config.Services.Cities)
             {
                 /**
                  * Need to create a kernel for each city server as there is some data they do not share
                  */
                 var childKernel = new ChildKernel(
                     Kernel,
-                    new ShardDataServiceModule(Config.SimNFS),
+                    new ShardDataServiceModule(Config.Config.UserContentPath),
                     new CityServerModule()
                 );
 
@@ -137,9 +137,8 @@ namespace FSO.Server
                 Servers.Add(city);
             }
 
-            foreach (var lotServer in Config.Services.Lots)
+            foreach (var lotServer in Config.Config.Services.Lots)
             {
-                if (lotServer.SimNFS == null) lotServer.SimNFS = Config.SimNFS;
                 var childKernel = new ChildKernel(
                     Kernel,
                     new LotServerModule()
@@ -150,16 +149,16 @@ namespace FSO.Server
                 );
             }
 
-            if (Config.Services.Tasks != null
-                && Config.Services.Tasks.Enabled)
+            if (Config.Config.Services.Tasks != null
+                && Config.Config.Services.Tasks.Enabled)
             {
                 var childKernel = new ChildKernel(
                     Kernel,
                     new TaskEngineModule()
                 );
 
-                childKernel.Bind<TaskServerConfiguration>().ToConstant(Config.Services.Tasks);
-                childKernel.Bind<TaskTuning>().ToConstant(Config.Services.Tasks.Tuning);
+                childKernel.Bind<TaskServerConfiguration>().ToConstant(Config.Config.Services.Tasks);
+                childKernel.Bind<TaskTuning>().ToConstant(Config.Config.Services.Tasks.Tuning);
 
                 var tasks = childKernel.Get<TaskServer>(new ConstructorArgument("config", Config.Services.Tasks));
                 Servers.Add(tasks);
