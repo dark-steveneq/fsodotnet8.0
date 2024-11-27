@@ -215,7 +215,7 @@ namespace FSO.Content
                 DataDefinition = new TSODataDefinition();
                 try
                 {
-                    using (var stream = File.Open("Content/FSODataDefinition.dat", FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (var stream = File.Open(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Content/FSODataDefinition.dat"), FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         DataDefinition.Read(stream);
                     }

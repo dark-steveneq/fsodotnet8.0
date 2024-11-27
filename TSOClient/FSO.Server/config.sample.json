@@ -58,6 +58,7 @@
     "userApi": {
       "enabled": true,
       "bindings": [ "http://localhost:9000/" ],
+      "siteName": "My FreeSO Server", 
       "controllers": [ "auth", "citySelector" ],
       "updateUrl": "http://some-url"
     },

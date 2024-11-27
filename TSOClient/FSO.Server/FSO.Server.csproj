@@ -51,7 +51,7 @@
     <ProjectReference Include="..\FSO.Files\FSO.Files.csproj" />
     <ProjectReference Include="..\FSO.SimAntics\FSO.SimAntics.csproj" />
     <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
-    <ProjectReference Include="..\FSO.World\FSO.LotView.csproj" />
+    <ProjectReference Include="..\FSO.LotView\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="NLog.config">

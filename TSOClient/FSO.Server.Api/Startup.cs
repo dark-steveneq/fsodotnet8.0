@@ -1,9 +1,10 @@
+using System.Reflection;
 using FSO.Server.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace FSO.Server.Api
 {
@@ -55,6 +56,12 @@ namespace FSO.Server.Api
             app.UseCors();
             //app.UseHttpsRedirection();
 
+            // https://github.com/dotnet/aspnetcore/discussions/55657
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new ManifestEmbeddedFileProvider(Assembly.GetAssembly(type: typeof(Startup))!, "wwwroot"),
+                RequestPath = string.Empty
+            });
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseMvc();

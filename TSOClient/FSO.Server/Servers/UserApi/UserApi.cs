@@ -60,7 +60,8 @@ namespace FSO.Server.Servers.UserApi
                 { "smtpPort", userApiConfig.SmtpPort.ToString() },
                 { "useProxy", userApiConfig.UseProxy.ToString() },
                 { "updateID", config.UpdateID?.ToString() ?? "" },
-                { "branchName", config.UpdateBranch }
+                { "branchName", config.UpdateBranch },
+                { "siteName", config.Services.UserApi.SiteName }
             };
             
 

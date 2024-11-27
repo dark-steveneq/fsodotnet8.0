@@ -1,0 +1,50 @@
+@{
+}
+<div class="hidden bg-green-400 border-green-800 bg-red-400 border-red-800 border-3 border-0 rounded-md px-1 w-full"></div>
+<h1 class="text-gl">Register</h1>
+<form class="ml-0.5 p-2 border-2 rounded-md w-min border-slate-600" id="register">
+    <label for="username">Username</label>
+    <br>
+    <input class="username border-2 border-slate-600 rounded-md" type="text" name="username">
+    <br>
+    @if (ViewData["SmtpEnabled"] != null)
+    {
+        <label for="email">Email</label>
+        <br>
+        <input class="email border-2 border-slate-600 rounded-md" type="text" name="email">
+        <br>
+    }
+    <label for="password">Password</label>
+    <br>
+    <input class="password border-2 border-slate-600 rounded-md" type="password" name="password">
+    <br>
+    <label for="confirm">Confirm Password</label>
+    <br>
+    <input class="confirm border-2 border-slate-600 rounded-md" type="password" name="confirm">
+    <br>
+    <input class="mt-3 px-2 py-1 text-white bg-sky-400 rounded-full hover:bg-sky-300" type="submit" name="Submit">
+</form>
+<br>
+<br>
+<h1 class="text-xl">Change Password</h1>
+<form class="ml-0.5 p-2 border-2 rounded-md w-min border-slate-600" id="change">
+    <label for="username">Username</label>
+    <br>
+    <input class="username border-2 border-slate-600 rounded-md" type="text" name="username">
+    <br>
+    <label for="old">Old Password</label>
+    <br>
+    <input class="old border-2 border-slate-600 rounded-md" type="password" name="old">
+    <br>
+    <label for="password">New Password</label>
+    <br>
+    <input class="password border-2 border-slate-600 rounded-md" type="password" name="password">
+    <br>
+    <label for="confirm">Confirm Password</label>
+    <br>
+    <input class="confirm border-2 border-slate-600 rounded-md" type="password" name="confirm">
+    <br>
+    <input class="mt-3 px-2 py-1 text-white bg-sky-400 rounded-full hover:bg-sky-300" type="submit" name="Submit">
+</form>
+
+<script src="~/js/register.js"></script>

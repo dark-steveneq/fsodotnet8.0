@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FSO.Server.Api
@@ -24,7 +23,7 @@ namespace FSO.Server.Api
             var app = WebHost.CreateDefaultBuilder()
                 .UseUrls(urls)
                 .ConfigureLogging(conf => {
-                    //conf.SetMinimumLevel(LogLevel.None);
+                    conf.SetMinimumLevel(LogLevel.None);
                 })
                 .UseKestrel(options =>
                 {

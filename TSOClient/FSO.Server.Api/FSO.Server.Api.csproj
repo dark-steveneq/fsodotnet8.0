@@ -4,7 +4,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
+  <ItemGroup>
+    <UpToDateCheckBuilt Include="wwwroot/font/font.ttf" Set="Css" />
+    <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+    <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+  </ItemGroup>
+  <Target Name="Tailwind" BeforeTargets="Build">
+    <Exec Command="npm i" />
+    <Exec Command="npm run css:build" />
+  </Target>
   <ItemGroup>
     <None Remove="MailTemplates\MailBan.html" />
     <None Remove="MailTemplates\MailBase.html" />
@@ -38,9 +50,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <EmbeddedResource Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot/js/register.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.4" />
     <PackageReference Include="AWSSDK.Core" Version="3.3.103.48" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.104.36" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />

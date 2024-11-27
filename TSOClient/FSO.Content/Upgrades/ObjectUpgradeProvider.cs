@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace FSO.Content.Upgrades
 {
@@ -31,7 +32,7 @@ namespace FSO.Content.Upgrades
             FileUpgrades.Clear();
             try
             {
-                var json = File.ReadAllText("Content/upgrades.json");
+                var json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Content/upgrades.json"));
                 ActiveFile = JsonConvert.DeserializeObject<UpgradesFile>(json);
                 Editable = true;
             }
@@ -45,7 +46,7 @@ namespace FSO.Content.Upgrades
         public void SaveJSONTuning()
         {
             var result = JsonConvert.SerializeObject(ActiveFile);
-            File.WriteAllText("Content/upgrades.json", result);
+            File.WriteAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Content/upgrades.json"), result);
         }
 
         public void LoadNetTuning(byte[] data)

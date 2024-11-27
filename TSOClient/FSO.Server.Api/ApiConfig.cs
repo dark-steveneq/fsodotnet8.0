@@ -38,5 +38,8 @@ namespace FSO.Server.Api
 
         public string BranchName { get; set; } = "dev";
         public IUpdateUploader UpdateUploader { get; set; }
+
+        public bool SiteEnabled { get; set; } = false;
+        public string SiteName { get; set; } = "FreeSO Server";
     }
 }

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["name"]</title>
+        <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    </head>
+    <body class="bg-slate-200 min-h-screen justify-between">
+        <header class="h-11 flex grow justify-between align-middle leading-tight p-3 bg-white drop-shadow-lg shadow-slate-700">
+            <a class="font-bold" href="/">@ViewData["name"]</a>
+            <div class="flex grow justify-end">
+                <a class="mx-2" href="/adminui">Admin</a>
+                <a class="mx-2" href="/swagger">API Docs</a>
+                <a class="ml-2 px-1.5 py-1 -translate-y-0.5 h-6 text-white bg-sky-400 rounded-full hover:bg-sky-300" href="/register">Register</a>
+            </div>
+        </header>
+        <section class="min-h-max bg-white mx-5 my-3 px-2 py-2">
+            @RenderBody()
+        </section>
+        <footer class="sticky top-[100vh] h-6 justify-center text-center">
+            <span>FreeSO Server Copyleft 2015-2024</span>
+        </footer>
+    </body>
+</html>

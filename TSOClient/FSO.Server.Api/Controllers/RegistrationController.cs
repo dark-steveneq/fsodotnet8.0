@@ -15,7 +15,6 @@ namespace FSO.Server.Api.Controllers
     /// </summary>
 
     [EnableCors]
-    [Route("userapi/registration")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
@@ -28,6 +27,7 @@ namespace FSO.Server.Api.Controllers
         private static Regex USERNAME_VALIDATION = new Regex("^([a-z0-9]){1}([a-z0-9_]){2,23}$");
 
         #region Registration
+        [Route("userapi/registration")]
         [HttpPost]
         public IActionResult CreateUser([FromForm] RegistrationModel user)
         {

@@ -46,6 +46,8 @@ namespace FSO.Server.Servers.UserApi
 
         public AWSConfig AwsConfig { get; set; }
         public GithubConfig GithubConfig { get; set; }
+
+        public string SiteName { get; set; }
     }
 
     public enum ApiServerControllers

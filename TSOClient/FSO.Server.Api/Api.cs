@@ -70,6 +70,12 @@ namespace FSO.Server.Api
             
             Shards = new Shards(DAFactory);
             Shards.AutoUpdate();
+
+            if (appSettings["siteName"]!=null)
+            {
+                Config.SiteEnabled = true;
+                Config.SiteName = appSettings["siteName"];
+            }
         }
 
         public JWTUser RequireAuthentication(HttpRequest request)
