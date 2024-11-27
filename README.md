@@ -26,8 +26,8 @@ Currently only the server works. You can join it using the official FreeSO clien
 - Improve logger
 - Implement SQLite3 database driver
   - Automatic database creation
-- Implement optional register page
-- Make admin avatars start off with 999999999 simoleons
+- ~~Implement optional register page~~
+- ~~Make admin avatars start off with 999999999 simoleons~~
 - Make a Docker container
 - Write documentation
 
