@@ -11,6 +11,11 @@ using FSO.Server.Database.DA.Tasks;
 
 namespace FSO.Server.Servers.Tasks
 {
+    /// <summary>
+    /// Task Server is a service that periodically runs some task
+    /// specified in config.json at the time specified by the Cron
+    /// field.
+    /// </summary>
     public class TaskServer : AbstractAriesServer
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();

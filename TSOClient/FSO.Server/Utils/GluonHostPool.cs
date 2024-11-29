@@ -58,6 +58,9 @@ namespace FSO.Server.Utils
             this.Monitor = new GluonHostPoolMonitor(this);
         }
 
+        /// <summary>
+        /// Start host pool
+        /// </summary>
         public void Start()
         {
             LOG.Info("starting gluon host pool");
@@ -67,6 +70,9 @@ namespace FSO.Server.Utils
             PoolHealthWatcher.Start();
         }
 
+        /// <summary>
+        /// Stop host pool
+        /// </summary>
         public void Stop()
         {
             LOG.Info("stopping gluon host pool");
@@ -98,6 +104,11 @@ namespace FSO.Server.Utils
             }
         }
 
+        /// <summary>
+        /// Get host by call sign
+        /// </summary>
+        /// <param name="callSign"></param>
+        /// <returns>Call sign's host instance</returns>
         public IGluonHost Get(string callSign)
         {
             lock (Pool)
@@ -115,18 +126,32 @@ namespace FSO.Server.Utils
             }
         }
 
+        /// <summary>
+        /// Get hosts by roles
+        /// </summary>
+        /// <param name="role">Host role</param>
+        /// <returns>List of matched host instances</returns>
         public IEnumerable<IGluonHost> GetByRole(DbHostRole role)
         {
             lock (Pool)
                 return Pool.Values.Where(x => x.Role == role).ToList();
         }
 
+        /// <summary>
+        /// Get all hosts in pool
+        /// </summary>
+        /// <returns>List of all host insances</returns>
         public IEnumerable<IGluonHost> GetAll()
         {
             lock (Pool)
                 return Pool.Values.ToList();
         }
 
+        /// <summary>
+        /// Get host by Shard ID
+        /// </summary>
+        /// <param name="shard_id">Host's Shard ID</param>
+        /// <returns>Shard's host instance</returns>
         public IGluonHost GetByShardId(int shard_id)
         {
             lock (Pool)
@@ -182,6 +207,9 @@ namespace FSO.Server.Utils
             return true;
         }
 
+        /// <summary>
+        /// Discover hosts from database
+        /// </summary>
         public void DiscoverHosts()
         {
             var hashInput = "";
@@ -213,6 +241,10 @@ namespace FSO.Server.Utils
             PoolHash = sb.ToString();
         }
 
+        /// <summary>
+        /// Callback for adding hosts from a database entry
+        /// </summary>
+        /// <param name="dbHost">Host database entry</param>
         private void OnHostDiscovered(DbHost dbHost)
         {
             var host = (GluonHost)Pool.Get(dbHost.call_sign);
@@ -220,6 +252,9 @@ namespace FSO.Server.Utils
         }
     }
 
+    /// <summary>
+    /// Class containing all host information
+    /// </summary>
     public class GluonHost : IAriesEventSubscriber, IAriesMessageSubscriber, IGluonHost
     {
         public string CallSign { get; internal set; }
@@ -265,6 +300,10 @@ namespace FSO.Server.Utils
             });
         }
 
+        /// <summary>
+        /// Update host information from database
+        /// </summary>
+        /// <param name="host">Host information from database</param>
         public void Update(DbHost host)
         {
             var hostChanged = false;
@@ -291,6 +330,10 @@ namespace FSO.Server.Utils
             }
         }
 
+        /// <summary>
+        /// Send message to host
+        /// </summary>
+        /// <param name="messages">Objects to send</param>
         public void Write(params object[] messages)
         {
             if (Client.IsConnected){
@@ -321,6 +364,9 @@ namespace FSO.Server.Utils
             });
         }
 
+        /// <summary>
+        /// Connect to host
+        /// </summary>
         public void Connect()
         {
             if(Status == GluonHostStatus.DISCONNECTED && InternalHost != null)
@@ -336,6 +382,11 @@ namespace FSO.Server.Utils
             Status = GluonHostStatus.CONNECTED;
         }
 
+        /// <summary>
+        /// Callback on Gluon message receive
+        /// </summary>
+        /// <param name="client">Client instance</param>
+        /// <param name="message">Sent object</param>
         public void MessageReceived(AriesClient client, object message)
         {
             if (message is IGluonCall)
@@ -372,6 +423,9 @@ namespace FSO.Server.Utils
         {
         }
 
+        /// <summary>
+        /// Disconnect from host
+        /// </summary>
         public void Close()
         {
             Client.Disconnect();

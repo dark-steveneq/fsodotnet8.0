@@ -24,6 +24,9 @@ using System.Threading.Tasks;
 
 namespace FSO.Server
 {
+    /// <summary>
+    /// Tool that actually runs the server itself
+    /// </summary>
     public class ToolRunServer : ITool
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();
@@ -49,6 +52,10 @@ namespace FSO.Server
             this.HostPool = hostPool;
         }
 
+        /// <summary>
+        /// Run server
+        /// </summary>
+        /// <returns>Non-zero error code</returns>
         public int Run()
         {
             LOG.Info("Starting server");

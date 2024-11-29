@@ -18,6 +18,9 @@ using FSO.Server.Protocol.Electron.Packets;
 
 namespace FSO.Server.Servers.Lot
 {
+    /// <summary>
+    /// Lot Server is a service that's behind all the lots.
+    /// </summary>
     public class LotServer : AbstractAriesServer
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();

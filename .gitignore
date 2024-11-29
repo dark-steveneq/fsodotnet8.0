@@ -86,3 +86,6 @@ TSOClient/.vs/config/applicationhost.config
 *.nvuser
 
 TSOClient/Mario
+
+_site
+api

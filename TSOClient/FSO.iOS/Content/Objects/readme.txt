@@ -1,1 +1,0 @@
-﻿Place standalone custom objects in here. Both the server AND all clients must have the same objects!

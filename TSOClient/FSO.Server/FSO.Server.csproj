@@ -59,48 +59,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Admin\gulpfile.js" />
-    <Content Include="Admin\src\app\admin\hosts\hosts.html" />
-    <Content Include="Admin\src\app\admin\hosts\hosts.controller.js" />
-    <Content Include="Admin\src\app\admin\shards\sharda.dialog.controller.js" />
-    <Content Include="Admin\src\app\admin\shards\sharda.dialog.html" />
-    <Content Include="Admin\src\app\admin\shards\shards.controller.js" />
-    <Content Include="Admin\src\app\admin\shards\shards.html" />
-    <Content Include="Admin\src\app\admin\shards\shardx.dialog.controller.js" />
-    <Content Include="Admin\src\app\admin\shards\shardx.dialog.html" />
-    <Content Include="Admin\src\app\admin\tasks\tasks.controller.js" />
-    <Content Include="Admin\src\app\admin\tasks\task.dialog.controller.js" />
-    <Content Include="Admin\src\app\admin\tasks\task.dialog.html" />
-    <Content Include="Admin\src\app\admin\tasks\tasks.html" />
-    <Content Include="Admin\src\app\admin\users\users.controller.js" />
-    <Content Include="Admin\src\app\admin\users\users.dialog.controller.js" />
-    <Content Include="Admin\src\app\admin\users\users.dialog.html" />
-    <Content Include="Admin\src\app\admin\users\users.html" />
-    <Content Include="Admin\src\app\components\navbar\navbar.controller.js" />
-    <Content Include="Admin\src\app\components\navbar\navbar.html" />
-    <Content Include="Admin\src\app\directives\passwordVerify.js" />
-    <Content Include="Admin\src\app\index.js" />
-    <Content Include="Admin\src\app\login\login.controller.js" />
-    <Content Include="Admin\src\app\login\login.html" />
-    <Content Include="Admin\src\app\admin\main.controller.js" />
-    <Content Include="Admin\src\app\admin\main.html" />
-    <Content Include="Admin\src\app\factories\api.js" />
-    <Content Include="Admin\src\app\services\auth.js" />
-    <Content Include="Admin\src\app\services\token.js" />
-    <Content Include="Admin\src\assets\images\angular-material.png" />
-    <Content Include="Admin\src\assets\images\angular.png" />
-    <Content Include="Admin\src\assets\images\browsersync.png" />
-    <Content Include="Admin\src\assets\images\gulp.png" />
-    <Content Include="Admin\src\assets\images\jasmine.png" />
-    <Content Include="Admin\src\assets\images\karma.png" />
-    <Content Include="Admin\src\assets\images\node-sass.png" />
-    <Content Include="Admin\src\assets\images\protractor.png" />
-    <Content Include="Admin\src\assets\images\yeoman.png" />
-    <Content Include="Admin\src\favicon.ico" />
-    <Content Include="Admin\src\index.html" />
-    <Content Include="FreeSO.ico" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Owin.Hosting" Version="4.2.2" />

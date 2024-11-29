@@ -7,6 +7,9 @@ using FSO.Server.Protocol.Utils;
 
 namespace FSO.Server.Servers.Shared.Handlers
 {
+    /// <summary>
+    /// Handler for Gluon authentication
+    /// </summary>
     public class GluonAuthenticationHandler
     {
         private IGluonHostPool HostPool;

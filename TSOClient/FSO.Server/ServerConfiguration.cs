@@ -14,14 +14,35 @@ using System.Reflection;
 
 namespace FSO.Server
 {
+    /// <summary>
+    /// Server Configuration Parsed from config.json
+    /// </summary>
     public class ServerConfiguration
     {
+        /// <summary>
+        /// Location of The Sims Online Assets
+        /// </summary>
         public string GameLocation;
+        /// <summary>
+        /// Location of User-Generated Content (Lots, Objects)
+        /// </summary>
         public string SimNFS;
+        /// <summary>
+        /// Version branch
+        /// </summary>
         public string UpdateBranch;
 
+        /// <summary>
+        /// Database configuration
+        /// </summary>
         public DatabaseConfiguration Database;
+        /// <summary>
+        /// Service configuration
+        /// </summary>
         public ServerConfigurationservices Services;
+        /// <summary>
+        /// Discord RPC configuration
+        /// </summary>
         public DiscordConfiguration Discord;
 
         /// <summary>
@@ -46,7 +67,9 @@ namespace FSO.Server
     }
 
     
-
+    /// <summary>
+    /// Ninject module which parses config.json
+    /// </summary>
     public class ServerConfigurationModule : NinjectModule
     {
         private ServerConfiguration GetConfiguration(IContext context)

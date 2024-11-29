@@ -1,9 +1,5 @@
 ﻿using System;
 using FSO.Server.Common;
-using FSO.Server.Api;
-using Microsoft.Owin.Hosting;
-using System.Web.Http;
-using Owin;
 using System.Collections.Specialized;
 using Ninject;
 using FSO.Server.Domain;
@@ -65,7 +61,7 @@ namespace FSO.Server.Servers.UserApi
             };
             
 
-            var api = new FSO.Server.Api.Api();
+            var api = new Server.Api.Api();
             api.Init(settings);
             //if (userApiConfig.AwsConfig != null) api.UpdateUploader = new AWSUpdateUploader(userApiConfig.AwsConfig);
             //if (userApiConfig.GithubConfig != null) api.UpdateUploaderClient = new GithubUpdateUploader(userApiConfig.GithubConfig);
@@ -73,7 +69,7 @@ namespace FSO.Server.Servers.UserApi
             api.Github = userApiConfig.GithubConfig;
             api.HostPool = GetGluonHostPool();
             
-            APIThread = FSO.Server.Api.Program.StartUserApi(Config.Services.UserApi.Bindings.ToArray());
+            APIThread = Server.Api.Program.StartUserApi(Config.Services.UserApi.Bindings.ToArray());
         }
 
         public IGluonHostPool GetGluonHostPool()

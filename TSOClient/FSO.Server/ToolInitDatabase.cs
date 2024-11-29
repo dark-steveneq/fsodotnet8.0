@@ -22,6 +22,10 @@ namespace FSO.Server
             this.DAFactory = factory;
         }
 
+        /// <summary>
+        /// Run database initialization
+        /// </summary>
+        /// <returns>Non-zero error code</returns>
         public int Run()
         {
             Console.WriteLine("Starting database init");

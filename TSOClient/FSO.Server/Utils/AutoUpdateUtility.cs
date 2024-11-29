@@ -9,8 +9,17 @@ using System.Linq;
 
 namespace FSO.Server.Utils
 {
+    /// <summary>
+    /// Responsible for server autoupdates.
+    /// </summary>
     public static class AutoUpdateUtility
     {
+        /// <summary>
+        /// Checks if update queueing is required
+        /// </summary>
+        /// <param name="kernel">Ninject kernel</param>
+        /// <param name="branch">Version branch</param>
+        /// <returns></returns>
         public static bool QueueUpdateIfRequired(IKernel kernel, string branch)
         {
             var version = ServerVersion.Get();
@@ -82,6 +91,13 @@ namespace FSO.Server.Utils
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="updates">List of updates</param>
+        /// <param name="current">Current update index</param>
+        /// <param name="target">Target update index</param>
+        /// <returns></returns>
         public static List<DbUpdate> FindPath(List<DbUpdate> updates, int? current, int? target)
         {
             var to = updates.FirstOrDefault(x => x.update_id == target);

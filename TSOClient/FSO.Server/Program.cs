@@ -1,16 +1,19 @@
-﻿using CommandLine;
-using FSO.Server.Database;
+﻿using FSO.Server.Database;
 using FSO.Server.DataService;
 using FSO.Server.Utils;
 using Ninject;
 using Ninject.Parameters;
 using System;
-using System.Reflection;
 
 namespace FSO.Server
 {
     public class Program
     {
+        /// <summary>
+        /// Entrypoint of the server, decides which tool to run
+        /// </summary>
+        /// <param name="args">Command-line arguments</param>
+        /// <returns></returns>
         public static int Main(string[] args)
         {
             Type toolType = null;

@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace FSO.Server
 {
+    /// <summary>
+    /// Tool for importing neighborhoods from JSON
+    /// </summary>
     public class ToolImportNhood : ITool
     {
         private IDAFactory DAFactory;
@@ -21,7 +24,10 @@ namespace FSO.Server
             this.DAFactory = factory;
         }
 
-
+        /// <summary>
+        /// Run neighborhood import
+        /// </summary>
+        /// <returns>Non-zero error code</returns>
         public int Run()
         {
             if (Options.JSON == null)
@@ -162,6 +168,11 @@ namespace FSO.Server
             return 0;
         }
 
+        /// <summary>
+        /// Convert CityNeighbourhood to DbNeighborhood
+        /// </summary>
+        /// <param name="nhood">Original CityNeighborhood</param>
+        /// <returns>Converted DbNeighborhood</returns>
         private DbNeighborhood ImportToReal(CityNeighbourhood nhood)
         {
             return new DbNeighborhood()

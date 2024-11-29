@@ -1,5 +1,8 @@
 ﻿namespace FSO.Server.Discord
 {
+    /// <summary>
+    /// Unused
+    /// </summary>
     public class DiscordConfiguration
     {
         public string ApiKey;

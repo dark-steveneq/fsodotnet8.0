@@ -1,1 +1,0 @@
-﻿Place standalone custom semi-globals in here. Both the server AND all clients must have the same objects!

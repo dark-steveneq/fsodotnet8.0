@@ -13,6 +13,9 @@ using System.Linq;
 
 namespace FSO.Server
 {
+    /// <summary>
+    /// Tool for restoring lots from a folder by adding references to them in the database
+    /// </summary>
     public class ToolRestoreLots : ITool
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();
@@ -89,6 +92,11 @@ namespace FSO.Server
             }
         }
 
+
+        /// <summary>
+        /// Run lot restoration
+        /// </summary>
+        /// <returns>Non-zero error code</returns>
         public int Run()
         {
             if (Options.RestoreFolder == null)

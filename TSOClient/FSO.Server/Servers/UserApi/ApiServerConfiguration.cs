@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace FSO.Server.Servers.UserApi
 {
+    /// <summary>
+    /// Class containing UserAPI configuration from config.json
+    /// </summary>
     public class ApiServerConfiguration
     {
         /// <summary>

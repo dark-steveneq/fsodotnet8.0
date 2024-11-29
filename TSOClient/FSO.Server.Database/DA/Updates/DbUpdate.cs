@@ -2,6 +2,9 @@
 
 namespace FSO.Server.Database.DA.Updates
 {
+    /// <summary>
+    /// Class containing update information
+    /// </summary>
     public class DbUpdate
     {
         public int update_id { get; set; }

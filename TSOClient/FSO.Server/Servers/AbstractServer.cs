@@ -3,6 +3,9 @@ using FSO.Server.Common;
 
 namespace FSO.Server.Servers
 {
+    /// <summary>
+    /// Abstract class for managing services
+    /// </summary>
     public abstract class AbstractServer
     {
         public abstract void Start();

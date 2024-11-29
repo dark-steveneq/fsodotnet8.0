@@ -1,0 +1,7 @@
+items:
+- name: Server
+  items:
+  - name: Starting a Server
+    href: server/Starting a Server.md
+  - name: Creating a Neighborhood
+    href: server/Creating a Neighborhood.md
