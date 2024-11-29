@@ -27,7 +27,7 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "docs/images/**"
         ]
       }
     ],
@@ -39,6 +39,9 @@
     "globalMetadata": {
       "_appName": "FreeSO",
       "_appTitle": "FreeSO",
+      "_appLogoPath": "docs/images/logo.ico",
+      "_appFaviconPath": "docs/images/favicon.ico",
+      "_appFooter": "FreeSO Copyleft 2015-2024",
       "_enableSearch": true,
       "pdf": false
     }
