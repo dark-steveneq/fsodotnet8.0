@@ -1385,7 +1385,8 @@ namespace FSO.SimAntics
             var item = catalog.GetItemByGUID(GUID);
 
             int salePrice = 0;
-            if (item != null) salePrice = (int)item.Value.Price;
+            if (item != null)
+                salePrice = (int)item.Value.Price;
             //salePrice = Math.Max(0, Math.Min(salePrice, (salePrice * (100 - objDefinition.OBJ.InitialDepreciation)) / 100));
 
             group.InitialPrice = (int)salePrice;
@@ -1472,8 +1473,10 @@ namespace FSO.SimAntics
                     group.AddObject(vmObject);
 
                     vmObject.GhostImage = ghostImage;
-                    if (!ghostImage) VM.AddEntity(vmObject);
-                    if (UseWorld && Blueprint != null) Blueprint.AddObject(worldObject);
+                    if (!ghostImage)
+                        VM.AddEntity(vmObject);
+                    if (UseWorld && Blueprint != null)
+                        Blueprint.AddObject(worldObject);
 
                     vmObject.MainParam = MainParam;
                     vmObject.MainStackOBJ = MainStackOBJ;

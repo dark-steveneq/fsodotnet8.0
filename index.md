@@ -8,7 +8,7 @@ Port of the original .NET Framework 4.5 codebase to .NET 8.0
 This is not related in any way with [Riperiperi](https://github.com/riperiperi) or the FreeSO development team. This is a passion project that aims to make the engine easier to work with for anyone who dares to do anything with it.
 
 # State
-Currently only the server works. You can join it using the official FreeSO client. For some reason Alphavile causes the client to freeze when loading. Because of that, the default city is now Charvatia.
+Server seems to work fine. The client on the other hand is unstable as shit (can't load TSO lots, ceiling lamp turning into a desync-based console spam and simantics exception generator, broken PNG rendering) but it's still work-in-progress.
 
 # Development on Linux
 This project seems perfectly compilable (outside of compilation issues) on Linux using VSCode and `dotnet` CLI. If you're using an open source build of VSCode (like VSCodium) you should concider using the proprietary build since debugging is disabled on those because of the debugger's license

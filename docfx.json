@@ -6,7 +6,8 @@
         {
           "src": "TSOClient/",
           "files": [
-            "FSO.Server/FSO.Server.csproj"
+            "FSO.Server/FSO.Server.csproj",
+            "FSO.Client/FSO.Client.csproj"
           ]
         }
       ],

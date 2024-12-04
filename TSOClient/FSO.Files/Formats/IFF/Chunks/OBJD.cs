@@ -526,17 +526,28 @@ namespace FSO.Files.Formats.IFF.Chunks
                         this.TypeAttrGUID = io.ReadUInt32();
                         try
                         {
-                            this.FunctionSubsort = io.ReadUInt16();
-                            this.DTSubsort = io.ReadUInt16();
-                            this.KeepBuying = io.ReadUInt16();
-                            this.VacationSubsort = io.ReadUInt16();
-                            this.ResetLotAction = io.ReadUInt16();
-                            this.CommunitySubsort = io.ReadUInt16();
-                            this.DreamFlags = io.ReadUInt16();
-                            this.RenderFlags = io.ReadUInt16();
-                            this.VitaboyFlags = io.ReadUInt16();
-                            this.STSubsort = io.ReadUInt16();
-                            this.MTSubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.FunctionSubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.DTSubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.KeepBuying = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.VacationSubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.ResetLotAction = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.CommunitySubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.DreamFlags = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.RenderFlags = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.VitaboyFlags = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.STSubsort = io.ReadUInt16();
+                            if (io.HasMore)
+                                this.MTSubsort = io.ReadUInt16();
                         } catch (Exception)
                         {
                             //past this point if these fields are here is really a mystery

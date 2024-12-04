@@ -31,7 +31,7 @@ namespace FSO.Common.Rendering.Emoji
             
             EmojiTex = new RenderTarget2D(gd, Width * DefaultRes, Width * DefaultRes, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
             ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
         }
 
         public void ExpandIfNeeded()

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using GOLD;
 
 namespace FSO.Client.UI.Framework.Parser
 {
@@ -10,35 +8,27 @@ namespace FSO.Client.UI.Framework.Parser
         public UINode SharedProperties { get; set; }
         public List<UINode> Children { get; set; }
 
-
-		public static UIGroup FromReduction(Reduction r, Dictionary<Token, object> dataMap)
+        public UIGroup()
         {
-            UIGroup result = new UIGroup();
-			// <Object> ::= BeginLiteral <Content> EndLiteral
-            var content = (List<UINode>)dataMap[r[1]];
-            var sharedProps = content.FirstOrDefault(x => x.Name == "SetSharedProperties");
-
-            result.SharedProperties = sharedProps;
-            result.Children = content.Where(x => x != sharedProps).ToList();
-
-            return result;
+            Children = [];
         }
     }
 
     public class UISharedProperties
     {
-        public static UISharedProperties FromReduction(Reduction r)
-        {
-            UISharedProperties result = new UISharedProperties();
-            return result;
-        }
     }
 
+    /// <summary>
+    /// Class representing parsed UI elements
+    /// </summary>
     public class UINode
     {
         public string Name { get; set; }
         public string ID { get; set; }
 
+        /// <summary>
+        /// Dictionary of attributes
+        /// </summary>
         public Dictionary<string, string> Attributes { get; internal set; }
 
         public UINode()
@@ -46,6 +36,11 @@ namespace FSO.Client.UI.Framework.Parser
             Attributes = new Dictionary<string, string>();
         }
 
+        /// <summary>
+        /// Get Vector2 from attribute
+        /// </summary>
+        /// <param name="name">Attribute name</param>
+        /// <returns>Parsed vector, zeroed if not found</returns>
         public Vector2 GetVector2(string name)
         {
             var att = Attributes[name];
@@ -60,6 +55,11 @@ namespace FSO.Client.UI.Framework.Parser
             return Vector2.Zero;
         }
 
+        /// <summary>
+        /// Get Color from attribute
+        /// </summary>
+        /// <param name="name">Attribute name</param>
+        /// <returns>Parsed color, black if not found</returns>
         public Color GetColor(string name)
         {
             var att = Attributes[name];
@@ -67,7 +67,7 @@ namespace FSO.Client.UI.Framework.Parser
             {
                 return UIScript.ParseRGB(att);
             }
-            return default(Color);
+            return Color.Black;
         }
 
         public Point GetPoint(string name)

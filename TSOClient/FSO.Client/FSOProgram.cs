@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace FSO.Client
 {
-    public class FSOProgram : IFSOProgram
+    public class FSOProgram
     {
         public bool UseDX { get; set; }
 

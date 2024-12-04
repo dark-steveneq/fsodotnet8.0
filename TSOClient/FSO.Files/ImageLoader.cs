@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Microsoft.Xna.Framework;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace FSO.Files
 {
@@ -34,6 +36,41 @@ namespace FSO.Files
 
         public static Texture2D WinFromStreamP(GraphicsDevice gd, Stream str, int premult)
         {
+            //test for targa
+            str.Seek(-18, SeekOrigin.End);
+            byte[] sig = new byte[16];
+            str.Read(sig, 0, 16);
+            str.Seek(0, SeekOrigin.Begin);
+            if (Encoding.Default.GetString(sig) == "TRUEVISION-XFILE")
+            {
+                try
+                {
+                    var tga = new TargaImagePCL.TargaImage(str);
+                    var tex = new Texture2D(gd, tga.Image.Width, tga.Image.Height);
+                    tex.SetData(tga.Image.ToBGRA(true));
+                    return tex;
+                }
+                catch (Exception)
+                {
+                    return null; //bad tga
+                }
+            }
+            else
+            {
+                Image<Rgba32> image = Image.Load(str).CloneAs<Rgba32>();
+                byte[] pixelArray = new byte[image.Width * image.Height * 4];
+                image.CopyPixelDataTo(pixelArray);
+                image.Dispose();
+                var tex = new Texture2D(gd, image.Width, image.Height);
+                tex.SetData(pixelArray);
+                ManualTextureMaskSingleThreaded(ref tex, MASK_COLORS.ToArray());
+                return tex;
+            }
+        }
+
+        /*
+        public static Texture2D WinFromStreamP(GraphicsDevice gd, Stream str, int premult)
+        {
             //if (!UseSoftLoad)
             //{
             //attempt monogame load of image
@@ -45,19 +82,12 @@ namespace FSO.Files
             {
                 try
                 {
-                    //it's a bitmap. 
-                    Texture2D tex;
-                    if (ImageLoaderHelpers.BitmapFunction != null)
-                    {
-                        var bmp = ImageLoaderHelpers.BitmapFunction(str);
-                        if (bmp == null) return null;
-                        tex = new Texture2D(gd, bmp.Item2, bmp.Item3);
-                        tex.SetData(bmp.Item1);
-                    }
-                    else
-                    {
-                        tex = Texture2D.FromStream(gd, str);
-                    }
+                    Image<Rgba32> image = (Image<Rgba32>)Image.Load(str);
+                    byte[] pixelArray = new byte[image.Width * image.Height * 4];
+                    image.CopyPixelDataTo(pixelArray);
+                    image.Dispose();
+                    var tex = new Texture2D(gd, image.Width, image.Height);
+                    tex.SetData(pixelArray);
                     ManualTextureMaskSingleThreaded(ref tex, MASK_COLORS.ToArray());
                     return tex;
                 }
@@ -93,7 +123,7 @@ namespace FSO.Files
                     try
                     {
                         Texture2D tex;
-                        Color[] buffer = null;
+                        Microsoft.Xna.Framework.Color[] buffer = null;
                         if (ImageLoaderHelpers.BitmapFunction != null)
                         {
                             var bmp = ImageLoaderHelpers.BitmapFunction(str);
@@ -113,14 +143,14 @@ namespace FSO.Files
                         {
                             if (buffer == null)
                             {
-                                buffer = new Color[tex.Width * tex.Height];
-                                tex.GetData<Color>(buffer);
+                                buffer = new Microsoft.Xna.Framework.Color[tex.Width * tex.Height];
+                                tex.GetData<Microsoft.Xna.Framework.Color>(buffer);
                             }
 
                             for (int i = 0; i < buffer.Length; i++)
                             {
                                 var a = buffer[i].A;
-                                buffer[i] = new Color((byte)((buffer[i].R * a) / 255), (byte)((buffer[i].G * a) / 255), (byte)((buffer[i].B * a) / 255), a);
+                                buffer[i] = new Microsoft.Xna.Framework.Color((byte)((buffer[i].R * a) / 255), (byte)((buffer[i].G * a) / 255), (byte)((buffer[i].B * a) / 255), a);
                             }
                             tex.SetData(buffer);
                         }
@@ -128,14 +158,14 @@ namespace FSO.Files
                         {
                             if (buffer == null)
                             {
-                                buffer = new Color[tex.Width * tex.Height];
-                                tex.GetData<Color>(buffer);
+                                buffer = new Microsoft.Xna.Framework.Color[tex.Width * tex.Height];
+                                tex.GetData<Microsoft.Xna.Framework.Color>(buffer);
                             }
 
                             for (int i = 0; i < buffer.Length; i++)
                             {
                                 var a = buffer[i].A / 255f;
-                                buffer[i] = new Color((byte)(buffer[i].R / a), (byte)(buffer[i].G / a), (byte)(buffer[i].B / a), buffer[i].A);
+                                buffer[i] = new Microsoft.Xna.Framework.Color((byte)(buffer[i].R / a), (byte)(buffer[i].G / a), (byte)(buffer[i].B / a), buffer[i].A);
                             }
                             tex.SetData(buffer);
                         }
@@ -148,7 +178,9 @@ namespace FSO.Files
                     }
                 }
             }
+            
         }
+        */
 
         public static void ManualTextureMaskSingleThreaded(ref Texture2D Texture, uint[] ColorsFrom)
         {

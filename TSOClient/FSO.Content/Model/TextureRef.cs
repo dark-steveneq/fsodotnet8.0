@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using FSO.Common;
 using Microsoft.Xna.Framework;
+using System.Threading.Tasks;
 
 namespace FSO.Content.Model
 {
@@ -141,15 +142,48 @@ namespace FSO.Content.Model
                         if (Thread.CurrentThread == FSOEnvironment.GameThread)
                         {
                             _Instance = Process(device, stream);
+                            Console.WriteLine("Processed instance on directly");
                         }
                         else
                         {
                             //We need to get into the game thread to do this work
-                            _Instance = GameThread.NextUpdate<Texture2D>(x =>
+                            Task<Texture2D> task = GameThread.NextUpdate<Texture2D>(x =>
                             {
                                 return Process(device, stream);
-                            }).Result;
+                            });
+                            Console.WriteLine("Awaiting task completion");
+                            task.Wait();
+                            Console.WriteLine("Processed instance after waiting");
+                            _Instance = task.Result;
                         }
+
+                        if (_Instance == null)
+                        {
+                            stream.Seek(0, SeekOrigin.Begin);
+                            if (Thread.CurrentThread == FSOEnvironment.GameThread)
+                            {
+                                _Instance = Process(device, stream);
+                                Console.WriteLine("Processed 2nd instance on directly");
+                            }
+                            else
+                            {
+                                //We need to get into the game thread to do this work
+                                Task<Texture2D> task = GameThread.NextUpdate<Texture2D>(x =>
+                                {
+                                    return Process(device, stream);
+                                });
+                                Console.WriteLine("Awaiting 2nd task completion");
+                                task.Wait();
+                                Console.WriteLine("Processed 2nd instance after waiting");
+                                _Instance = task.Result;
+                            }
+                        }
+                        
+                        if (_Instance.IsDisposed)
+                            Console.WriteLine("I GOT DISPOSED! FUCK!!!!");
+
+                        if (_Instance == null)
+                            throw new Exception("Null Instance");
                     }
                     if (!FSOEnvironment.DirectX) GC.SuppressFinalize(_Instance); //do not run the default finalizer on the texture.
 
@@ -162,9 +196,7 @@ namespace FSO.Content.Model
                             _Instance.Tag = hidef;
                         }
                     } else
-                    {
-                    _Instance.Tag = this; //form a destiny bond with the texture
-                    }
+                        _Instance.Tag = this; //form a destiny bond with the texture
                 }
                 return _Instance;
             }

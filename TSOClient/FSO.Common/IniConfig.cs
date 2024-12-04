@@ -22,7 +22,12 @@ namespace FSO.Common
                 try
                 {
                     if (prop.PropertyType != typeof(string))
-                        prop.SetValue(this, Convert.ChangeType(value, prop.PropertyType, CultureInfo.InvariantCulture));
+                    {
+                        if (prop.PropertyType == typeof(int) && (value == "true" || value == "false"))
+                            prop.SetValue(this, value == "true" ? 1 : 0);
+                        else
+                            prop.SetValue(this, Convert.ChangeType(value, prop.PropertyType, CultureInfo.InvariantCulture));
+                    }
                     else prop.SetValue(this, value);
                 }
                 catch (Exception) { }

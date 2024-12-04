@@ -78,6 +78,8 @@ namespace FSO.Content
                 }
             }
             var result = base.ResolveById(id);
+            if (result == null)
+                result = base.ResolveById(id | 1);
             /*
             if (result.ReplacePath == null)
             {

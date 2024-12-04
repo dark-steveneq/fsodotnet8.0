@@ -454,7 +454,8 @@ namespace FSO.SimAntics
             entity.ObjectID = ObjectId;
             ObjectsById.Add(entity.ObjectID, entity);
             AddToObjList(this.Entities, entity);
-            if (!entity.GhostImage) Context.ObjectQueries.NewObject(entity);
+            if (!entity.GhostImage)
+                Context.ObjectQueries.NewObject(entity);
             ObjectId = NextObjID();
         }
 

@@ -466,6 +466,7 @@ namespace FSO.Client.UI
                         if (!ext.HasUpdated) ext.Update(null);
                         ext.PreDraw(SpriteBatch);
                         ext.Draw(SpriteBatch);
+                        Console.WriteLine("{0}: {1}", ext.GetType(), ext.ID);
                     }
                 }
             }

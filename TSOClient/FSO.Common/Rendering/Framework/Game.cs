@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace FSO.Common.Rendering.Framework
 {
@@ -10,6 +11,12 @@ namespace FSO.Common.Rendering.Framework
 		public Game() : base()
         {
             Graphics = new GraphicsDeviceManager(this);
+        }
+
+        protected override void OnExiting(object sender, ExitingEventArgs args)
+        {
+            base.OnExiting(sender, args);
+            Environment.Exit(0);
         }
 
         protected override void Initialize(){

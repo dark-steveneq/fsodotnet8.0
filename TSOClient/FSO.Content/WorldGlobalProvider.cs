@@ -194,13 +194,15 @@ namespace FSO.Content
                 }
                 else
                 { 
-          var iff = new IffFile(Path.Combine(ContentManager.BasePath, "objectdata/globals/" + filename + ".iff"));
+                    var iff = new IffFile(Path.Combine(ContentManager.BasePath, "objectdata/globals/" + filename + ".iff"));
                     iff.InitHash();
                     OTFFile otf = null;
                     try
                     {
                         var rewrite = PIFFRegistry.GetOTFRewrite(filename + ".otf");
-                        otf = new OTFFile(rewrite ?? Path.Combine(ContentManager.BasePath, ("objectdata/globals/" + filename + ".otf")));
+                        var path = rewrite ?? Path.Combine(ContentManager.BasePath, "objectdata", "globals", filename + ".otf");
+                        if (File.Exists(path))
+                            otf = new OTFFile();
                     }
                     catch (IOException)
                     {
@@ -241,6 +243,8 @@ namespace FSO.Content
 
         public GameGlobalResource(IffFile iff, OTFFile tuning)
         {
+            if (tuning == null)
+                return;
             this.Iff = iff;
             this.Tuning = tuning;
             Recache();
@@ -249,7 +253,7 @@ namespace FSO.Content
         public override void Recache()
         {
             base.Recache();
-            if (Tuning != null)
+            if (Tuning.Tables != null)
             {
                 foreach (var table in Tuning.Tables)
                 {
@@ -286,7 +290,9 @@ namespace FSO.Content
 
         public override List<T> List<T>()
         {
-            return this.Iff.List<T>();
+            if (Iff != null)
+                return this.Iff.List<T>();
+            return [];
         }
     }
 }

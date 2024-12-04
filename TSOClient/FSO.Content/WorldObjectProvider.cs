@@ -279,6 +279,8 @@ namespace FSO.Content
 
         public object GetRoutine(ushort id)
         {
+            if (RoutineCache == null)
+                return null;
             object result;
             if (RoutineCache.TryGetValue(id, out result))
                 return result;

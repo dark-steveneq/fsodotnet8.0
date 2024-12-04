@@ -427,6 +427,8 @@ namespace FSO.Client.UI.Framework.Parser
         {
             var assetID = node["assetID"];
             
+            if (Textures.ContainsKey(node.ID.ToLowerInvariant()))
+                return;
             try
             {
                 var assetNum = ulong.Parse(assetID.Substring(2), NumberStyles.HexNumber);
@@ -482,7 +484,6 @@ namespace FSO.Client.UI.Framework.Parser
         public void Parse(string path)
         {
             var parser = new UIScriptParser();
-            parser.Setup();
             using (var reader = File.OpenText(path))
             {
                 var didParse = parser.Parse(reader);
@@ -546,7 +547,7 @@ namespace FSO.Client.UI.Framework.Parser
                 }
                 else
                 {
-                    if (child.Name != null && FUNCTIONS.Contains(child.Name))
+                    if (child.Name != null && !NamedObjects.ContainsKey(child.ID) && FUNCTIONS.Contains(child.Name))
                     {
                         var m = type.GetMethod(child.Name, funcSig);
                         m.Invoke(this, new object[] { child });
@@ -660,19 +661,6 @@ namespace FSO.Client.UI.Framework.Parser
         }
     }
 
-
-    public enum UIAttributeType
-    {
-        Point,
-        Texture,
-        Vector2,
-        Unknown,
-        StringTable,
-        String,
-        Integer,
-        Boolean,
-        Color
-    }
 
     public class UIAttField
     {

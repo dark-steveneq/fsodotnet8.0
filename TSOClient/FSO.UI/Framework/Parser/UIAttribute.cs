@@ -2,8 +2,8 @@
 
 namespace FSO.Client.UI.Framework.Parser
 {
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class UIAttribute : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class UIAttribute : Attribute
     {
         public string Name { get; set; }
         public Type Parser { get; set; }
@@ -19,6 +19,19 @@ namespace FSO.Client.UI.Framework.Parser
             this.Name = name;
             this.Parser = parser;
         }
+    }
+
+    public enum UIAttributeType
+    {
+        Point,
+        Texture,
+        Vector2,
+        Unknown,
+        StringTable,
+        String,
+        Integer,
+        Boolean,
+        Color
     }
 
     public interface UIAttributeParser

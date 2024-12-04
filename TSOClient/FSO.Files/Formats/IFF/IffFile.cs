@@ -156,7 +156,9 @@ namespace FSO.Files.Formats.IFF
             using (var io = IoBuffer.FromStream(stream, ByteOrder.BIG_ENDIAN))
             {
                 var identifier = io.ReadCString(60, false).Replace("\0", "");
-                if (identifier != "IFF FILE 2.5:TYPE FOLLOWED BY SIZE JAMIE DOORNBOS & MAXIS 1")
+                if (identifier.Length == 0)
+                    throw new Exception("Couldn't read iff header");
+                else if (identifier != "IFF FILE 2.5:TYPE FOLLOWED BY SIZE JAMIE DOORNBOS & MAXIS 1")
                 {
                     if (identifier != "IFF FILE 2.0:TYPE FOLLOWED BY SIZE JAMIE DOORNBOS & MAXIS 1") //house11.iff, seems to read fine
                         throw new Exception("Invalid iff file!");

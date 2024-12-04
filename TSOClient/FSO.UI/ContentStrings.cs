@@ -67,12 +67,19 @@ namespace FSO.Client.GameContent
         public string GetString(string dir, string table, string id)
         {
             string value = "***MISSING***";
-            if (StringTable.ContainsKey(dir))
+            try
             {
-                if (StringTable[dir].ContainsKey(table))
+                if (StringTable.ContainsKey(dir))
                 {
-                    StringTable[dir][table].TryGetValue(id, out value);
+                    if (StringTable[dir].ContainsKey(table))
+                    {
+                        StringTable[dir][table].TryGetValue(id, out value);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return value;

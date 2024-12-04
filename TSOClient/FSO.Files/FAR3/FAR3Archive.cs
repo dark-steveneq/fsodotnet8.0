@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace FSO.Files.FAR3
 {
@@ -23,21 +24,21 @@ namespace FSO.Files.FAR3
         /// Creates a new FAR3Archive instance from a path.
         /// </summary>
         /// <param name="Path">The path to the archive.</param>
-        public FAR3Archive(string Path)
+        public FAR3Archive(string path)
         {
-            m_ArchivePath = Path;
+            m_ArchivePath = path;
 
-            if (isReadingSomething == false)
+            if (!isReadingSomething)
             {
                 isReadingSomething = true;
 
                 try
                 {
-                    m_Reader = new BinaryReader(File.Open(Path, FileMode.Open, FileAccess.Read, FileShare.Read));
+                    m_Reader = new BinaryReader(File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read));
                 }
                 catch (Exception ex)
                 {
-                    throw new FAR3Exception("Could not open the specified archive (" + Path + ") - " + ex);
+                    throw new FAR3Exception("Could not open the specified archive (" + path + ") - " + ex);
                 }
 
                 string Header = Encoding.ASCII.GetString(m_Reader.ReadBytes(8));
@@ -76,6 +77,10 @@ namespace FSO.Files.FAR3
                     if (!m_Entries.ContainsKey(Entry.Filename))
                         m_Entries.Add(Entry.Filename, Entry);
                     m_EntriesList.Add(Entry);
+
+                    File.AppendAllLines("/home/dark/ids.txt", [
+                        string.Format("file:{0} name:{1} id:{2} tid:{3} lid:{4}", path.Substring(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location).Length), Entry.Filename, Entry.FileID, Entry.TypeID, ((ulong)Entry.FileID << 32) | Entry.TypeID)
+                    ]);
 
                     m_EntryByID.Add(Entry.FileID, Entry); //isn't this a bad idea? i have a feeling this is a bad idea...
                 }

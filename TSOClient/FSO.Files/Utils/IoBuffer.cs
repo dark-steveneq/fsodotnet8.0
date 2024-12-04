@@ -279,7 +279,7 @@ namespace FSO.Files.Utils
         /// </summary>
         /// <returns>A float.</returns>
         [System.Security.SecuritySafeCritical]  // auto-generated
-        public virtual unsafe float ReadFloat()
+        public virtual float ReadFloat()
         {
             return Reader.ReadSingle();
         }

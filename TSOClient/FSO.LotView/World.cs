@@ -902,8 +902,15 @@ namespace FSO.LotView
         /// <returns>Object's ID if the object was found at the given position.</returns>
         public Texture2D GetObjectThumb(ObjectComponent[] objects, Vector3[] positions, GraphicsDevice gd)
         {
-            State._2D.Begin(this.State.Camera2D);
-            return Platform.GetObjectThumb(objects, positions, gd, State);
+            try
+            {
+                State._2D.Begin(this.State.Camera2D);
+                return Platform.GetObjectThumb(objects, positions, gd, State);
+            }
+            catch
+            {
+                return new Texture2D(gd, 1, 1);
+            }
         }
 
         public Texture2D GetLotThumb(GraphicsDevice gd, Action<Texture2D> rooflessCallback)

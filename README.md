@@ -4,12 +4,12 @@ Port of the original .NET Framework 4.5 codebase to .NET 8.0
 This is not related in any way with [Riperiperi](https://github.com/riperiperi) or the FreeSO development team. This is a passion project that aims to make the engine easier to work with for anyone who dares to do anything with it.
 
 # State
-Currently only the server works. You can join it using the official FreeSO client. For some reason Alphavile causes the client to freeze when loading. Because of that, the default city is now Charvatia.
+Server seems to work fine. The client on the other hand is unstable as shit (can't load TSO lots, ceiling lamp turning into a desync-based console spam and simantics exception generator, broken PNG rendering) but it's still work-in-progress.
 
 # TODO
 ## Client
-- Possibly rewrite UI script parser so that it doesn't use any abandoned libraries
-- Make sure runs on Linux
+- ~~Possibly rewrite UI script parser so that it doesn't use any abandoned libraries~~
+- ~~Make sure runs on Linux~~
 
 ## Server
 - ~~Fix crashing (sometimes?) when buying a lot~~ (It's caused by missconfiguration)
@@ -30,6 +30,9 @@ Currently only the server works. You can join it using the official FreeSO clien
 - ~~Make admin avatars start off with 999999999 simoleons~~
 - Make a Docker container
 - Write documentation
+
+## All
+- Remove all commented out things
 
 ## Other
 - ~~Rename project folders~~

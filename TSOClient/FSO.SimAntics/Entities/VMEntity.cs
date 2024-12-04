@@ -219,22 +219,30 @@ namespace FSO.SimAntics
             SoundThreads = new List<VMSoundEntry>();
 
             RTTI = new VMEntityRTTI();
-            var numAttributes = obj.OBJ.NumAttributes;
+            var numAttributes = Object.OBJ.NumAttributes;
 
-            if (obj.OBJ.UsesFnTable == 0) EntryPoints = GenerateFunctionTable(obj.OBJ);
+            if (Object.OBJ.UsesFnTable == 0)
+                EntryPoints = GenerateFunctionTable(Object.OBJ);
             else
             {
-                var OBJfChunk = obj.Resource.Get<OBJf>(obj.OBJ.ChunkID); //objf has same id as objd
-                if (OBJfChunk != null) EntryPoints = OBJfChunk.functions;
+                var OBJfChunk = Object.Resource.Get<OBJf>(Object.OBJ.ChunkID); //objf has same id as objd
+                if (OBJfChunk != null)
+                    EntryPoints = OBJfChunk.functions;
             }
 
-            if (obj.GUID == 0xa9bb3a76) EntryPoints[17] = new OBJfFunctionEntry();
+            if (Object.GUID == 0xa9bb3a76)
+                EntryPoints[17] = new OBJfFunctionEntry();
 
-            SemiGlobal = obj.Resource.SemiGlobal;
+            if (Object.Resource.SemiGlobal != null)
+            {
+                SemiGlobal = Object.Resource.SemiGlobal;
+                if (SemiGlobal.Iff == null)
+                    SemiGlobal = null;
+            }
 
-            Slots = obj.Resource.Get<SLOT>(obj.OBJ.SlotID); //containment slots are dealt with in the avatar and object classes respectively.
+            Slots = Object.Resource.Get<SLOT>(Object.OBJ.SlotID); //containment slots are dealt with in the avatar and object classes respectively.
 
-            var attributeTable = obj.Resource.Get<STR>(256);
+            var attributeTable = Object.Resource.Get<STR>(256);
             if (attributeTable != null)
             {
                 numAttributes = (ushort)Math.Max(numAttributes, attributeTable.Length);
@@ -245,12 +253,13 @@ namespace FSO.SimAntics
                 }
             }
 
-            TreeTable = obj.Resource.Get<TTAB>(obj.OBJ.TreeTableID);
-            if (TreeTable != null) TreeTableStrings = obj.Resource.Get<TTAs>(obj.OBJ.TreeTableID);
-            if (TreeTable == null && SemiGlobal != null)
+            TreeTable = Object.Resource.Get<TTAB>(Object.OBJ.TreeTableID);
+            if (TreeTable != null)
+                TreeTableStrings = Object.Resource.Get<TTAs>(Object.OBJ.TreeTableID);
+            else if (SemiGlobal != null)
             {
-                TreeTable = SemiGlobal.Get<TTAB>(obj.OBJ.TreeTableID); //tree not in local, try semiglobal
-                TreeTableStrings = SemiGlobal.Get<TTAs>(obj.OBJ.TreeTableID);
+                TreeTable = SemiGlobal.Get<TTAB>(Object.OBJ.TreeTableID); //tree not in local, try semiglobal
+                TreeTableStrings = SemiGlobal.Get<TTAs>(Object.OBJ.TreeTableID);
             }
 
             this.Attributes = new List<short>(numAttributes);
@@ -270,11 +279,16 @@ namespace FSO.SimAntics
         /// <param name="obj">GameObject instance with a tree table to use.</param>
         public void UseTreeTableOf(GameObject obj) //manually set the tree table for an object. Used for multitile objects, which inherit this from the master.
         {
-            if (TreeTable != null) return;
+            if (TreeTable != null)
+                return;
             var GLOBChunks = obj.Resource.List<GLOB>();
             GameGlobal SemiGlobal = null;
 
-            if (GLOBChunks != null && GLOBChunks[0].Name != "") SemiGlobal = FSO.Content.Content.Get().WorldObjectGlobals.Get(GLOBChunks[0].Name);
+            if (GLOBChunks != null && GLOBChunks[0].Name != "")
+                SemiGlobal = FSO.Content.Content.Get().WorldObjectGlobals.Get(GLOBChunks[0].Name);
+
+            if (SemiGlobal != null && SemiGlobal.Resource.Iff == null)
+                SemiGlobal = null;
 
             TreeTable = obj.Resource.Get<TTAB>(obj.OBJ.TreeTableID);
             if (TreeTable != null) TreeTableStrings = obj.Resource.Get<TTAs>(obj.OBJ.TreeTableID);

@@ -7,13 +7,15 @@ namespace FSO.UI.Model
 {
     public static class DiscordRpcEngine
     {
-        public static bool Active;
-        public static bool Disable;
+        public static bool Active = false;
+        public static bool Disable = true;
         public static string Secret;
         public static EventHandlers Events;
 
         public static void Init()
         {
+            if (Disable)
+                return;
             try
             {
                 var handlers = new EventHandlers();

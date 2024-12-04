@@ -20,8 +20,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Net.WindowsGL.csproj" />
-    <ProjectReference Include="..\..\Other\libs\FSOMonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj" />
     <ProjectReference Include="..\..\Other\libs\MSDFData\MSDFData.csproj" />
     <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
     <ProjectReference Include="..\FSO.Content\FSO.Content.csproj" />

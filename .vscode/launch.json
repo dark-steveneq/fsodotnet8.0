@@ -8,6 +8,12 @@
             "projectPath": "${workspaceFolder}/TSOClient/FSO.Windows/FSO.Windows.csproj"
         },
         {
+            "name": "C#: FSO.Linux Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/TSOClient/FSO.Linux/FSO.Linux.csproj"
+        },
+        {
             "name": "C#: FSO.Server Debug",
             "type": "dotnet",
             "request": "launch",
