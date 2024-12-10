@@ -423,7 +423,8 @@ namespace FSO.Client.UI.Screens
 
         public void InitializeLot(string lotName, bool external)
         {
-            if (lotName == "") return;
+            if (lotName == "")
+                return;
             var recording = lotName.ToLowerInvariant().EndsWith(".fsor");
             CleanupLastWorld();
 

@@ -253,9 +253,12 @@ namespace FSO.SimAntics.Engine
             QueueDirty = true;
             var interaction = Queue[ActiveQueueBlock];
             //clear "interaction cancelled" since we are leaving the interaction
-            if (interaction.Mode != VMQueueMode.ParentIdle) Entity.SetFlag(VMEntityFlags.InteractionCanceled, false);
-            if (interaction.Callback != null) interaction.Callback.Run(Entity);
-            if (Queue.Count > 0) Queue.RemoveAt(ActiveQueueBlock);
+            if (interaction.Mode != VMQueueMode.ParentIdle)
+                Entity.SetFlag(VMEntityFlags.InteractionCanceled, false);
+            if (interaction.Callback != null)
+                interaction.Callback.Run(Entity);
+            if (Queue.Count > 0)
+                Queue.RemoveAt(ActiveQueueBlock);
             if (Entity is VMAvatar && !IsCheck && ActiveQueueBlock == 0)
             {
                 //some things are reset when an interaction ends
@@ -287,7 +290,8 @@ namespace FSO.SimAntics.Engine
 
         public void Tick(){
 #if IDE_COMPAT
-            if (ThreadBreak == VMThreadBreakMode.Pause) return;
+            if (ThreadBreak == VMThreadBreakMode.Pause)
+                return;
             else if (ThreadBreak == VMThreadBreakMode.Reset)
             {
                 Entity.Reset(Context);
@@ -299,8 +303,10 @@ namespace FSO.SimAntics.Engine
             }
 #endif
 
-            if (BlockingState != null) BlockingState.WaitTime++;
-            if (DialogCooldown > 0) DialogCooldown--;
+            if (BlockingState != null)
+                BlockingState.WaitTime++;
+            if (DialogCooldown > 0)
+                DialogCooldown--;
 #if !THROW_SIMANTICS
             try
             {
@@ -368,8 +374,10 @@ namespace FSO.SimAntics.Engine
                 }
 #endif
 
-                if (e is ThreadAbortException) throw e;
-                if (Stack.Count == 0) return;
+                if (e is ThreadAbortException)
+                    throw e;
+                if (Stack.Count == 0)
+                    return;
                 var context = Stack[Stack.Count - 1];
                 bool Delete = ((Entity is VMGameObject) && (DialogCooldown > 30 * 20 - 10));
                 if (DialogCooldown == 0)
@@ -526,7 +534,10 @@ namespace FSO.SimAntics.Engine
             if (opcode >= 8192)
             {
                 // Semi-Global sub-routine call
-                bhav = (VMRoutine)frame.ScopeResource.SemiGlobal.GetRoutine(opcode);
+                if (frame.ScopeResource.SemiGlobal != null && frame.ScopeResource.SemiGlobal.Iff != null)
+                    bhav = (VMRoutine)frame.ScopeResource.SemiGlobal.GetRoutine(opcode);
+                else
+                    throw new Exception("Missing semiglobal file: ");
             }
             else if (opcode >= 4096)
             {

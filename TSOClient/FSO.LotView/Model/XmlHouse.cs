@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using System.CodeDom;
+using System.Xml;
 
 namespace FSO.LotView.Model
 {
@@ -25,6 +28,7 @@ namespace FSO.LotView.Model
         [XmlArrayItem("sound")]
         public List<XmlSoundData> Sounds { get; set; }
 
+
         public static XmlHouseData Parse(string xmlFilePath)
         {
             using (var reader = File.OpenRead(xmlFilePath))
@@ -33,10 +37,15 @@ namespace FSO.LotView.Model
             }
         }
 
-        public static XmlHouseData Parse(Stream reader)
+        public static XmlHouseData Parse(Stream str)
         {
-            XmlSerializer serialize = new XmlSerializer(typeof(XmlHouseData));
-            return (XmlHouseData)serialize.Deserialize(reader);
+            var settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Ignore;
+            var reader = XmlReader.Create(str, settings);
+            var serialize = new XmlSerializer(typeof(XmlHouseData));
+            var read = (XmlHouseData)serialize.Deserialize(reader);
+            reader.Close();
+            return read;
         }
 
         public static void Save(string xmlFilePath, XmlHouseData data)

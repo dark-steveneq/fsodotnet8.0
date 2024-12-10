@@ -19,10 +19,13 @@ namespace FSO.Server.Utils
         /// <returns>New texture</returns>
         public static TexBitmap SoftImageFetch(Stream stream, AbstractTextureRef texRef)
         {
-            Image<Rgba32> result = null;
+            Image<Rgba32> image = null;
             try
             {
-                result = Image.Load(stream);
+                using (var img = Image.Load(stream))
+                {
+                    image = img.CloneAs<Rgba32>();
+                }
             }
             catch (Exception)
             {
@@ -30,13 +33,17 @@ namespace FSO.Server.Utils
             }
             stream.Close();
             
-            if (result == null) return null;
+            if (image == null)
+                return null;
 
+            byte[] pixelArray = new byte[image.Width * image.Height * 4];
+            image.CopyPixelDataTo(pixelArray);
+            image.Dispose();
             return new TexBitmap
             {
-                Data = result.SavePixelData(),
-                Width = result.Width,
-                Height = result.Height,
+                Data = pixelArray,
+                Width = image.Width,
+                Height = image.Height,
                 PixelSize = 4
             };
         }

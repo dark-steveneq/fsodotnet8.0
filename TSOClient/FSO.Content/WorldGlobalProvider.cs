@@ -7,6 +7,7 @@ using FSO.Files.Formats.IFF.Chunks;
 using FSO.Files.Formats.OTF;
 using FSO.Files.FAR1;
 using FSO.Common.TS1;
+using System.Reflection;
 
 namespace FSO.Content
 {
@@ -194,7 +195,7 @@ namespace FSO.Content
                 }
                 else
                 { 
-                    var iff = new IffFile(Path.Combine(ContentManager.BasePath, "objectdata/globals/" + filename + ".iff"));
+                    var iff = new IffFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ContentManager.BasePath, "objectdata", "globals", filename + ".iff"));
                     iff.InitHash();
                     OTFFile otf = null;
                     try
@@ -202,7 +203,7 @@ namespace FSO.Content
                         var rewrite = PIFFRegistry.GetOTFRewrite(filename + ".otf");
                         var path = rewrite ?? Path.Combine(ContentManager.BasePath, "objectdata", "globals", filename + ".otf");
                         if (File.Exists(path))
-                            otf = new OTFFile();
+                            otf = new OTFFile(path);
                     }
                     catch (IOException)
                     {
@@ -243,17 +244,16 @@ namespace FSO.Content
 
         public GameGlobalResource(IffFile iff, OTFFile tuning)
         {
-            if (tuning == null)
-                return;
             this.Iff = iff;
-            this.Tuning = tuning;
+            if (tuning != null)
+                this.Tuning = tuning;
             Recache();
         }
 
         public override void Recache()
         {
             base.Recache();
-            if (Tuning.Tables != null)
+            if (Tuning != null && Tuning.Tables != null)
             {
                 foreach (var table in Tuning.Tables)
                 {

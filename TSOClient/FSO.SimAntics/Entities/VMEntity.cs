@@ -234,11 +234,7 @@ namespace FSO.SimAntics
                 EntryPoints[17] = new OBJfFunctionEntry();
 
             if (Object.Resource.SemiGlobal != null)
-            {
                 SemiGlobal = Object.Resource.SemiGlobal;
-                if (SemiGlobal.Iff == null)
-                    SemiGlobal = null;
-            }
 
             Slots = Object.Resource.Get<SLOT>(Object.OBJ.SlotID); //containment slots are dealt with in the avatar and object classes respectively.
 

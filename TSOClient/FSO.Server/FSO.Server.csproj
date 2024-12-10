@@ -15,9 +15,6 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>FreeSO.ico</ApplicationIcon>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
     <Optimize>true</Optimize>
@@ -90,8 +87,8 @@
     <PackageReference Include="NLog" Version="4.5.7" />
     <PackageReference Include="Owin" Version="1.0" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-    <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0006" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
+    <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0008" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
   </ItemGroup>

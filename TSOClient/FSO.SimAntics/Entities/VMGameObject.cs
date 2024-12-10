@@ -123,7 +123,8 @@ namespace FSO.SimAntics
         }
 
         public override void Init(FSO.SimAntics.VMContext context){
-            if (UseWorld) WorldUI.ObjectID = ObjectID;
+            if (UseWorld)
+                WorldUI.ObjectID = ObjectID;
             if (Slots != null && Slots.Slots.ContainsKey(0))
             {
                 Contained = new VMEntity[Slots.Slots[0].Count];

@@ -7,7 +7,8 @@
           "src": "TSOClient/",
           "files": [
             "FSO.Server/FSO.Server.csproj",
-            "FSO.Client/FSO.Client.csproj"
+            "FSO.Client/FSO.Client.csproj",
+            "FSO.Vitaboy/FSO.Vitaboy.csproj"
           ]
         }
       ],

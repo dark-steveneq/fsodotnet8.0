@@ -133,9 +133,12 @@ namespace FSO.Content.Framework
                 using (var stream = new MemoryStream(data, false))
                 {
                     T result = default(T);
-                    if (Codec == null) result = (T)SmartCodec.Decode(stream, Path.GetExtension(entry.FarEntry.Filename));
-                    else result = this.Codec.Decode(stream);
-                    if (result is IFileInfoUtilizer) ((IFileInfoUtilizer)result).SetFilename(entry.FarEntry.Filename);
+                    if (Codec == null)
+                        result = (T)SmartCodec.Decode(stream, Path.GetExtension(entry.FarEntry.Filename));
+                    else
+                        result = this.Codec.Decode(stream);
+                    if (result is IFileInfoUtilizer)
+                        ((IFileInfoUtilizer)result).SetFilename(entry.FarEntry.Filename);
                     return result;
                 }
             });

@@ -131,7 +131,8 @@ namespace FSO.Content
                     iff = this.Iffs.Get(reference.FileName + ".iff");
                     iff.InitHash();
                     iff.RuntimeInfo.Path = reference.FileName;
-                    if (WithSprites) sprites = this.Sprites.Get(reference.FileName + ".spf");
+                    if (WithSprites)
+                        sprites = this.Sprites.Get(reference.FileName + ".spf");
                     var rewrite = PIFFRegistry.GetOTFRewrite(reference.FileName + ".otf");
                     try
                     {
@@ -157,7 +158,8 @@ namespace FSO.Content
                 }
 
                 iff.RuntimeInfo.UseCase = IffUseCase.Object;
-                if (sprites != null) sprites.RuntimeInfo.UseCase = IffUseCase.ObjectSprites;
+                if (sprites != null)
+                    sprites.RuntimeInfo.UseCase = IffUseCase.ObjectSprites;
 
                 return new GameObjectResource(iff, sprites, tuning, reference.FileName, ContentManager);
             };
@@ -314,19 +316,14 @@ namespace FSO.Content
             this.Tuning = tuning;
             this.Name = iname;
 
-            if (iff == null) return;
+            if (iff == null)
+                return;
             var GLOBChunks = iff.List<GLOB>();
             if (GLOBChunks != null && GLOBChunks[0].Name != "")
             {
-                GameGlobal sg = null;
-                try
-                {
-                    sg = content.WorldObjectGlobals.Get(GLOBChunks[0].Name);
-                } catch (Exception)
-                {
-
-                }
-                if (sg != null) SemiGlobal = sg.Resource; //used for tuning constant fetching.
+                GameGlobal sg = content.WorldObjectGlobals.Get(GLOBChunks[0].Name);
+                if (sg != null && sg.Resource != null && sg.Resource.Iff != null)
+                    SemiGlobal = sg.Resource; //used for tuning constant fetching.
             }
 
             Recache();

@@ -71,7 +71,8 @@ namespace FSO.Client.UI.Panels
                     setupTex = ImageLoader.FromStream(GameFacade.GraphicsDevice, logostrm);
             }
 
-            else setupTex = GetTexture((ulong)FileIDs.UIFileIDs.setup);
+            else
+                setupTex = GetTexture((ulong)FileIDs.UIFileIDs.setup);
             Background = new UIImage(setupTex);
             var bgScale = 600f / setupTex.Height;
             Background.SetSize(setupTex.Width * bgScale, 600);

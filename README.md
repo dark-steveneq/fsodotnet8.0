@@ -10,6 +10,8 @@ Server seems to work fine. The client on the other hand is unstable as shit (can
 ## Client
 - ~~Possibly rewrite UI script parser so that it doesn't use any abandoned libraries~~
 - ~~Make sure runs on Linux~~
+- Make sound and texture profiles
+- Fix texture rendering
 
 ## Server
 - ~~Fix crashing (sometimes?) when buying a lot~~ (It's caused by missconfiguration)
@@ -33,6 +35,7 @@ Server seems to work fine. The client on the other hand is unstable as shit (can
 
 ## All
 - Remove all commented out things
+- Make server content loading use interfaces 
 
 ## Other
 - ~~Rename project folders~~
