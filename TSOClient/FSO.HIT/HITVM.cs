@@ -10,16 +10,26 @@ using FSO.Common;
 
 namespace FSO.HIT
 {
+    /// <summary>
+    /// Main class for playing HIT sounds (.xa files)
+    /// </summary>
     public class HITVM
     {
         public static bool DISABLE_SOUND = false;
         private static HITVM INSTANCE;
 
+        /// <summary>
+        /// Get shared HITVM instance
+        /// </summary>
+        /// <returns>Shared HITVM instance</returns>
         public static HITVM Get()
         {
-            return INSTANCE; //there can be only one!
+            return INSTANCE;
         }
 
+        /// <summary>
+        /// Init the shared HITVM instance
+        /// </summary>
         public static void Init()
         {
             DISABLE_SOUND = FSOEnvironment.NoSound;
@@ -28,25 +38,43 @@ namespace FSO.HIT
 
         //non static stuff
 
-        private Dictionary<string, HITSound> ActiveEvents; //events that are active are reused for all objects calling that event.
+        /// <summary>
+        /// Dictionary of all event sounds, events that are active are reused for all objects calling that event.
+        /// </summary>
+        private Dictionary<string, HITSound> ActiveEvents;
+        /// <summary>
+        /// List of all sounds
+        /// </summary>
         private List<HITSound> Sounds;
-        private int[] Globals; //SimSpeed 0x64 to CampfireSize 0x87.
+        /// <summary>
+        /// Array with globals, SimSpeed 0x64 to CampfireSize 0x87.
+        /// </summary>
+        private int[] Globals;
         private HITTVOn TVEvent;
         private HITTVOn MusicEvent;
         private HITTVOn NextMusic;
         public AudioListener Listener = new AudioListener();
 
         private List<FSCPlayer> FSCPlayers;
+        /// <summary>
+        /// List of ambient loops
+        /// </summary>
         public List<SoundEffectInstance> AmbLoops;
+        /// <summary>
+        /// Queue of notes to play
+        /// </summary>
         public List<HITNoteEntry> PlayQueue = new List<HITNoteEntry>();
         private float[] GroupMasterVolumes = new float[]
         {
             1.0f, 1.0f, 1.0f, 1.0f
         };
 
+        /// <summary>
+        /// Initialize private default variables
+        /// </summary>
         public HITVM()
         {
-            var content = FSO.Content.Content.Get();
+            //var content = FSO.Content.Content.Get();
 
             Globals = new int[36];
             Sounds = new List<HITSound>();
@@ -55,12 +83,18 @@ namespace FSO.HIT
             AmbLoops = new List<SoundEffectInstance>();
         }
 
+        /// <summary>
+        /// Set volume for specified volume group
+        /// </summary>
+        /// <param name="group">Volume group to affect</param>
+        /// <param name="volume">Volume to apply</param>
         public void SetMasterVolume(HITVolumeGroup group, float volume)
         {
             GroupMasterVolumes[(int)group] = volume;
             foreach (var sound in Sounds)
             {
-                if (sound.VolGroup == group) sound.RecalculateVolume();
+                if (sound.VolGroup == group)
+                    sound.RecalculateVolume();
             }
 
             foreach (var amb in AmbLoops)
@@ -69,42 +103,69 @@ namespace FSO.HIT
             }
         }
 
+        /// <summary>
+        /// Get volume of specified volume group
+        /// </summary>
+        /// <param name="group">Volume group</param>
+        /// <returns>Volume level</returns>
         public float GetMasterVolume(HITVolumeGroup group)
         {
             return GroupMasterVolumes[(int)group];
         }
 
+        /// <summary>
+        /// Set global with a value
+        /// </summary>
+        /// <param name="num">Globals index to set</param>
+        /// <param name="value">Value to set</param>
         public void WriteGlobal(int num, int value)
         {
             Globals[num] = value;
         }
 
+        /// <summary>
+        /// Read global value
+        /// </summary>
+        /// <param name="num">Global index to read</param>
+        /// <returns>Read global</returns>
         public int ReadGlobal(int num) 
         {
             return Globals[num];
         }
 
+        /// <summary>
+        /// Add note to note queue
+        /// </summary>
+        /// <param name="note">Not to add</param>
         public void QueuePlay(HITNoteEntry note)
         {
             PlayQueue.Add(note);
         }
 
+        /// <summary>
+        /// Controls whether to play nightclub sounds on tick or not
+        /// </summary>
         public bool NightclubMode;
 
+        /// <summary>
+        /// Tick function controls nightclub sounds and cleans up sounds that finished playing
+        /// </summary>
         public void Tick()
         {
             if (NightclubMode)
             {
                 //find the loudest nightclub sound
                 var nc = Sounds.Where(x => x.Name?.StartsWith("nc_") == true);
-                if (nc.Count() == 0) NightclubMode = false;
+                if (nc.Count() == 0)
+                    NightclubMode = false;
                 else
                 {
                     var max = nc.OrderBy(x => x.GetVolume()).Last();
                     var bestID = max.Name.Last();
                     foreach (var sound in nc)
                     {
-                        if (sound.Name.Last() != bestID) sound.Mute();
+                        if (sound.Name.Last() != bestID)
+                            sound.Mute();
                     }
                 }
             }
@@ -123,7 +184,8 @@ namespace FSO.HIT
                 item.started = true;
                 item.instance.Play();
             }
-            if (PlayQueue.Count > 0) PlayQueue.Clear();
+            if (PlayQueue.Count > 0)
+                PlayQueue.Clear();
 
             if (NextMusic != null)
             {
@@ -156,11 +218,18 @@ namespace FSO.HIT
             return player;
         }
 
+        /// <summary>
+        /// Plays sound event
+        /// </summary>
+        /// <param name="evt">EventID to play</param>
+        /// <returns>HITSound instance of the sound event</returns>
         public HITSound PlaySoundEvent(string evt)
         {
-            if (DISABLE_SOUND) return null;
+            if (DISABLE_SOUND)
+                return null;
             evt = evt.ToLowerInvariant();
-            if (evt.StartsWith("nc_")) NightclubMode = true;
+            if (evt.StartsWith("nc_"))
+                NightclubMode = true;
             HITThread InterruptBlocker = null; //the thread we have to wait for to finish before we begin.
             if (ActiveEvents.ContainsKey(evt))
             {

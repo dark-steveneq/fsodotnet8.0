@@ -8,7 +8,8 @@
           "files": [
             "FSO.Server/FSO.Server.csproj",
             "FSO.Client/FSO.Client.csproj",
-            "FSO.Vitaboy/FSO.Vitaboy.csproj"
+            "FSO.Vitaboy/FSO.Vitaboy.csproj",
+            "FSO.HIT/FSO.HIT.csproj"
           ]
         }
       ],

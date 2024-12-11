@@ -9,6 +9,9 @@ using FSO.Common;
 
 namespace FSO.HIT
 {
+    /// <summary>
+    /// HITThread is the actual class that runs HIT code
+    /// </summary>
     public class HITThread : HITSound
     {
         public uint PC; //program counter

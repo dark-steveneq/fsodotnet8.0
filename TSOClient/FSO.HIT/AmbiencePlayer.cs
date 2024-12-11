@@ -5,6 +5,9 @@ using FSO.HIT.Model;
 
 namespace FSO.HIT
 {
+    /// <summary>
+    /// HIT player responsible for playing lot ambience
+    /// </summary>
     public class AmbiencePlayer
     {
         private bool fscMode;
@@ -12,6 +15,10 @@ namespace FSO.HIT
         private SoundEffect sfx;
         private SoundEffectInstance inst;
 
+        /// <summary>
+        /// Create an ambience player instance and play provided ambience
+        /// </summary>
+        /// <param name="amb">Ambience to play</param>
         public AmbiencePlayer(Ambience amb)
         {
             if (amb.Loop)
@@ -37,9 +44,13 @@ namespace FSO.HIT
             }
         }
 
+        /// <summary>
+        /// Stop and destroy ambiance
+        /// </summary>
         public void Kill()
         {
-            if (fscMode) HITVM.Get().StopFSC(fsc);
+            if (fscMode)
+                HITVM.Get().StopFSC(fsc);
             else
             {
                 inst.Stop();
@@ -50,11 +61,16 @@ namespace FSO.HIT
         }
     }
 
+    /// <summary>
+    /// Contains all information about ambience to play
+    /// </summary>
     public struct Ambience
     {
+        // Path to ambience's .xa file
         public string Path;
-        public bool Loop; //certain ambiences are simple xa loops instead of fscs.
-
+        // Control looping, certain ambiences are simple xa loops instead of fscs.
+        public bool Loop;
+        
         public Ambience(string path, bool loop)
         {
             Path = path;
