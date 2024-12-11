@@ -4,7 +4,7 @@ Port of the original .NET Framework 4.5 codebase to .NET 8.0
 This is not related in any way with [Riperiperi](https://github.com/riperiperi) or the FreeSO development team. This is a passion project that aims to make the engine easier to work with for anyone who dares to do anything with it.
 
 # State
-Server seems to work fine. The client on the other hand is unstable as shit (can't load TSO lots, ceiling lamp turning into a desync-based console spam and simantics exception generator, broken PNG rendering) but it's still work-in-progress.
+Server seems to work fine. The client on the other hand needs a little bit of work (broken PNG rendering, single interaction plays multiple different sounds over one another) but it's playable.
 
 # TODO
 ## Client
@@ -12,6 +12,7 @@ Server seems to work fine. The client on the other hand is unstable as shit (can
 - ~~Make sure runs on Linux~~
 - Make sound and texture profiles
 - Fix texture rendering
+- Fix sound issue
 
 ## Server
 - ~~Fix crashing (sometimes?) when buying a lot~~ (It's caused by missconfiguration)
