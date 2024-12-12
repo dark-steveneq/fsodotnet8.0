@@ -78,10 +78,6 @@ namespace FSO.Files.FAR3
                         m_Entries.Add(Entry.Filename, Entry);
                     m_EntriesList.Add(Entry);
 
-                    File.AppendAllLines("/home/dark/ids.txt", [
-                        string.Format("file:{0} name:{1} id:{2} tid:{3} lid:{4}", path.Substring(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location).Length), Entry.Filename, Entry.FileID, Entry.TypeID, ((ulong)Entry.FileID << 32) | Entry.TypeID)
-                    ]);
-
                     m_EntryByID.Add(Entry.FileID, Entry); //isn't this a bad idea? i have a feeling this is a bad idea...
                 }
 
