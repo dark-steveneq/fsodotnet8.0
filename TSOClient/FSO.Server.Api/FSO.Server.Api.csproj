@@ -13,10 +13,6 @@
     <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
     <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
   </ItemGroup>
-  <Target Name="Tailwind" BeforeTargets="Build">
-    <Exec Command="npm i" />
-    <Exec Command="npm run css:build" />
-  </Target>
   <ItemGroup>
     <None Remove="MailTemplates\MailBan.html" />
     <None Remove="MailTemplates\MailBase.html" />
