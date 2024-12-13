@@ -44,7 +44,7 @@ on:
 jobs:
   build-amd64:
     name: Build for AMD64
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -75,7 +75,7 @@ jobs:
 
   build-arm64:
     name: Build for ARM64
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
