@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ "master" ]
-    paths: 
+    paths:
+      - .github/workflows/docker-git.yml
       - TSOClient/FSO.Server
       - TSOClient/FSO.Common
       - TSOClient/FSO.Common.DatabaseService
@@ -22,7 +23,8 @@ on:
       - Others/libs/TargaImgePCL
   pull_request:
     branches: [ "master" ]
-    paths: 
+    paths:
+      - .github/workflows/docker-git.yml
       - TSOClient/FSO.Server
       - TSOClient/FSO.Common
       - TSOClient/FSO.Common.DatabaseService
