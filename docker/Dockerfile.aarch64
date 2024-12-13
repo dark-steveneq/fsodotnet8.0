@@ -9,9 +9,9 @@ RUN chmod +x /entrypoint.sh
 WORKDIR /App/TSOClient/FSO.Server
 
 RUN dotnet restore FSO.Server.csproj
-RUN dotnet publish FSO.Server.csproj -a amd64 -c Release -o ./out
+RUN dotnet publish FSO.Server.csproj -a arm64 -c Release -o ./out
 
-FROM --platform=amd64 mcr.microsoft.com/dotnet/aspnet:8.0
+FROM --platform=arm64 mcr.microsoft.com/dotnet/aspnet:8.0
 
 LABEL org.opencontainers.image.authors=https://github.com/dark-steveneq
 LABEL org.opencontainers.image.url=https://github.com/dark-steveneq/fsodotnet8.0
