@@ -1,3 +1,40 @@
+# FreeSO .NET 8.0 Port Server Container
+This image contains a built copy of FreeSO .NET 8.0 Server. Both AMD64 and ARM64 are supported.
+
+## Example Setup
+### compose.yml
+```yaml
+services:
+  freeso:
+    build: .
+    restart: unless-stopped
+    ports:
+      - 9000:9000/tcp
+      - 33101:33101/tcp
+      - 34101:34101/tcp
+      - 35101:35101/tcp
+    volumes:
+      - ./config.json:/App/config.json:rw
+      - ./Content:/App/Content:rw
+      - ./version.txt:/App/version.txt:ro
+      - ./simNFS:/simNFS:rw
+      - ./game/TSOClient:/game:ro
+
+  mariadb:
+    image: mariadb:latest
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: fso
+      MARIADB_USER: fsoserver
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306/tcp # Do not port forward this or at least change the default database credentials 
+    volumes:
+      - ./mariadb:/var/lib/mysql:rw
+```
+### config.json
+```json
 {
     "gameLocation": "/game",
     "secret": "YOUR SECRET GOES HERE, IT SHOULD BE 32 CHARS LONG AND RANDOM",
@@ -99,3 +136,4 @@
     }
   }
   
+```
