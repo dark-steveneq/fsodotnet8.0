@@ -4,13 +4,51 @@ on:
   workflow_dispatch:
   push:
     branches: [ "master" ]
+    paths: 
+      - TSOClient/FSO.Server
+      - TSOClient/FSO.Common
+      - TSOClient/FSO.Common.DatabaseService
+      - TSOClient/FSO.Common.Domain
+      - TSOClient/FSO.Content
+      - TSOClient/FSO.Files
+      - TSOClient/FSO.LotView
+      - TSOClient/FSO.Server.Api
+      - TSOClient/FSO.Server.Client
+      - TSOClient/FSO.Server.Datbase
+      - TSOClient/FSO.Server.Domain
+      - TSOClient/FSO.Server.Protocol
+      - TSOClient/FSO.SimAntics
+      - TSOClient/FSO.Vitaboy
+      - Others/libs/TargaImgePCL
   pull_request:
     branches: [ "master" ]
+    paths: 
+      - TSOClient/FSO.Server
+      - TSOClient/FSO.Common
+      - TSOClient/FSO.Common.DatabaseService
+      - TSOClient/FSO.Common.Domain
+      - TSOClient/FSO.Content
+      - TSOClient/FSO.Files
+      - TSOClient/FSO.LotView
+      - TSOClient/FSO.Server.Api
+      - TSOClient/FSO.Server.Client
+      - TSOClient/FSO.Server.Datbase
+      - TSOClient/FSO.Server.Domain
+      - TSOClient/FSO.Server.Protocol
+      - TSOClient/FSO.SimAntics
+      - TSOClient/FSO.Vitaboy
+      - Others/libs/TargaImgePCL
 
 jobs:
   build-amd64:
     name: Build for AMD64
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4.2.2
@@ -36,6 +74,12 @@ jobs:
   build-arm64:
     name: Build for ARM64
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4.2.2
