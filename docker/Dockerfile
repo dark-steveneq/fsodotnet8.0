@@ -1,5 +1,7 @@
 FROM --platform=$BUILDARCH mcr.microsoft.com/dotnet/sdk:8.0 AS builder
 
+ARG TARGETARCH
+
 RUN mkdir -p /App /out /out/simNFS
 COPY . /App
 COPY ./docker/entrypoint.sh /entrypoint.sh
@@ -9,9 +11,9 @@ RUN chmod +x /entrypoint.sh
 WORKDIR /App/TSOClient/FSO.Server
 
 RUN dotnet restore FSO.Server.csproj
-RUN dotnet publish FSO.Server.csproj -a amd64 -c Release -o ./out
+RUN dotnet publish FSO.Server.csproj -a $TARGETARCH -c Release -o ./out
 
-FROM --platform=amd64 mcr.microsoft.com/dotnet/aspnet:8.0
+FROM --platform=$TARGETARCH mcr.microsoft.com/dotnet/aspnet:8.0
 
 LABEL org.opencontainers.image.authors=https://github.com/dark-steveneq
 LABEL org.opencontainers.image.url=https://github.com/dark-steveneq/fsodotnet8.0
