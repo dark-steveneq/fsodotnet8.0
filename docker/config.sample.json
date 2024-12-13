@@ -13,7 +13,7 @@
           "call_sign": "callisto",
           "binding": "0.0.0.0:35100",
           "internal_host": "127.0.0.1:35",
-          "public_host": "127.0.0.1:35",
+          "public_host": "0.0.0.0:35",
   
           "schedule":[
               {
@@ -49,7 +49,7 @@
       },
   
       "api": {
-        "enabled": false,
+        "enabled": true,
         "bindings": [ "https://auth.east.ea.com:443/", "http://localhost:80/" ],
         "controllers": [ "auth", "citySelector" ]
       },
@@ -57,7 +57,7 @@
       "userApi": {
         "enabled": true,
         "bindings": [ "http://0.0.0.0:9000/" ],
-        "siteName": "My Docker FreeSO Server", 
+        "siteName": "My FreeSO Server", 
         "controllers": [ "auth", "citySelector" ],
         "updateUrl": "http://some-url"
       },
@@ -68,8 +68,8 @@
           "id": 1,
           "binding": "0.0.0.0:33100",
           "internal_host": "127.0.0.1:33",
-          "public_host": "127.0.0.1:33",
-    
+          "public_host": "0.0.0.0:33",
+  
           "maintenance":{
               "cron":"0 4 * * *",
               "timeout":3600,
@@ -84,7 +84,7 @@
               "call_sign": "europa",
               "binding": "0.0.0.0:34100",
               "internal_host": "127.0.0.1:34",
-              "public_host": "127.0.0.1:34",
+              "public_host": "0.0.0.0:34",
   
               "max_lots": 100,
   

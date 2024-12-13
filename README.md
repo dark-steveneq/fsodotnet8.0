@@ -31,7 +31,7 @@ Server seems to work fine. The client on the other hand needs a little bit of wo
   - Automatic database creation
 - ~~Implement optional register page~~
 - ~~Make admin avatars start off with 999999999 simoleons~~
-- Make a Docker container
+- ~~Make a Docker container~~
 - Write documentation
 
 ## All

@@ -19,4 +19,4 @@ elif [ ! -f "/App/version.txt" ]; then
 else
     echo "Version.TXT is fine"
 fi
-/App/server
+/App/server "$@"

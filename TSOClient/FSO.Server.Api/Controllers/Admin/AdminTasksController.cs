@@ -57,7 +57,7 @@ namespace FSO.Server.Api.Controllers.Admin
                     }).Result;
                     return ApiResponse.Json(HttpStatusCode.OK, id);
                 }
-                catch (Exception ex)
+                catch
                 {
                     return ApiResponse.Json(HttpStatusCode.OK, -1);
                 }

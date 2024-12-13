@@ -15,12 +15,15 @@ namespace FSO.Server.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+
             var api = Api.INSTANCE;
 
             var result = new XMLList<ShardStatusItem>("Shard-Status-List");
             var shards = api.Shards.All;
+            var host = Request.Host.Host;
             foreach (var shard in shards)
             {
+                shard.PublicHost = host + shard.PublicHost[shard.PublicHost.IndexOf(":")..];
                 result.Add(shard);
             }
             return ApiResponse.Xml(HttpStatusCode.OK, result);

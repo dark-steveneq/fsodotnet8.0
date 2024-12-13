@@ -5,7 +5,7 @@ Once you have your server running, you'll need to create at least one neighborho
 The file can have whatever name you'd like but for the sake of the tutorial, I'll name it `neighborhoods.json`. The file contains an array of a special neighborhood structure. Here's the list of all its fields
 ```json5
 {
-    "GUID": "00000000-0000-0000-0000-000000000000", // Neighborhood GUID, should get randomized on import
+    "GUID": "00000000-0000-0000-0000-000000000000", // Neighborhood GUID
     "Name": "Name",                                 // Neighborhood name
     "Description": "Description",                   // Neighborhood description
     "Location": {"x": 0, "y": 0},                   // Neighborhood location
