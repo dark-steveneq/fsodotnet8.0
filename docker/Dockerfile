@@ -11,6 +11,15 @@ RUN dotnet publish FSO.Server.csproj -c Release -o ./out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
+LABEL org.opencontainers.image.authors https://github.com/dark-steveneq
+LABEL org.opencontainers.image.url https://github.com/dark-steveneq/fsodotnet8.0
+LABEL org.opencontainers.image.documentation https://github.com/dark-steveneq/fsodotnet8.0/blob/master/docker/README.md
+LABEL org.opencontainers.image.source https://github.com/dark-steveneq/fsodotnet8.0
+LABEL org.opencontainers.image.vendor Dark Steveneq
+LABEL org.opencontainers.image.licenses MPL-2.0
+LABEL org.opencontainers.image.title FreeSO .NET 8.0 Port Server
+LABEL org.opencontainers.image.description Container with FreSO .NET 8.0 Server
+
 WORKDIR /App
 
 COPY --from=builder /App/TSOClient/FSO.Server/out /App
