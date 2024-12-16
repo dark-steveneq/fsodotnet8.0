@@ -1,4 +1,5 @@
-﻿using FSO.Server.Api.Services;
+﻿using System.Collections.Generic;
+using FSO.Server.Api.Services;
 
 namespace FSO.Server.Api
 {
@@ -41,5 +42,8 @@ namespace FSO.Server.Api
 
         public bool SiteEnabled { get; set; } = false;
         public string SiteName { get; set; } = "FreeSO Server";
+
+        public bool SingleNode { get; set; } = true;
+        public Dictionary<string,Dictionary<string, string>> Rewrites { get; set; } = null;
     }
 }

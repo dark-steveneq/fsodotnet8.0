@@ -1,11 +1,11 @@
-name: Build server Docker image (Git)
+name: Build Server (Git)
 
 on:
   workflow_dispatch:
   push:
     branches: [ "master" ]
     paths:
-      - .github/workflows/docker-git.yml
+      - .github/workflows/server-git.yml
       - TSOClient/FSO.Server
       - TSOClient/FSO.Common
       - TSOClient/FSO.Common.DatabaseService
@@ -42,8 +42,66 @@ on:
       - Others/libs/TargaImgePCL
 
 jobs:
-  build:
-    name: Build images
+  build-windows:
+    name: Build for Windows
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
+      
+    - name: Restore NuGet packages
+      working-directory: ./TSOClient/FSO.Server/
+      run: dotnet restore
+
+    - name: Build server
+      working-directory: ./TSOClient/FSO.Server/
+      run: RUN dotnet publish FSO.Server.csproj -c Release -o ./out
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: fsodotnet8.0server-windows-${{ github.ref }}
+        path: ./TSOClient/FSO.Server/out
+
+  build-linux:
+    name: Build for Linux
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.x'
+      
+    - name: Restore NuGet packages
+      working-directory: ./TSOClient/FSO.Server/
+      run: dotnet restore
+
+    - name: Build server
+      working-directory: ./TSOClient/FSO.Server/
+      run: RUN dotnet publish FSO.Server.csproj -c Release -o ./out
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: fsodotnet8.0server-linux-${{ github.ref }}
+        path: ./TSOClient/FSO.Server/out
+
+  build-docker:
+    name: Build Docker images
     runs-on: ubuntu-24.04
     permissions:
       contents: read

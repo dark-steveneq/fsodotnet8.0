@@ -7,3 +7,5 @@ items:
     href: server/Starting a Server with Docker.md
   - name: Creating a Neighborhood
     href: server/Creating a Neighborhood.md
+  - name: Managing the Database
+    href: server/Managing the Database.md
