@@ -68,7 +68,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: fsodotnet8.0server-windows-${{ github.ref }}
+        name: fsodotnet8.0server-windows-${{ github.sha }}
         path: ./TSOClient/FSO.Server/out
 
   build-linux:
@@ -97,7 +97,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: fsodotnet8.0server-linux-${{ github.ref }}
+        name: fsodotnet8.0server-linux-${{ github.sha }}
         path: ./TSOClient/FSO.Server/out
 
   build-docker:
