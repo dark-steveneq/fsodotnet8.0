@@ -5,7 +5,7 @@
 0. Install MariaDB  
 MariaDB is required for the server to store info such as sims, cities, passwords and so on. You can download it [here](https://mariadb.org/download) and if you need help with setting it up, consult whatever tutorial you can find on Google.
 
-1. Make a new folder  
+1. Extract the server to a new folder  
 You probably already knew that but I'm putting it here none the less.
 
 2. Create a SimNFS folder  
