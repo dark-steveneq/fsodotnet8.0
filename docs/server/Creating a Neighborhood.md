@@ -17,7 +17,11 @@ The file can have whatever name you'd like but for the sake of the tutorial, I'l
 Now that you know the structure, you copy the structure into an array in that JSON file so that its contents looks like this
 ```json5
 [
-    {...}
+    {
+        "GUID": "something",
+        "Name": "name",
+        ...
+    }
 ]
 ```
 
@@ -26,3 +30,6 @@ In order to import the neighborhood JSON file, launch the server with `--import-
 
 3. Start the server  
 Everything should be good to go!
+
+
+Now that you have everything running correctly, you should probably read through [Managing the Database](./Managing%20the%20Database.md)
