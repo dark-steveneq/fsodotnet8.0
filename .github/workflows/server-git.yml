@@ -63,7 +63,7 @@ jobs:
 
     - name: Build server
       working-directory: ./TSOClient/FSO.Server/
-      run: RUN dotnet publish FSO.Server.csproj -c Release -o ./out
+      run: dotnet publish FSO.Server.csproj -c Release -o ./out
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -92,7 +92,7 @@ jobs:
 
     - name: Build server
       working-directory: ./TSOClient/FSO.Server/
-      run: RUN dotnet publish FSO.Server.csproj -c Release -o ./out
+      run: dotnet publish FSO.Server.csproj -c Release -o ./out
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
