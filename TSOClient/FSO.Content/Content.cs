@@ -337,7 +337,7 @@ namespace FSO.Content
         /// <returns>The path combined with the client's directory.</returns>
         public string GetPath(string path)
         {
-            if (path[0] == '/')
+            if (path[0] == '/' || path[0] == '\\')
             {
                 path = path.Substring(1);
             }
