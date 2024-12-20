@@ -286,6 +286,8 @@ namespace FSO.Client.UI.Screens
 
             if (state.WindowFocused && state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F1) && state.CtrlDown)
                 FSOFacade.Controller.ToggleDebugMenu();
+            if (state.WindowFocused && state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F2) && state.CtrlDown)
+                FSOFacade.Controller.ToggleAssetMenu();
 
             base.Update(state);
             

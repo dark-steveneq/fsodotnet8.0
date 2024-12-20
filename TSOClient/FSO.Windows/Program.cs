@@ -18,7 +18,7 @@ namespace FSO.Windows
         {
             ClipboardHandler.Default = new WinFormsClipboard();
 
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             FSOProgram.ShowDialog = ShowDialog;
 
             if (new FSOProgram().InitWithArguments(args))

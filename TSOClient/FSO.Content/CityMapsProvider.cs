@@ -11,19 +11,21 @@ namespace FSO.Content
 {
     public class CityMapsProvider : IContentProvider<CityMap>
     {
-        private ConcurrentDictionary<int, CityMap> Cache;
         private Dictionary<int, string> DirCache;
         private Content Content;
+        private static int PoolID = CacheControler.NewPool("CityMapProvider");
         
         public CityMapsProvider(Content content)
         {
             this.Content = content;
+            CacheControler.UsePool(PoolID);
         }
+
+        ~CityMapsProvider() => CacheControler.FreePool(PoolID);
 
         public void Init()
         {
             DirCache = new Dictionary<int, string>();
-            Cache = new ConcurrentDictionary<int, CityMap>();
 
             var dir = Content.GetPath("cities");
             foreach (var map in Directory.GetDirectories(dir))
@@ -47,14 +49,11 @@ namespace FSO.Content
 
         public CityMap Get(ulong id)
         {
-            CityMap result;
-            if (Cache.TryGetValue((int)id, out result))
-            {
-                return result;
-            } else
-            {
-                return Cache.GetOrAdd((int)id, new CityMap(DirCache[(int)id]));
-            }
+            CityMap result = CacheControler.Get<CityMap>(PoolID, id);
+            if (result == null)
+                result = new CityMap(DirCache[(int)id]);
+                CacheControler.Cache(PoolID, id, result);
+            return result;
         }
 
         public CityMap Get(uint type, uint fileID)

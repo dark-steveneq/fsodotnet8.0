@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using Mina.Core.Buffer;
 
 namespace FSO.Files
 {
@@ -31,7 +32,7 @@ namespace FSO.Files
 
         private static Texture2D WinFromStream(GraphicsDevice gd, Stream str)
         {
-            return WinFromStreamP(gd, str, 0);
+            return WinFromStreamP(gd, str, -1);
         }
 
         public static Texture2D WinFromStreamP(GraphicsDevice gd, Stream str, int premult)
@@ -41,6 +42,7 @@ namespace FSO.Files
             byte[] sig = new byte[16];
             str.Read(sig, 0, 16);
             str.Seek(0, SeekOrigin.Begin);
+            /*
             if (Encoding.Default.GetString(sig) == "TRUEVISION-XFILE")
             {
                 try
@@ -57,15 +59,18 @@ namespace FSO.Files
             }
             else
             {
-                Image<Rgba32> image = Image.Load(str).CloneAs<Rgba32>();
+            */
+                Image<Rgba32> image = Image.Load<Rgba32>(str);
+
                 byte[] pixelArray = new byte[image.Width * image.Height * 4];
                 image.CopyPixelDataTo(pixelArray);
                 image.Dispose();
+
                 var tex = new Texture2D(gd, image.Width, image.Height);
                 tex.SetData(pixelArray);
                 ManualTextureMaskSingleThreaded(ref tex, MASK_COLORS.ToArray());
                 return tex;
-            }
+            //}
         }
 
         /*

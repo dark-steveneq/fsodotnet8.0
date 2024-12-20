@@ -165,7 +165,8 @@ namespace FSO.Content
             WorldRoofs = new WorldRoofProvider(this);
 
             InitBasic();
-            if (init) Init();
+            if (init)
+                Init();
         }
 
         /// <summary>
@@ -193,7 +194,8 @@ namespace FSO.Content
                 WorldWalls.Init();
                 WorldFloors.Init();
                 Upgrades.Init();
-                if (Mode == ContentMode.SERVER) Upgrades.LoadJSONTuning();
+                if (Mode == ContentMode.SERVER)
+                    Upgrades.LoadJSONTuning();
             }
             WorldObjectGlobals.InitCurves();
             WorldRoofs.Init();
@@ -245,7 +247,8 @@ namespace FSO.Content
         private void Init()
         {
             Inited = true;
-            if (!TS1) Audio.Init();
+            if (!TS1)
+                Audio.Init();
             /** Scan system for files **/
             if (AllFiles == null)
             {
@@ -271,15 +274,15 @@ namespace FSO.Content
             LoadProgress = ContentLoadingProgress.InitBCF;
             BCFGlobal?.Init();
 
-            if (!TS1) PIFFRegistry.Init(Path.Combine(FSOEnvironment.ContentDir, "Patch/"));
-            else PIFFRegistry.Init(Path.Combine(FSOEnvironment.ContentDir, "TS1Patch/"));
+            if (!TS1)
+                PIFFRegistry.Init(Path.Combine(FSOEnvironment.ContentDir, "Patch/"));
+            else
+                PIFFRegistry.Init(Path.Combine(FSOEnvironment.ContentDir, "TS1Patch/"));
 
             LoadProgress = ContentLoadingProgress.InitAvatars;
             Archives = new Dictionary<string, FAR3Archive>();
             if (Target != FSOEngineMode.TS1 && Mode == ContentMode.CLIENT)
-            {
                 UIGraphics.Init();
-            }
 
             if (TS1)
             {
@@ -289,7 +292,8 @@ namespace FSO.Content
                 Neighborhood = new TS1NeighborhoodProvider(this);
             } else
             {
-                if (Mode == ContentMode.CLIENT) AvatarHandgroups.Init();
+                if (Mode == ContentMode.CLIENT)
+                    AvatarHandgroups.Init();
                 AvatarBindings.Init();
                 AvatarOutfits.Init();
                 AvatarPurchasables.Init();
@@ -306,7 +310,8 @@ namespace FSO.Content
             }
 
             LoadProgress = ContentLoadingProgress.InitAudio;
-            if (TS1) Audio.Init();
+            if (TS1)
+                Audio.Init();
 
             InitWorld();
         }
@@ -368,7 +373,8 @@ namespace FSO.Content
                 return new MemoryStream(bytes, false);
             }
 
-            if (path.EndsWith(".bmp") || path.EndsWith(".png") || path.EndsWith(".tga")) path = "uigraphics/" + path;
+            if (path.EndsWith(".bmp") || path.EndsWith(".png") || path.EndsWith(".tga"))
+                path = "uigraphics/" + path;
 
             return File.OpenRead(GetPath(path));
         }

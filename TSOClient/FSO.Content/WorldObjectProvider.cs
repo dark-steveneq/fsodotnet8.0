@@ -27,6 +27,8 @@ namespace FSO.Content
 
         public WorldObjectProvider(Content contentManager) : base(contentManager)
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("World Object Provider");
         }
 
         private bool WithSprites;
@@ -52,7 +54,6 @@ namespace FSO.Content
 
             /** Load packingslip **/
             Entries = new Dictionary<ulong, GameObjectReference>();
-            Cache = new TimedReferenceCache<ulong, GameObject>();
 
             var packingslip = new XmlDocument();
             packingslip.Load(ContentManager.GetPath("packingslips/objecttable.xml"));

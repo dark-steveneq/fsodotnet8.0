@@ -10,6 +10,8 @@ namespace FSO.Content.TS1
         public CustomUIProvider(Content contentManager)
             : base(contentManager, new TextureCodec(), new Regex("uigraphics/.*\\.png"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("Custom UI Provider");
             UseContent = true;
         }
     }

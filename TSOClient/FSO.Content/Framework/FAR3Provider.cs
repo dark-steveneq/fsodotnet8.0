@@ -21,9 +21,9 @@ namespace FSO.Content.Framework
         public Dictionary<string, Far3ProviderEntry<T>> EntriesByName;
 
         protected IContentCodec<T> Codec;
-        protected TimedReferenceCache<ulong, T> Cache;
         private string[] m_FarFiles;
         private Regex FarFilePattern;
+        internal static int PoolID = CacheControler.NewPool("FAR3 Provider");
 
         /// <summary>
         /// Creates a new FAR3Provider.
@@ -36,7 +36,11 @@ namespace FSO.Content.Framework
             this.ContentManager = ContentManager;
             this.Codec = Codec;
             this.m_FarFiles = FarFiles;
+            CacheControler.UsePool(PoolID);
         }
+
+        ~FAR3Provider() => CacheControler.FreePool(PoolID);
+
 
         /// <summary>
         /// Creates a new FAR3Provider.
@@ -58,8 +62,10 @@ namespace FSO.Content.Framework
         /// <returns>A FAR3 archive.</returns>
         public T Get(ContentID ID)
         {
-            if (ID == null) return default(T);
-            if (ID.FileName != null) return Get(ID.FileName);
+            if (ID == null)
+                return default(T);
+            if (ID.FileName != null)
+                return Get(ID.FileName);
             return Get(ID.TypeID, ID.FileID);
         }
 
@@ -106,9 +112,7 @@ namespace FSO.Content.Framework
         {
             Far3ProviderEntry<T> entry = null;
             if (EntriesById.TryGetValue(id, out entry))
-            {
                 return Get(entry);
-            }
             return default(T);
         }
 
@@ -136,17 +140,21 @@ namespace FSO.Content.Framework
         /// <returns>A FAR3 archive.</returns>
         public T Get(Far3ProviderEntry<T> Entry)
         {
-            //thread safe.
-            return Cache.GetOrAdd(Entry.ID, (id) =>
+            if (CacheControler.Cached(PoolID, Entry.ID))
+                return CacheControler.Get<T>(PoolID, Entry.ID);
+            else
             {
+                T result;
                 byte[] data = Entry.Archive.GetEntry(Entry.FarEntry);
                 using (var stream = new MemoryStream(data, false))
                 {
-                    T result = this.Codec.Decode(stream);
-                    if (result is IFileInfoUtilizer) ((IFileInfoUtilizer)result).SetFilename(Entry.FarEntry.Filename);
-                    return result;
+                    result = this.Codec.Decode(stream);
+                    if (result is IFileInfoUtilizer)
+                        ((IFileInfoUtilizer)result).SetFilename(Entry.FarEntry.Filename);
                 }
-            });
+                CacheControler.Cache(PoolID, Entry.ID, Entry.FarEntry.Filename, result);
+                return result;
+            }
         }
 
         public bool Initialized;
@@ -154,49 +162,47 @@ namespace FSO.Content.Framework
         
         public void Init()
         {
-            if (Initialized) return;
+            if (Initialized)
+                return;
             Initialized = true;
-            Cache = new TimedReferenceCache<ulong, T>();
-            lock (Cache)
+
+            EntriesById = new Dictionary<ulong, Far3ProviderEntry<T>>();
+            EntriesByName = new Dictionary<string, Far3ProviderEntry<T>>();
+
+            if (FarFilePattern != null)
             {
-                EntriesById = new Dictionary<ulong, Far3ProviderEntry<T>>();
-                EntriesByName = new Dictionary<string, Far3ProviderEntry<T>>();
-
-                if (FarFilePattern != null)
+                List<string> FarFiles = new List<string>();
+                foreach (var File in ContentManager.AllFiles)
                 {
-                    List<string> FarFiles = new List<string>();
-                    foreach (var File in ContentManager.AllFiles)
+                    if (FarFilePattern.IsMatch(File.Replace('\\', '/')))
                     {
-                        if (FarFilePattern.IsMatch(File.Replace('\\', '/')))
-                        {
-                            FarFiles.Add(File);
-                        }
+                        FarFiles.Add(File);
                     }
-
-                    m_FarFiles = FarFiles.ToArray();
                 }
 
-                foreach (var FarPath in m_FarFiles)
+                m_FarFiles = FarFiles.ToArray();
+            }
+
+            foreach (var FarPath in m_FarFiles)
+            {
+                var archive = new FAR3Archive(ContentManager.GetPath(FarPath));
+                var entries = archive.GetAllFAR3Entries();
+
+                foreach (var entry in entries)
                 {
-                    var archive = new FAR3Archive(ContentManager.GetPath(FarPath));
-                    var entries = archive.GetAllFAR3Entries();
+                    var fileID = ((ulong)entry.FileID) << 32;
 
-                    foreach (var entry in entries)
+                    var referenceItem = new Far3ProviderEntry<T>(this)
                     {
-                        var fileID = ((ulong)entry.FileID) << 32;
+                        ID = fileID | entry.TypeID,
+                        Archive = archive,
+                        FarEntry = entry
+                    };
 
-                        var referenceItem = new Far3ProviderEntry<T>(this)
-                        {
-                            ID = fileID | entry.TypeID,
-                            Archive = archive,
-                            FarEntry = entry
-                        };
-
-                        EntriesById.Add(referenceItem.ID, referenceItem);
-                        if (entry.Filename != null)
-                        {
-                            EntriesByName[entry.Filename.ToLowerInvariant()] = referenceItem;
-                        }
+                    EntriesById.Add(referenceItem.ID, referenceItem);
+                    if (entry.Filename != null)
+                    {
+                        EntriesByName[entry.Filename.ToLowerInvariant()] = referenceItem;
                     }
                 }
             }

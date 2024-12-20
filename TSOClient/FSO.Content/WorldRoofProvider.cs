@@ -10,6 +10,8 @@ namespace FSO.Content
         public WorldRoofProvider(Content contentManager) : base(contentManager, new TextureCodec(new uint[] { }, true), 
             new Regex(contentManager.TS1? "GameData/Roofs/.*\\.bmp" : "housedata/roofs/.*\\.jpg"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("World Roof Provider");
             UseTS1 = contentManager.TS1;
         }
 

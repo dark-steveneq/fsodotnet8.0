@@ -13,6 +13,8 @@ namespace FSO.Content
         public HandgroupProvider(Content contentManager)
             : base(contentManager, new HandgroupCodec(), new Regex(".*/hands/groups/.*\\.dat"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("Handgroup Provider");
         }
     }
 }

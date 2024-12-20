@@ -13,6 +13,8 @@ namespace FSO.Content
         public WorldObjectGlobals(Content contentManager)
             : base(contentManager, new IffCodec(), new Regex(".*/globals/.*\\.iff"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("World Object Globals");
         }
     }
 }

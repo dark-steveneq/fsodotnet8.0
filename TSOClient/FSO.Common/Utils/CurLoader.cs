@@ -60,7 +60,8 @@ namespace FSO.Common.Utils
 
                 var reserved = io.ReadInt16();
                 var type = io.ReadInt16();
-                if (type != 2) throw new Exception("Not a cursor!");
+                if (type != 2)
+                    throw new Exception("Not a cursor!");
                 var images = io.ReadInt16(); //currently discard extra images...
 
                 //read first image

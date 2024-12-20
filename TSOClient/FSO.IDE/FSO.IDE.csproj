@@ -169,7 +169,7 @@
     <ProjectReference Include="..\FSO.HIT\FSO.HIT.csproj" />
     <ProjectReference Include="..\FSO.Vitaboy.Engine\FSO.Vitaboy.Engine.csproj" />
     <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
-    <ProjectReference Include="..\FSO.World\FSO.LotView.csproj" />
+    <ProjectReference Include="..\FSO.LotView\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

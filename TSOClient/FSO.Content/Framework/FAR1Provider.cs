@@ -21,9 +21,9 @@ namespace FSO.Content.Framework
         protected Dictionary<string, List<Far1ProviderEntry<T>>> EntriesOfType; //based on file extension
 
         protected IContentCodec<T> Codec;
-        protected TimedReferenceCache<string, T> Cache;
         private string[] FarFiles;
         private Regex FarFilePattern;
+        internal static int PoolID = CacheControler.NewPool("FAR1 Provider");
 
         /// <summary>
         /// Creates a new instance of FAR1Provider.
@@ -36,7 +36,10 @@ namespace FSO.Content.Framework
             this.ContentManager = contentManager;
             this.Codec = codec;
             this.FarFiles = farFiles;
+            CacheControler.UsePool(PoolID);
         }
+
+        ~FAR1Provider() => CacheControler.FreePool(PoolID);
 
         /// <summary>
         /// Creates a new instance of FAR1Provider.
@@ -127,21 +130,24 @@ namespace FSO.Content.Framework
 
         public T Get(Far1ProviderEntry<T> entry)
         {
-            return Cache.GetOrAdd(entry.FarEntry.Filename, (name) =>
+            if (CacheControler.Cached(PoolID, entry.FarEntry.Filename))
+                return CacheControler.Get<T>(PoolID, entry.FarEntry.Filename);
+            else
             {
+                T result = default(T);
                 byte[] data = entry.Archive.GetEntry(entry.FarEntry);
                 using (var stream = new MemoryStream(data, false))
                 {
-                    T result = default(T);
                     if (Codec == null)
                         result = (T)SmartCodec.Decode(stream, Path.GetExtension(entry.FarEntry.Filename));
                     else
                         result = this.Codec.Decode(stream);
                     if (result is IFileInfoUtilizer)
                         ((IFileInfoUtilizer)result).SetFilename(entry.FarEntry.Filename);
-                    return result;
                 }
-            });
+                CacheControler.Cache(PoolID, entry.FarEntry.Filename, result);
+                return result;
+            }            
         }
 
         public T ThrowawayGet(Far1ProviderEntry<T> entry)
@@ -149,7 +155,8 @@ namespace FSO.Content.Framework
             byte[] data = entry.Archive.GetEntry(entry.FarEntry);
             using (var stream = new MemoryStream(data, false))
             {
-                if (Codec == null) return (T)SmartCodec.Decode(stream, Path.GetExtension(entry.FarEntry.Filename));
+                if (Codec == null)
+                    return (T)SmartCodec.Decode(stream, Path.GetExtension(entry.FarEntry.Filename));
                 T result = this.Codec.Decode(stream);
                 return result;
             }
@@ -166,7 +173,6 @@ namespace FSO.Content.Framework
 
         public void Init()
         {
-            Cache = new TimedReferenceCache<string, T>();
             EntriesByName = new Dictionary<string, Far1ProviderEntry<T>>();
             EntriesOfType = new Dictionary<string, List<Far1ProviderEntry<T>>>();
 

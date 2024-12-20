@@ -9,6 +9,8 @@ namespace FSO.Content
     {
         public IniProvider(Content content) : base(content, new IniCodec(), new Regex("^sys/.*\\.ini"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("INI Provider");
         }
     }
 }

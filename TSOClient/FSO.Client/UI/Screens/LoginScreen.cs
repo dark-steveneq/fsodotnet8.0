@@ -161,6 +161,8 @@ namespace FSO.Client.UI.Screens
             base.Update(state);
             if (state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F1))
                 FSOFacade.Controller.ToggleDebugMenu();
+            if (state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F2))
+                FSOFacade.Controller.ToggleAssetMenu();
             if (state.ShiftDown && state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F10))
             {
                 GlobalSettings.Default.ClientVersion = "bad/version-23";

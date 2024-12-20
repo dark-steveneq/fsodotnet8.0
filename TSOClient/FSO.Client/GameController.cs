@@ -331,7 +331,8 @@ namespace FSO.Client
 
         public void ToggleDebugMenu()
         {
-            if(_DebugMenu == null){
+            if (_DebugMenu == null)
+            {
                 _DebugMenu = new UIDebugMenu();
                 _DebugDialog = new UI.DialogReference()
                 {
@@ -340,12 +341,43 @@ namespace FSO.Client
                 };
             }
 
-            if (_DebugVisible){
+            if (_DebugVisible)
+            {
                 _DebugVisible = false;
                 GameFacade.Screens.AddDialog(_DebugDialog);
-            }else{
+            }
+            else
+            {
                 _DebugVisible = true;
                 GameFacade.Screens.RemoveDialog(_DebugDialog);
+            }
+        }
+
+        private UIAssetMenu _AssetMenu;
+        private bool _AssetVisible = false;
+        private DialogReference _AssetDialog;
+
+        public void ToggleAssetMenu()
+        {
+            if (_AssetMenu == null)
+            {
+                _AssetMenu = new UIAssetMenu();
+                _AssetDialog = new UI.DialogReference()
+                {
+                    Dialog = _AssetMenu,
+                    Modal = true
+                };
+            }
+
+            if (_AssetVisible)
+            {
+                _AssetVisible = false;
+                GameFacade.Screens.AddDialog(_AssetDialog);
+            }
+            else
+            {
+                _AssetVisible = true;
+                GameFacade.Screens.RemoveDialog(_AssetDialog);
             }
         }
 

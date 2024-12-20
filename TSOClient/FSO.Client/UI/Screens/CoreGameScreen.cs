@@ -386,6 +386,9 @@ namespace FSO.Client.UI.Screens
             if (state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F1) && state.CtrlDown)
                 FSOFacade.Controller.ToggleDebugMenu();
 
+            if (state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F2) && state.CtrlDown)
+                FSOFacade.Controller.ToggleAssetMenu();
+
             if (CityRenderer != null)
             {
                 if (ZoomLevel > 3 && (CityRenderer.m_Zoomed == TerrainZoomMode.Near) != (ZoomLevel == 4)) ZoomLevel = (CityRenderer.m_Zoomed == TerrainZoomMode.Near) ? 4 : 5;

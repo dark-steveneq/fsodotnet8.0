@@ -198,7 +198,8 @@ namespace FSO.Client
             GameFacade.Emojis = new Common.Rendering.Emoji.EmojiProvider(GraphicsDevice);
             CurLoader.BmpLoaderFunc = Files.ImageLoader.FromStream;
             GameFacade.Cursor = new CursorManager(GraphicsDevice);
-            if (!GameFacade.Linux) GameFacade.Cursor.Init(FSO.Content.Content.Get().GetPath(""), false);
+            //if (!GameFacade.Linux)
+            //    GameFacade.Cursor.Init(FSO.Content.Content.Get().GetPath(""), false);
 
             /** Init any computed values **/
             GameFacade.Init();

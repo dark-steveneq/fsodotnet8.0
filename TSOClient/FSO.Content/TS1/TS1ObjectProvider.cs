@@ -19,6 +19,8 @@ namespace FSO.Content.TS1
 
         public TS1ObjectProvider(Content contentManager, TS1Provider provider) : base(contentManager)
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("TS1 Object Provider");
             GameObjects = new TS1SubProvider<IffFile>(provider, ".iff");
         }
 
@@ -27,7 +29,6 @@ namespace FSO.Content.TS1
             GameObjects.Init();
 
             Entries = new Dictionary<ulong, GameObjectReference>();
-            Cache = new TimedReferenceCache<ulong, GameObject>();
 
             ItemsByGUID = new Dictionary<uint, ObjectCatalogItem>();
             ItemsByCategory = new List<ObjectCatalogItem>[30];

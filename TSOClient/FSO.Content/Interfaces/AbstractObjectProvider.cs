@@ -11,17 +11,21 @@ namespace FSO.Content.Interfaces
 {
     public abstract class AbstractObjectProvider : IContentProvider<GameObject>
     {
-        protected TimedReferenceCache<ulong, GameObject> Cache = new TimedReferenceCache<ulong, GameObject>();
         protected Content ContentManager;
 
         public Dictionary<ulong, GameObjectReference> Entries;
         public Dictionary<ulong, GameObjectCatalogEnrich> CatalogEnrich = new Dictionary<ulong, GameObjectCatalogEnrich>();
         public List<GameObjectReference> ControllerObjects = new List<GameObjectReference>();
+        internal static int PoolID = CacheControler.NewPool("Object Provider");
 
         public AbstractObjectProvider(Content contentManager)
         {
             this.ContentManager = contentManager;
+            CacheControler.UsePool(PoolID);
         }
+
+        ~AbstractObjectProvider() => CacheControler.FreePool(PoolID);
+
 
         private bool WithSprites;
 
@@ -38,47 +42,41 @@ namespace FSO.Content.Interfaces
 
         public GameObject Get(ulong id)
         {
-            return Cache.GetOrAdd(id, (_) =>
+            if (CacheControler.Cached(PoolID, id))
+                return CacheControler.Get<GameObject>(PoolID, id);
+
+            GameObjectReference reference;
+            GameObjectResource resource = null;
+
+            lock (Entries)
             {
-                GameObjectReference reference;
-                GameObjectResource resource = null;
-
-                lock (Entries)
+                Entries.TryGetValue(id, out reference);
+                if (reference == null)
                 {
-                    Entries.TryGetValue(id, out reference);
-                    if (reference == null)
-                    {
-                        Console.WriteLine("Failed to get Object ID: " + id.ToString() + " (no resource)");
-                        return null;
-                    }
-                    /*
-                    lock (ProcessedFiles)
-                    {
-                        //if a file is processed but an object in it is not in the cache, it may have changed.
-                        //check for it again!
-                        ProcessedFiles.TryGetValue(reference.FileName, out resource);
-                    }
-                    */
+                    Console.WriteLine("Failed to get Object ID: " + id.ToString() + " (no resource)");
+                    return null;
                 }
+            }
 
-                resource = ProcessedFiles.GetOrAdd(reference.FileName, GenerateResource(reference));
-                if (resource.MainIff == null) return null;
-                foreach (var objd in resource.MainIff.List<OBJD>())
-                {
-                    if (objd.GUID == id)
-                    {
-                        var item = new GameObject
-                        {
-                            GUID = objd.GUID,
-                            OBJ = objd,
-                            Resource = resource
-                        };
-                        return item; //found it!
-                    }
-                }
-                Console.WriteLine("Failed to get Object ID: " + id.ToString() + " from resource " + resource.Name);
+            resource = ProcessedFiles.GetOrAdd(reference.FileName, GenerateResource(reference));
+            if (resource.MainIff == null)
                 return null;
-            });
+            foreach (var objd in resource.MainIff.List<OBJD>())
+            {
+                if (objd.GUID == id)
+                {
+                    var item = new GameObject
+                    {
+                        GUID = objd.GUID,
+                        OBJ = objd,
+                        Resource = resource
+                    };
+                    CacheControler.Cache(PoolID, id, item);
+                    return item; //found it!
+                }
+            }
+            Console.WriteLine("Failed to get Object ID: " + id.ToString() + " from resource " + resource.Name);
+            return null;
         }
 
         public GameObject Get(uint type, uint fileID)
@@ -148,11 +146,8 @@ namespace FSO.Content.Interfaces
             {
                 Entries.Remove(GUID);
             }
-            lock (Cache)
-            {
-                GameObject removed;
-                Cache.TryRemove(GUID, out removed);
-            }
+
+            CacheControler.Remove(PoolID, GUID);
         }
 
         public void ResetFile(IffFile iff)

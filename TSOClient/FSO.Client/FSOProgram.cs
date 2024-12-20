@@ -74,14 +74,6 @@ namespace FSO.Client
                         //normal style param
                         switch (cmd)
                         {
-                            case "dx11":
-                            case "dx":
-                                useDX = true;
-                                break;
-                            case "gl":
-                            case "ogl":
-                                useDX = false;
-                                break;
                             case "ts1":
                                 GlobalSettings.Default.TS1HybridEnable = true;
                                 break;
@@ -96,7 +88,7 @@ namespace FSO.Client
                                 break;
                             case "nosound":
                                 FSOEnvironment.NoSound = true;
-                                break;
+                                break;  
                         }
                     }
                 }
@@ -110,8 +102,6 @@ namespace FSO.Client
             }
 
             #endregion
-
-            UseDX = MonogameLinker.Link(useDX);
 
             var path = gameLocator.FindTheSimsOnline();
 
@@ -150,21 +140,13 @@ namespace FSO.Client
             {
                 var name = args.Name;
                 if (name.StartsWith("FSO.Scripts"))
-                {
                     return AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName == name);
-                }
-                else
-                {
-                    var assemblyPath = Path.Combine(MonogameLinker.AssemblyDir, args.Name.Substring(0, name.IndexOf(',')) + ".dll");
-                    var assembly = Assembly.LoadFrom(assemblyPath);
-                    return assembly;
-                }
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
-
+            return null;
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

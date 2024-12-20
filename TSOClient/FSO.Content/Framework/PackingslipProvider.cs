@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Xml;
 using FSO.Common.Content;
 
@@ -15,7 +16,7 @@ namespace FSO.Content.Framework
         private string PackingSlipFile;
         protected Dictionary<ulong, PackingslipEntry<T>> Entries;
         protected IContentCodec<T> Codec;
-        protected Dictionary<ulong, T> Cache;
+        private static int PoolID = CacheControler.NewPool("Packingslip Provider");
 
         /// <summary>
         /// Creates a new instance of PackingSlipProvider.
@@ -28,7 +29,10 @@ namespace FSO.Content.Framework
             this.ContentManager = contentManager;
             this.PackingSlipFile = packingslip;
             this.Codec = codec;
+            CacheControler.UsePool(PoolID);
         }
+
+        ~PackingslipProvider() => CacheControler.FreePool(PoolID);
 
         /// <summary>
         /// Gets a file from an archive.
@@ -49,38 +53,28 @@ namespace FSO.Content.Framework
         /// <returns>A file of the specified type.</returns>
         public T Get(ulong id)
         {
-            lock (Cache)
+            if (CacheControler.Cached(PoolID, id))
+                return CacheControler.Get<T>(PoolID, id);
+
+            var item = (Entries.ContainsKey(id)) ? Entries[id] : null;
+            if (item == null)
+                return default(T);
+
+            using (var dataStream = ContentManager.GetResource(item.FilePath, id))
             {
-                if (Cache.ContainsKey(id))
-                {
-                    return Cache[id];
-                }
-
-                var item = (Entries.ContainsKey(id))?Entries[id]:null;
-                if(item == null)
-                {
+                if (dataStream == null)
                     return default(T);
-                }
 
-                using (var dataStream = ContentManager.GetResource(item.FilePath, id))
-                {
-                    if (dataStream == null){
-                        return default(T);
-                    }
-
-                    T value = this.Codec.Decode(dataStream);
-                    Cache.Add(id, value);
-                    return value;
-                }
+                T value = this.Codec.Decode(dataStream);
+                CacheControler.Cache(PoolID, id, value);
+                return value;
             }
         }
-
 
         #region IContentProvider Members
         public void Init()
         {
             Entries = new Dictionary<ulong, PackingslipEntry<T>>();
-            Cache = new Dictionary<ulong, T>();
 
             var packingslip = new XmlDocument();
             packingslip.Load(ContentManager.GetPath(PackingSlipFile));

@@ -36,7 +36,8 @@ namespace FSO.Client.UI.Panels.Chat
             var dirty = false;
             var owner = ((Dialog.Owner.ActiveEntity as VMAvatar)?.AvatarState?.Permissions ?? VMTSOAvatarPermissions.Visitor);
 
-            if (owner != LastPerm) dirty = true;
+            if (owner != LastPerm)
+                dirty = true;
             if (!dirty && Dialog.Owner.vm.Ready)
             {
                 var channels = Dialog.Owner.vm.TSOState.ChatChannels;
@@ -53,7 +54,8 @@ namespace FSO.Client.UI.Panels.Chat
                 }
             }
 
-            if (dirty) Populate();
+            if (dirty)
+                Populate();
         }
 
         public void Populate()
@@ -65,7 +67,6 @@ namespace FSO.Client.UI.Panels.Chat
             var perm = ((Dialog.Owner.ActiveEntity as VMAvatar)?.AvatarState?.Permissions ?? VMTSOAvatarPermissions.Visitor);
 
             var ui = Content.Content.Get().CustomUI;
-            var btnTex = ui.Get("chat_cat.png").Get(GameFacade.GraphicsDevice);
 
             channels.Add(VMTSOChatChannel.MainChannel);
             channels.AddRange(Dialog.Owner.vm.TSOState.ChatChannels);
@@ -80,16 +81,13 @@ namespace FSO.Client.UI.Panels.Chat
                 Invalidate();
                 return;
             }
-            var btnCaption = TextStyle.DefaultLabel.Clone();
-            btnCaption.Size = 8;
-            btnCaption.Shadow = true;
 
             var active = Dialog.Owner.ChatPanel.ActiveChannel;
             var xPos = 0;
             foreach (var channel in channels)
             {
                 if (perm < channel.ViewPermMin) continue;
-                var btn = new UIButton(btnTex);
+                var btn = new UIChatCategoryButton();
                 if (!EditMode)
                 {
                     btn.Selected = (channel.ID == active);
@@ -106,7 +104,6 @@ namespace FSO.Client.UI.Panels.Chat
                 }
 
                 btn.Caption = channel.Name;
-                btn.CaptionStyle = btnCaption.Clone();
                 btn.CaptionStyle.Color = channel.TextColor;
                 btn.OnButtonClick += (btn2) => ChannelSelect(channel);
 
@@ -117,10 +114,9 @@ namespace FSO.Client.UI.Panels.Chat
 
             if (EditMode)
             {
-                var btn2 = new UIButton(btnTex);
+                var btn2 = new UIChatCategoryButton();
                 btn2.Caption = GameFacade.Strings.GetString("f113", "14");
                 btn2.Tooltip = GameFacade.Strings.GetString("f113", "16");
-                btn2.CaptionStyle = btnCaption;
                 btn2.OnButtonClick += NewButton;
 
                 btn2.X = xPos;
@@ -131,10 +127,9 @@ namespace FSO.Client.UI.Panels.Chat
                     Add(btn2);
                 }
                 
-                btn2 = new UIButton(btnTex);
+                btn2 = new UIChatCategoryButton();
                 btn2.Caption = GameFacade.Strings.GetString("f113", "15");
                 btn2.Tooltip = GameFacade.Strings.GetString("f113", "17");
-                btn2.CaptionStyle = btnCaption;
                 btn2.OnButtonClick += CancelEditButton;
 
                 btn2.X = xPos;
@@ -143,10 +138,9 @@ namespace FSO.Client.UI.Panels.Chat
             }
             else if (perm >= VMTSOAvatarPermissions.Owner)
             {
-                var btn2 = new UIButton(btnTex);
+                var btn2 = new UIChatCategoryButton();
                 btn2.Caption = GameFacade.Strings.GetString("f113", "13");
                 btn2.Tooltip = GameFacade.Strings.GetString("f113", "20");
-                btn2.CaptionStyle = btnCaption;
                 btn2.OnButtonClick += EditButton;
 
                 btn2.X = xPos;

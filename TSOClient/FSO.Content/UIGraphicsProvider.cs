@@ -31,6 +31,9 @@ namespace FSO.Content
         public UIGraphicsProvider(Content contentManager)
             : base(contentManager, new TextureCodec(MASK_COLORS), new Regex("uigraphics/.*\\.dat"))
         {
+            CacheControler.RemovePool(PoolID);
+            PoolID = CacheControler.NewPool("UIGraphics Provider");
+
             Files[0x00000Cb800000002] = "uigraphics/friendshipweb/friendshipwebalpha.tga";
             Files[0x00000Cbfb00000001] = "uigraphics/hints/hint_mechanicskill.bmp";
 
