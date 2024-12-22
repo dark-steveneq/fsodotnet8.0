@@ -16,7 +16,6 @@ namespace FSO.Server.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-
             var api = Api.INSTANCE;
 
             var result = new XMLList<ShardStatusItem>("Shard-Status-List");

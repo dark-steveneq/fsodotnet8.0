@@ -27,6 +27,10 @@ namespace FSO.LotView.Platform
         {
             LotThumbTarget?.Dispose();
             ObjThumbTarget?.Dispose();
+
+
+            LotThumbTarget = null;
+            ObjThumbTarget = null;
         }
 
         public Texture2D GetLotThumb(GraphicsDevice gd, WorldState state, Action<Texture2D> rooflessCallback)
@@ -176,7 +180,7 @@ namespace FSO.LotView.Platform
                 }
             }
 
-            var fpAvatar = state.Cameras.CameraFirstPerson?.FirstPersonAvatar;
+            var fpAvatar = state.Cameras.CameraDirect?.FirstPersonAvatar;
 
             foreach (var sim in bp.Avatars)
             {
@@ -222,8 +226,8 @@ namespace FSO.LotView.Platform
 
             gd.SetRenderTarget(ObjThumbTarget);
             var cpoints = new List<Vector3>();
-            var view = state.View;
-            var vp = view * state.Projection;
+            var view = cam.View;
+            var vp = view * cam.Projection;
             gd.BlendState = BlendState.NonPremultiplied;
             gd.RasterizerState = RasterizerState.CullNone;
             gd.DepthStencilState = DepthStencilState.Default;
@@ -246,12 +250,14 @@ namespace FSO.LotView.Platform
                 var oldObjRot = obj.Direction;
                 var oldObjPos = obj.UnmoddedPosition;
                 var oldRoom = obj.Room;
+                var oldContainer = obj.Container;
 
                 obj.Direction = Direction.NORTH;
                 obj.Room = 65535;
                 obj.OnRotationChanged(state);
                 obj.OnZoomChanged(state);
-                obj.Position = tilePosition;
+                obj.Container = null;
+                obj.UnmoddedPosition = tilePosition;
                 obj.Draw(gd, state);
 
                 var mat = obj.World * vp;
@@ -270,6 +276,7 @@ namespace FSO.LotView.Platform
                 //return everything to normal
                 obj.Direction = oldObjRot;
                 obj.Room = oldRoom;
+                obj.Container = oldContainer;
                 obj.UnmoddedPosition = oldObjPos;
                 obj.OnRotationChanged(state);
                 obj.OnZoomChanged(state);
@@ -300,6 +307,11 @@ namespace FSO.LotView.Platform
         public void RecacheWalls(GraphicsDevice gd, WorldState state, bool cutawayOnly)
         {
             bp.WCRC?.Generate(gd, state, cutawayOnly);
+        }
+
+        public void SwapBlueprint(Blueprint bp)
+        {
+            this.bp = bp;
         }
     }
 }

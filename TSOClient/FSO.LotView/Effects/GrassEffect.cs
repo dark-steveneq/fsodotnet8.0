@@ -44,6 +44,7 @@ namespace FSO.LotView.Effects
         private EffectParameter pGrassShininess;
         private EffectParameter pUseTexture;
         private EffectParameter pIgnoreColor;
+        private EffectParameter pCeiling;
         private EffectParameter pBias;
 
         private EffectParameter pParallaxHeight;
@@ -262,6 +263,14 @@ namespace FSO.LotView.Effects
                 pIgnoreColor.SetValue(value);
             }
         }
+
+        public bool Ceiling
+        {
+            set
+            {
+                pCeiling.SetValue(value);
+            }
+        }
         public float Bias
         {
             set
@@ -433,6 +442,7 @@ namespace FSO.LotView.Effects
             pGrassShininess = Parameters["GrassShininess"];
             pUseTexture = Parameters["UseTexture"];
             pIgnoreColor = Parameters["IgnoreColor"];
+            pCeiling = Parameters["Ceiling"];
             pBias = Parameters["Bias"];
 
             pParallaxHeight = Parameters["ParallaxHeight"];

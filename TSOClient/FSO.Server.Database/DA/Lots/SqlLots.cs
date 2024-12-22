@@ -89,8 +89,7 @@ namespace FSO.Server.Database.DA.Lots
                     return result;
                 }
             } catch (Exception)
-            {
-            }
+            {}
             t.Rollback();
             throw new Exception(failReason);
         }
@@ -269,10 +268,10 @@ namespace FSO.Server.Database.DA.Lots
         }
 
         private static string NHoodQuery = 
-                "UPDATE fso.fso_lots l " +
+                "UPDATE fso_lots l " +
                 "SET neighborhood_id = " +
                 "COALESCE((SELECT neighborhood_id " +
-                "FROM fso.fso_neighborhoods n " +
+                "FROM fso_neighborhoods n " +
                 "ORDER BY(POWER(((l.location & 65535) + 0.0) - ((n.location & 65535) + 0.0), 2) + " +
                 "POWER((FLOOR(l.location / 65536) + 0.0) - (FLOOR(n.location / 65536) + 0.0), 2)) " +
                 "LIMIT 1), 0) ";

@@ -304,6 +304,11 @@ namespace FSO.LotView.Platform
             _2d.End(bp.WallCache2D, true);
         }
 
+        public void SwapBlueprint(Blueprint bp)
+        {
+            this.bp = bp;
+        }
+
         public void ClearDrawBuffer(List<_2DDrawBuffer> buf)
         {
             foreach (var b in buf) b.Dispose();

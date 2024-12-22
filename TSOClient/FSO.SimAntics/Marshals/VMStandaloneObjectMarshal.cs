@@ -9,7 +9,6 @@ namespace FSO.SimAntics.Marshals
 {
     public class VMStandaloneObjectMarshal
     {
-
         public int Version = VMMarshal.LATEST_VERSION;
         public bool Compressed = true;
 
@@ -18,7 +17,8 @@ namespace FSO.SimAntics.Marshals
 
         public void Deserialize(BinaryReader reader)
         {
-            if (new string(reader.ReadChars(4)) != "FSOo") return;
+            if (new string(reader.ReadChars(4)) != "FSOo")
+                return;
 
             Version = reader.ReadInt32();
             Compressed = reader.ReadBoolean();
@@ -48,9 +48,8 @@ namespace FSO.SimAntics.Marshals
 
         public void SerializeInto(BinaryWriter writer)
         {
-            writer.Write(new char[] { 'F', 'S', 'O', 'o' });
-            writer.Write(Version);
-            writer.Write(Compressed);
+            writer.Write(['F', 'S', 'O', 'o']);
+            writer.Write(VMMarshal.LATEST_VERSION); writer.Write(Compressed);
 
             var uWriter = writer;
             MemoryStream cStream = null;
@@ -83,7 +82,8 @@ namespace FSO.SimAntics.Marshals
         public VMStandaloneObjectMarshal() { }
         public VMStandaloneObjectMarshal(VMMultitileGroup group)
         {
-            if (group.BaseObject is VMAvatar) return; //do not attempt to create standalone object marshals for avatars.
+            if (group.BaseObject is VMAvatar)
+                return; //do not attempt to create standalone object marshals for avatars.
             Entities = new VMEntityMarshal[group.Objects.Count];
             MultitileGroup = group.Save();
 

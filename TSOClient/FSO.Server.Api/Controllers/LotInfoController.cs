@@ -68,7 +68,8 @@ namespace FSO.Server.Api.Controllers
             using (var da = api.DAFactory.Get())
             {
                 var lot = IDForLocation(shardid, id);
-                if (lot == null) return NotFound();
+                if (lot == null || !System.IO.File.Exists(Path.Combine(api.Config.NFSdir, "Lots/" + lot.Value.ToString("x8") + "/thumb.png")))
+                    return NotFound();
 
                 FileStream stream;
                 try
@@ -78,7 +79,7 @@ namespace FSO.Server.Api.Controllers
 
                     return File(ndat, "image/png");
                 }
-                catch (Exception e)
+                catch
                 {
                     return NotFound();
                 }

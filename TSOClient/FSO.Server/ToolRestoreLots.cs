@@ -13,9 +13,6 @@ using System.Linq;
 
 namespace FSO.Server
 {
-    /// <summary>
-    /// Tool for restoring lots from a folder by adding references to them in the database
-    /// </summary>
     public class ToolRestoreLots : ITool
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();
@@ -92,11 +89,6 @@ namespace FSO.Server
             }
         }
 
-
-        /// <summary>
-        /// Run lot restoration
-        /// </summary>
-        /// <returns>Non-zero error code</returns>
         public int Run()
         {
             if (Options.RestoreFolder == null)
@@ -109,11 +101,11 @@ namespace FSO.Server
             VMContext.InitVMConfig(false);
             Content.Content.Init(Config.GameLocation, Content.ContentMode.SERVER);
 
-            Console.WriteLine($"Starting property restore - scanning { Options.RestoreFolder }...");
+            Console.WriteLine($"Starting property restore - scanning {Options.RestoreFolder}...");
 
             if (!Directory.Exists(Options.RestoreFolder))
             {
-                Console.WriteLine($"Could not find the given directory: { Options.RestoreFolder }");
+                Console.WriteLine($"Could not find the given directory: {Options.RestoreFolder}");
                 return 1;
             }
 
@@ -129,7 +121,7 @@ namespace FSO.Server
             {
                 foreach (var file in files)
                 {
-                    Console.WriteLine($"===== { Path.GetFileName(file) } =====");
+                    Console.WriteLine($"===== {Path.GetFileName(file)} =====");
 
                     var data = File.ReadAllBytes(file);
 
@@ -151,11 +143,12 @@ namespace FSO.Server
 
                     var lot = new DbLot();
                     lot.name = state.Name;
-                    lot.location = state.LotID;
+                    lot.location = Options.Location != 0 ? Options.Location : state.LotID;
                     lot.description = "Restored from FSOV";
+                    if (Options.Category != -1) state.PropertyCategory = (byte)Options.Category;
                     if (state.PropertyCategory == 255) state.PropertyCategory = 11;
                     lot.category = (LotCategory)state.PropertyCategory;
-                    lot.owner_id = RemapAvatarID(da, state.OwnerID);
+                    lot.owner_id = RemapAvatarID(da, Options.Owner != 0 ? Options.Owner : state.OwnerID);
                     lot.neighborhood_id = state.NhoodID;
                     lot.ring_backup_num = 0;
                     lot.shard_id = Options.ShardId;
@@ -225,6 +218,15 @@ namespace FSO.Server
                         if (estate != null)
                         {
                             estate.OwnerID = RemapAvatarID(da, estate.OwnerID); //make sure the owners exist
+
+                            if (Options.Donate)
+                            {
+                                if (estate.OwnerID != 0)
+                                {
+                                    // Any object with an owner should become donated
+                                    estate.ObjectFlags |= VMTSOObjectFlags.FSODonated;
+                                }
+                            }
                         }
                     }
 
@@ -251,7 +253,7 @@ namespace FSO.Server
                             {
                                 Console.Write("++");
                                 Console.Write(guid);
-                                Console.Write(": Does not exist in DB. Creating new entry...");
+                                Console.Write($": {obj.PersistID} Does not exist in DB. Creating new entry...");
                                 objectCreate++;
                                 CreateDbObject(da, obj, lot);
                                 Done();
@@ -261,8 +263,8 @@ namespace FSO.Server
                                 if (dbObj.lot_id != null)
                                 {
                                     Console.Write("!!");
-                                    Console.Write(dbObj.dyn_obj_name ?? dbObj.type.ToString());
-                                    Console.Write(": In another property! ");
+                                    Console.Write(string.IsNullOrEmpty(dbObj.dyn_obj_name) ? dbObj.type.ToString() : dbObj.dyn_obj_name);
+                                    Console.Write($": {obj.PersistID} In another property ({dbObj.lot_id} with owner {dbObj.owner_id})! ");
                                     if (Options.Safe || Options.Objects)
                                     {
                                         if (Options.Objects)
@@ -289,8 +291,8 @@ namespace FSO.Server
                                 else
                                 {
                                     Console.Write("~~");
-                                    Console.Write(dbObj.dyn_obj_name ?? dbObj.type.ToString());
-                                    Console.Write(": In a user's inventory. ");
+                                    Console.Write(string.IsNullOrEmpty(dbObj.dyn_obj_name) ? dbObj.type.ToString() : dbObj.dyn_obj_name);
+                                    Console.Write($": {obj.PersistID} In a user's inventory ({dbObj.owner_id}). ");
                                     if (dbObj.type != guid) Console.Write("(WRONG GUID - MAKING NEW OBJECT) ");
                                     if (Options.Objects || dbObj.type != guid)
                                     {
@@ -308,7 +310,8 @@ namespace FSO.Server
                                     }
                                 }
                             }
-                        } catch (Exception e)
+                        }
+                        catch (Exception e)
                         {
                             Console.WriteLine($"Failed - {e.Message}. Continuing...");
                         }

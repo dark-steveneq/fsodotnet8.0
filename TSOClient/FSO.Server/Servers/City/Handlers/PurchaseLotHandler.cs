@@ -146,7 +146,8 @@ namespace FSO.Server.Servers.City.Handlers
                     var oldLoc = MapCoordinates.Unpack(ownedLot.location);
                     var moveCost = price - Realestate.GetPurchasePrice(oldLoc.X, oldLoc.Y);
                     moveCost += 2000; //flat rate for moving location
-                    if (packet.MayorMode) moveCost = 2000;
+                    if (packet.MayorMode)
+                        moveCost = 2000;
 
                     var transactionResult = db.Avatars.Transaction(session.AvatarId, uint.MaxValue, moveCost, 5); //expenses misc... maybe add specific for lot
                     resultFunds = transactionResult.source_budget;

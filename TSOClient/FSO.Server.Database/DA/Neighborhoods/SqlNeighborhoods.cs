@@ -62,7 +62,7 @@ namespace FSO.Server.Database.DA.Neighborhoods
         {
             return Context.Connection.Query<DbNeighborhood>(
                 "SELECT neighborhood_id " +
-                "FROM fso.fso_neighborhoods n " +
+                "FROM fso_neighborhoods n " +
                 "ORDER BY(POWER(((@location & 65535) + 0.0) - ((n.location & 65535) + 0.0), 2) + " +
                 "POWER((FLOOR(@location / 65536) + 0.0) - (FLOOR(n.location / 65536) + 0.0), 2)) " +
                 "LIMIT 1", new { location = location }).FirstOrDefault();

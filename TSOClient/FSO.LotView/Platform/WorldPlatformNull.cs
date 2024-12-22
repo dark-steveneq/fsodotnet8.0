@@ -55,5 +55,10 @@ namespace FSO.LotView.Platform
             state.PrepareLighting();
             _2d.End(bp.WallCache2D, true);
         }
+
+        public void SwapBlueprint(Blueprint bp)
+        {
+            this.bp = bp;
+        }
     }
 }

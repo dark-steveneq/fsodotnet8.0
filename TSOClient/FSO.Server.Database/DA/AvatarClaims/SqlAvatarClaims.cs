@@ -51,7 +51,7 @@ namespace FSO.Server.Database.DA.AvatarClaims
         }
         public IEnumerable<DbAvatarActive> GetAllActiveAvatars()
         {
-            return Context.Connection.Query<DbAvatarActive>("SELECT b.*, a.location FROM fso.fso_avatar_claims as a "+
+            return Context.Connection.Query<DbAvatarActive>("SELECT b.*, a.location FROM fso_avatar_claims as a "+
                 "inner join fso.fso_avatars as b ON a.avatar_id = b.avatar_id;");
         }
         public int? GetAllActiveAvatarsCount()

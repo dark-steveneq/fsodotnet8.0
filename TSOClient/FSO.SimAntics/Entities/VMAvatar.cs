@@ -640,13 +640,18 @@ namespace FSO.SimAntics
             }
 
             var tree = GetRoutineWithOwner(LEAVE_LOT_TREE, Thread.Context);
-            var routine = tree.routine;
 
             var qaction = GetAction(LEAVE_LOT_ACTION, this, Thread.Context, false);
-            qaction.Flags |= TTABFlags.FSOSkipPermissions;
-            if (qaction != null) Thread.EnqueueAction(qaction);
+            if (qaction != null)
+            {
+                qaction.Flags |= TTABFlags.FSOSkipPermissions;
+                Thread.EnqueueAction(qaction);
+            }
+            else
+                KillTimeout = FORCE_DELETE_TIMEOUT;
 
-            if (KillTimeout == -1) KillTimeout = 0;
+            if (KillTimeout == -1)
+                KillTimeout = 0;
         }
 
         private void UpdateHeadSeek()

@@ -251,13 +251,14 @@ namespace FSO.SimAntics.NetPlay.Model
             saveDaywear = saveDaywear || (bID == 0x24E0000000D || bID == 0x10000000D);
             BodyOutfit = (saveDaywear)?avatar.DefaultSuits.Daywear.ID : bID;
 
-            HeadOutfit = avatar.HeadOutfit.ID;
+            HeadOutfit = avatar.HeadOutfit?.ID ?? 0;
             Name = avatar.Name;
             Permissions = avatar.AvatarState.Permissions;
             AvatarFlags = ((VMTSOAvatarState)avatar.TSOState).Flags;
             Budget = avatar.TSOState.Budget.Value;
 
-            for (int i = 0; i < MotiveData.Length; i++) MotiveData[i] = avatar.GetMotiveData((VMMotive)i);
+            for (int i = 0; i < MotiveData.Length; i++)
+                MotiveData[i] = avatar.GetMotiveData((VMMotive)i);
             MotiveData[(int)(VMMotive.SleepState)] = 0;
             for (int i = 0; i < PersonDataMap.Length; i++)
             {

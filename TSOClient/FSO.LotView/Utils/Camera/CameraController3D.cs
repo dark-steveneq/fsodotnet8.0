@@ -105,16 +105,13 @@ namespace FSO.LotView.Utils.Camera
                 CamHeight = fp.CamHeight;
                 CamHeight -= relative.Y - fp.FPCamHeight;
 
-                if (fp.FirstPersonAvatar != null)
-                {
-                    fp.FirstPersonAvatar.Avatar.HideHead = false;
-                }
+                if (previous is CameraControllerDirect direct)
+                    if (direct.FirstPersonAvatar != null)
+                        direct.FirstPersonAvatar.Avatar.HideHead = false;
             }
             else if (previous is CameraController2D)
-            {
                 //just guess camera zoom and rotation?
                 Inherit2D((CameraController2D)previous, world);
-            }
             return previous;
         }
 
@@ -176,6 +173,8 @@ namespace FSO.LotView.Utils.Camera
             }
             MouseWasDown = md;
         }
+
+        public virtual void PreDraw(World world) { }
 
         public void ZoomHold(float intensity)
         {

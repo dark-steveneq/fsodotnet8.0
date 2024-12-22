@@ -4,6 +4,7 @@ using FSO.Server.Utils;
 using Ninject;
 using Ninject.Parameters;
 using System;
+using CommandLine;
 
 namespace FSO.Server
 {
@@ -20,75 +21,39 @@ namespace FSO.Server
             object toolOptions = null;
 
             string[] a2 = args;
-            if (args.Length == 0) a2 = ["--run"];
-            switch (a2[0])
-            {
-                case "--run":
-                    toolType = typeof(ToolRunServer);
-                    //toolOptions = subOptions;
-                    break;
-                case "--db-init":
-                    toolType = typeof(ToolInitDatabase);
-                    //toolOptions = subOptions;
-                    break;
-                case "--import-nhood":
-                    toolType = typeof(ToolImportNhood);
-                    var opts = new ImportNhoodOptions();
-                    opts.ShardId = int.Parse(a2[1]);
-                    opts.JSON = a2[2];
-                    toolOptions = opts;
-                    break;
-                case "--restore-lots":
-                    toolType = typeof(ToolRestoreLots);
-                    //toolOptions = subOptions;
-                    break;
-                default:
-                    Console.WriteLine("Commands:");
-                    Console.WriteLine("  --run");
-                    Console.WriteLine("  --db-init");
-                    Console.WriteLine("  --import-nhood");
-                    Console.WriteLine("  --restore-lots");
-                    Environment.Exit(1);
-                    break;
-            }
+            if (args.Length == 0)
+                a2 = ["run"];
 
-            /*
-            var result = CommandLine.Parser.Default.ParseArguments<ProgramOptions>(a2)
-                .WithParsed(options => {
-                    switch (options.ToString())
-                    {
-                        case "run":
-                            toolType = typeof(ToolRunServer);
-                            //toolOptions = subOptions;
-                            break;
-                        case "db-init":
-                            toolType = typeof(ToolInitDatabase);
-                            //toolOptions = subOptions;
-                            break;
-                        case "import-nhood":
-                            toolType = typeof(ToolImportNhood);
-                            //toolOptions = subOptions;
-                            break;
-                        case "restore-lots":
-                            toolType = typeof(ToolRestoreLots);
-                            //toolOptions = subOptions;
-                            break;
-                        default:
-                            Console.WriteLine("Use --help");
-                            Environment.Exit(1);
-                            break;
-                    }
+            var parser = new Parser(with =>
+            {
+                with.EnableDashDash = true;
+                with.HelpWriter = Console.Out;
+            });
+            var result = parser.ParseArguments<RunServerOptions, DatabaseInitOptions, ImportNhoodOptions, RestoreLotsOptions>(a2)
+                .WithParsed<RunServerOptions>(options =>
+                {
+                    toolType = typeof(ToolRunServer);
+                    toolOptions = options;
                 })
-                .WithNotParsed(action => {
-                    Environment.Exit(1);
+                .WithParsed<DatabaseInitOptions>(options =>
+                {
+                    toolType = typeof(DatabaseInitOptions);
+                    toolOptions = options;
+                })
+                .WithParsed<ImportNhoodOptions>(options =>
+                {
+                    toolType = typeof(ImportNhoodOptions);
+                    toolOptions = options;
+                })
+                .WithParsed<RestoreLotsOptions>(options =>
+                {
+                    toolType = typeof(RestoreLotsOptions);
+                    toolOptions = options;
                 });
-            */
- 
+
 
             if (toolType == null)
-            {
                 Environment.Exit(1);
-            }
 
             var kernel = new StandardKernel(
                 new ServerConfigurationModule(),

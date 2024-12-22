@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FSO.LotView.Utils.Camera;
 
 namespace FSO.Client.UI.Screens
 {
@@ -282,7 +283,8 @@ namespace FSO.Client.UI.Screens
             GameFacade.Game.IsFixedTimeStep = (vm == null || vm.Ready);
 
             Visible = World?.Visible == true && World?.State.Cameras.HideUI == false;
-            GameFacade.Game.IsMouseVisible = Visible;
+            bool directControl = (World?.State.Cameras.ActiveCamera as CameraControllerFP)?.CaptureMouse == true;
+            GameFacade.Game.IsMouseVisible = Visible && !directControl;
 
             if (state.WindowFocused && state.NewKeys.Contains(Microsoft.Xna.Framework.Input.Keys.F1) && state.CtrlDown)
                 FSOFacade.Controller.ToggleDebugMenu();
