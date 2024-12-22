@@ -41,8 +41,6 @@ namespace FSO.Client
             else
                 gameLocator = new WindowsLocator();
 
-            bool useDX = false;
-
             #region User resolution parmeters
 
             foreach (var arg in args)
@@ -59,7 +57,8 @@ namespace FSO.Client
                         GlobalSettings.Default.GraphicsWidth = ScreenWidth;
                         GlobalSettings.Default.GraphicsHeight = ScreenHeight;
                     }
-                    catch (Exception) { }
+                    catch
+                    {}
                 }
                 else if (arg[0] == '-')
                 {
@@ -74,14 +73,6 @@ namespace FSO.Client
                         //normal style param
                         switch (cmd)
                         {
-                            case "dx11":
-                            case "dx":
-                                useDX = true;
-                                break;
-                            case "gl":
-                            case "ogl":
-                                useDX = false;
-                                break;
                             case "ts1":
                                 GlobalSettings.Default.TS1HybridEnable = true;
                                 break;
@@ -110,8 +101,6 @@ namespace FSO.Client
             }
 
             #endregion
-
-            UseDX = MonogameLinker.Link(useDX);
 
             var path = gameLocator.FindTheSimsOnline();
 
@@ -150,17 +139,10 @@ namespace FSO.Client
             {
                 var name = args.Name;
                 if (name.StartsWith("FSO.Scripts"))
-                {
                     return AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName == name);
-                }
-                else
-                {
-                    var assemblyPath = Path.Combine(MonogameLinker.AssemblyDir, args.Name.Substring(0, name.IndexOf(',')) + ".dll");
-                    var assembly = Assembly.LoadFrom(assemblyPath);
-                    return assembly;
-                }
+                return null;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

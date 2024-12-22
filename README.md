@@ -10,24 +10,20 @@ Server seems to work fine. The client on the other hand needs a little bit of wo
 ## Client
 - ~~Possibly rewrite UI script parser so that it doesn't use any abandoned libraries~~
 - ~~Make sure runs on Linux~~
+- Fix cursor loading
 - Make sound and texture profiles
 - Fix texture rendering
 - Fix sound issue
 
 ## Server
 - ~~Fix crashing (sometimes?) when buying a lot~~ (It's caused by missconfiguration)
-- Make `FSO.Server` actually use `CommandLineParser`
+- ~~Make `FSO.Server` actually use `CommandLineParser`~~
 - Mina.NET: Remove `BinaryFormatter`
 - ~~Port `FSO.Server.API`~~
 - Fix `FSO.Server.Watchdog`
 - ~~Remove `FSO.Server.Core`~~
-- Implement config.yml format
-  - Automatic migration from config.json
-  - Migrate version.txt contents to config.yml
-  - Optional "any version" toggle if the server only uses base TSO files
-  - Use a JDBC-like database configuration
 - Improve logger
-- Implement SQLite3 database driver
+- ~~Implement SQLite3 database driver~~ Port to EFCore
   - Automatic database creation
 - ~~Implement optional register page~~
 - ~~Make admin avatars start off with 999999999 simoleons~~
@@ -42,9 +38,6 @@ Server seems to work fine. The client on the other hand needs a little bit of wo
 - ~~Rename project folders~~
 - Remove unused projects
 - Document each project
-
-# RFC
-- Isolate client from server
 
 # Development on Linux
 This project seems perfectly compilable (outside of compilation issues) on Linux using VSCode and `dotnet` CLI. If you're using an open source build of VSCode (like VSCodium) you should concider using the proprietary build since debugging is disabled on those because of the debugger's license
