@@ -86,9 +86,9 @@ namespace FSO.Client.UI.Framework.Parser
                 }
                 else if (data[i] == '"')
                     isString = !isString;
-                else if (isString || (data[i] != '\n' && data[i] != '\t' && data[i] != ' '))
+                else if (isString || (data[i] != '\n' && data[i] != '\r' && data[i] != '\t' && data[i] != ' '))
                     output[^1] += data[i];
-                else if (output[^1].Length > 0 && (data[i] == ' ' || data[i] == '\t') || data[i] == '\n')
+                else if (output[^1].Length > 0 && (data[i] == ' ' || data[i] == '\t') || data[i] == '\n' || data[i] == '\r')
                     output = [.. output, ""];
             }
             return output;

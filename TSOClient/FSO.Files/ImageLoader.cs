@@ -33,42 +33,6 @@ namespace FSO.Files
         {
             return WinFromStreamP(gd, str, 0);
         }
-
-        public static Texture2D WinFromStreamP(GraphicsDevice gd, Stream str, int premult)
-        {
-            //test for targa
-            str.Seek(-18, SeekOrigin.End);
-            byte[] sig = new byte[16];
-            str.Read(sig, 0, 16);
-            str.Seek(0, SeekOrigin.Begin);
-            if (Encoding.Default.GetString(sig) == "TRUEVISION-XFILE")
-            {
-                try
-                {
-                    var tga = new TargaImagePCL.TargaImage(str);
-                    var tex = new Texture2D(gd, tga.Image.Width, tga.Image.Height);
-                    tex.SetData(tga.Image.ToBGRA(true));
-                    return tex;
-                }
-                catch (Exception)
-                {
-                    return null; //bad tga
-                }
-            }
-            else
-            {
-                Image<Rgba32> image = Image.Load(str).CloneAs<Rgba32>();
-                byte[] pixelArray = new byte[image.Width * image.Height * 4];
-                image.CopyPixelDataTo(pixelArray);
-                image.Dispose();
-                var tex = new Texture2D(gd, image.Width, image.Height);
-                tex.SetData(pixelArray);
-                ManualTextureMaskSingleThreaded(ref tex, MASK_COLORS.ToArray());
-                return tex;
-            }
-        }
-
-        /*
         public static Texture2D WinFromStreamP(GraphicsDevice gd, Stream str, int premult)
         {
             //if (!UseSoftLoad)
@@ -180,8 +144,6 @@ namespace FSO.Files
             }
             
         }
-        */
-
         public static void ManualTextureMaskSingleThreaded(ref Texture2D Texture, uint[] ColorsFrom)
         {
             var ColorTo = Microsoft.Xna.Framework.Color.Transparent.PackedValue;

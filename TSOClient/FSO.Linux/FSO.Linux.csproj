@@ -4,13 +4,17 @@
     <AssemblyName>FreeSO</AssemblyName>
     <TargetFramework>net8.0</TargetFramework>
     <PublishSingleFile>true</PublishSingleFile>
-    <ApplicationIcon>fso.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../FSO.Client/FSO.Client.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Icon.bmp" />
-    <EmbeddedResource Include="fso.ico" />
+	  <EmbeddedResource Include="Icon.bmp">
+		  <LogicalName>Icon.bmp</LogicalName>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="Icon.ico">
+		  <LogicalName>Icon.ico</LogicalName>
+	  </EmbeddedResource>
   </ItemGroup>
 </Project>
