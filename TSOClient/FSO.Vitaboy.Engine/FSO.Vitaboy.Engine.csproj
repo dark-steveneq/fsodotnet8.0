@@ -20,7 +20,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
     <AssemblyTitle>TSO.Vitaboy.engine</AssemblyTitle>
     <Product>TSO.Vitaboy.engine</Product>
     <Copyright>Copyright ©  2013</Copyright>

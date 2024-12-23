@@ -10,7 +10,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\WindowsGL\Debug\</OutputPath>

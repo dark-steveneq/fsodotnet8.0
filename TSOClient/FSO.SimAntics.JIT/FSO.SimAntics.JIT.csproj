@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
     <AssemblyTitle>FSO.SimAntics.JIT</AssemblyTitle>
     <Product>FSO.SimAntics.JIT</Product>
     <Copyright>Copyright ©  2018</Copyright>

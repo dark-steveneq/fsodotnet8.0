@@ -3,15 +3,6 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyName>Volcanic</AssemblyName>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
@@ -21,7 +12,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -36,7 +27,7 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>IDE.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ServerRelease|AnyCPU'">
     <OutputPath>bin\ServerRelease\</OutputPath>
@@ -49,46 +40,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="Common\AvatarAnimatorControl.cs">
+    <Compile Update="Common\**.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Common\InteractiveDGRPControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Common\ObjThumbnailControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Common\Debug3DControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\BHAVViewControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpSoundControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpAnimControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpScopeControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpObjectControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpFlagsControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpLabelControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpValueControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpComboControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="EditorComponent\OperandForms\OpUnknownControl.cs">
+    <Compile Update="EditorComponent\**.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="EntityInspector.cs">
@@ -100,55 +55,7 @@
     <Compile Update="ObjectBrowser.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="ResourceBrowser\DGRPEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\FSOMEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\IFFResComponent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\OTFResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\PIFFEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\UpgradeEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\XMLEntryEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\OBJDEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\OBJDSelectorControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\OBJfEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\BHAVResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\SLOTResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\SPR2ResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\BCONResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\TTABResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\STRResourceControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="ResourceBrowser\ResourceEditors\UnknownResourceControl.cs">
+    <Compile Update="ResourceBrowser\**.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
@@ -169,110 +76,13 @@
     <ProjectReference Include="..\FSO.HIT\FSO.HIT.csproj" />
     <ProjectReference Include="..\FSO.Vitaboy.Engine\FSO.Vitaboy.Engine.csproj" />
     <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
-    <ProjectReference Include="..\FSO.World\FSO.LotView.csproj" />
+    <ProjectReference Include="..\FSO.LotView\FSO.LotView.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Icon.bmp" />
-    <Content Include="assimp-vc140-mt.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assimp32.dll" />
-    <Content Include="Assimp64.dll" />
-    <Content Include="IDE.ico" />
-    <Content Include="IDERes\arrowBG.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\arrowFG.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\bg.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\breakpoint.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\pause.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\play.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\reset.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\returnfalse.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\returntrue.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\stepin.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\stepout.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\btns\stepover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\current.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\diagbg.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\tree\comment_box.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\tree\comment_bubble.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\tree\goto_box.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\tree\label_box.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\viewBG.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\VolcanicLogo.png" />
-    <Content Include="IDERes\done.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\false.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\falseReturn.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\nodeBG.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\nodeFG.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\true.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="IDERes\trueReturn.png">
+	<EmbeddedResource Include="Icon.bmp">
+		<LogicalName>Icon.bmp</LogicalName>
+	</EmbeddedResource>
+    <Content Include="IDERes\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

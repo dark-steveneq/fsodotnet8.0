@@ -14,13 +14,17 @@ namespace FSO.Windows
     {
         public static bool UseDX = true;
 
-        public static void Main(string[] args)
+        public static void Init()
         {
             ClipboardHandler.Default = new WinFormsClipboard();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             FSOProgram.ShowDialog = ShowDialog;
+        }
 
+        public static void Main(string[] args)
+        {
+            Init();
             if (new FSOProgram().InitWithArguments(args))
                 new GameStartProxy().Start(UseDX);
         }

@@ -19,6 +19,7 @@
     <Company>Robert Burke (rob@mle.ie)</Company>
     <Copyright>100% Freeware</Copyright>
     <AssemblyVersion>1.4.*</AssemblyVersion>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>

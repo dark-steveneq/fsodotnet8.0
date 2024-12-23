@@ -9,7 +9,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>Android;Debug;iOS;Release;ServerRelease;Windows</Configurations>
+    <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableWindowsTargetting>true</EnableWindowsTargetting>
   </PropertyGroup>

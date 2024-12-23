@@ -1,9 +1,11 @@
 ﻿#define IDE_COMPAT
 
+using FSO.Common.Rendering.Framework.IO;
 using FSO.Common.Utils;
 using FSO.IDE.Common;
 using FSO.SimAntics.JIT.Roslyn;
 using FSO.UI;
+using FSO.Windows;
 using System;
 using System.IO;
 using System.Reflection;
@@ -23,7 +25,7 @@ namespace FSO.IDE
         /// </summary>
         static void Main(string[] args)
         {
-            FSO.Windows.Program.InitWindows();
+            FSO.Windows.Program.Init();
             TimedReferenceController.SetMode(CacheType.PERMANENT);
 
             try
@@ -34,7 +36,8 @@ namespace FSO.IDE
                 type = asm.GetType("FSO.Client.GameStartProxy");
                 StartProxy = Activator.CreateInstance(type) as IGameStartProxy;
                 AssemblyUtils.Entry = asm;
-            } catch (Exception)
+            } 
+            catch
             {
                 try
                 {
@@ -51,7 +54,8 @@ namespace FSO.IDE
                 }
             }
 
-            if (!FSOProgram.InitWithArguments(args)) return;
+            if (!FSOProgram.InitWithArguments(args))
+                return;
             (new VolcanicStartProxy()).Start(args);
         }
     }
