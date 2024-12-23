@@ -6,6 +6,8 @@ using FSO.IDE.Common;
 using FSO.SimAntics.JIT.Roslyn;
 using FSO.UI;
 using FSO.Windows;
+using FSO.Files;
+using FSO.SimAntics;
 using System;
 using System.IO;
 using System.Reflection;
@@ -72,7 +74,7 @@ namespace FSO.IDE
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Files.Formats.IFF.Chunks.SPR2FrameEncoder.QuantizeFrame = SpriteEncoderUtils.QuantizeFrame;
+            FSO.Files.Formats.IFF.Chunks.SPR2FrameEncoder.QuantizeFrame = SpriteEncoderUtils.QuantizeFrame;
             FSO.Files.Formats.IFF.IffFile.RETAIN_CHUNK_DATA = true;
             FSO.SimAntics.VM.SignalBreaks = true;
             FSO.Client.Debug.IDEHook.SetIDE(new IDETester());
