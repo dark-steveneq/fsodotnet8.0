@@ -94,22 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ServerOptions.cs" />
-    <Compile Remove="Servers\Api\ApiServer.cs" />
-    <Compile Remove="Servers\Api\ApiServerConfiguration.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminHostsController.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminOAuthController.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminShardOpController.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminShardsController.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminTasksController.cs" />
-    <Compile Remove="Servers\Api\Controllers\Admin\AdminUsersController.cs" />
-    <Compile Remove="Servers\Api\Controllers\AuthController.cs" />
-    <Compile Remove="Servers\Api\Controllers\CitySelectorController.cs" />
-    <Compile Remove="Servers\Api\Controllers\StatusCodeHandler.cs" />
-    <Compile Remove="Servers\Api\Controllers\UserAPI\CityInfoController.cs" />
-    <Compile Remove="Servers\Api\Controllers\UserAPI\RegistrationController.cs" />
-    <Compile Remove="Servers\Api\JsonWebToken\JWTTokenAuthentication.cs" />
-    <Compile Remove="Servers\Api\JsonWebToken\JWTUserIdentity.cs" />
-    <Compile Remove="Servers\Api\NancyExtensions.cs" />
   </ItemGroup>
   <PropertyGroup />
 </Project>

@@ -137,7 +137,8 @@ namespace FSO.Common.Utils
                 //ConcurrentDictionary does not ensure we don't accidentally create things twice. This lock will help us, but I don't think it ensures a perfect world.
                 lock (this) {
                     WeakReference prev;
-                    if (Cache.TryGetValue(key, out prev) && prev.IsAlive) return prev; //already created this value.
+                    if (Cache.TryGetValue(key, out prev) && prev.IsAlive)
+                        return prev; //already created this value.
                     created = valueFactory(k);
                     didCreate = true;
                     return new WeakReference(created, true);

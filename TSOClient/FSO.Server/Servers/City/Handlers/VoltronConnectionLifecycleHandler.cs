@@ -1,5 +1,6 @@
 ﻿using FSO.Common.DataService;
 using FSO.Common.DataService.Model;
+using FSO.Server.Common;
 using FSO.Server.Database.DA;
 using FSO.Server.Framework;
 using FSO.Server.Framework.Aries;
@@ -7,6 +8,7 @@ using FSO.Server.Framework.Voltron;
 using FSO.Server.Protocol.Gluon.Packets;
 using FSO.Server.Protocol.Voltron.Packets;
 using FSO.Server.Servers.City.Domain;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace FSO.Server.Servers.City.Handlers
 {
@@ -50,9 +52,13 @@ namespace FSO.Server.Servers.City.Handlers
             }
 
             IVoltronSession voltronSession = (IVoltronSession)session;
+            string pointless = "";
+            RewriteCache.Rewrites.TryRemove(voltronSession.AvatarId, out pointless);
+            
             VoltronSessions.UnEnroll(session);
 
-            if (voltronSession.IsAnonymous) return;
+            if (voltronSession.IsAnonymous)
+                return;
 
             Liveness.EnqueueChange(() => {
                 //unenroll in voltron group, mark as offline in data service.

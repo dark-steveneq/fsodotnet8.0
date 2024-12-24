@@ -126,7 +126,7 @@ namespace FSO.Server.Framework.Aries
                 PlainAcceptor.Bind(IPEndPointUtils.CreateIPEndPoint(Config.Binding.Replace("100", "101")));
                 LOG.Info("Listening on " + PlainAcceptor.LocalEndPoint + " in the plain");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LOG.Error("Unknown error bootstrapping server: "+ex.ToString(), ex);
             }
@@ -342,7 +342,8 @@ namespace FSO.Server.Framework.Aries
 
             foreach (var interceptor in _SessionInterceptors)
             {
-                try{
+                try
+                {
                     interceptor.SessionClosed(ariesSession);
                 }
                 catch (Exception ex)
@@ -415,8 +416,9 @@ namespace FSO.Server.Framework.Aries
             {
                 try {
                     db.Hosts.SetStatus(Config.Call_Sign, DbHostStatus.down);
-                }catch(Exception ex){
                 }
+                catch
+                {}
             }
         }
 

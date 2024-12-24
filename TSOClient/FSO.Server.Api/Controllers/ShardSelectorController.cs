@@ -3,8 +3,10 @@ using FSO.Server.Common;
 using FSO.Server.Database.DA.Shards;
 using FSO.Server.Protocol.CitySelector;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Net;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace FSO.Server.Api.Controllers
 {
@@ -24,10 +26,13 @@ namespace FSO.Server.Api.Controllers
             var api = Api.INSTANCE;
 
             var user = api.RequireAuthentication(Request);
-            if (avatarId == null){
+            if (avatarId == null)
                 //Using 0 to mean no avatar for CAS
                 avatarId = "0";
-            }
+
+            var host = Request.Host.Host;
+            if (host == "localhost")
+                host = "127.0.0.1";
 
             using (var db = api.DAFactory.Get())
             {
@@ -87,12 +92,11 @@ namespace FSO.Server.Api.Controllers
                     result.ConnectionID = ticket.ticket_id;
                     result.AvatarID = avatarId;
 
+                    RewriteCache.Rewrites.GetOrAdd(uint.Parse(avatarId), _ => host);
                     return ApiResponse.Xml(HttpStatusCode.OK, result);
                 }
                 else
-                {
                     return ERROR_SHARD_NOT_FOUND();
-                }
             }
         }
     }

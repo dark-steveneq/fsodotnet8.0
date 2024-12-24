@@ -1,4 +1,5 @@
-﻿using FSO.Server.Database.DA;
+﻿using FSO.Server.Common;
+using FSO.Server.Database.DA;
 using FSO.Server.Framework.Aries;
 using FSO.Server.Framework.Voltron;
 using FSO.Server.Protocol.Voltron.Packets;
@@ -31,7 +32,6 @@ namespace FSO.Server.Servers.Lot.Handlers
 
             IVoltronSession voltronSession = (IVoltronSession)session;
             Lots.SessionClosed(voltronSession);
-
         }
 
         public void SessionCreated(IAriesSession session)

@@ -6,8 +6,12 @@ using FSO.Server.Framework.Voltron;
 using FSO.Server.Protocol.Electron.Packets;
 using FSO.Server.Protocol.Gluon.Packets;
 using FSO.Server.Servers.City.Domain;
+using FSO.Server.Api;
 using NLog;
 using System;
+using FSO.Server.Database.DA.Shards;
+using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace FSO.Server.Servers.City.Handlers
 {
@@ -95,12 +99,32 @@ namespace FSO.Server.Servers.City.Handlers
                         db.Lots.CreateLotServerTicket(ticket);
                     }
 
+                    var ip = find.Server.PublicHost;
+                    var from = RewriteCache.Rewrites.GetOrAdd(session.AvatarId, null);
+                    if (from != "")
+                    {
+                        var api = FSO.Server.Api.Api.INSTANCE;
+                        if (api.Config.SingleNode)
+                           ip = from + ip[ip.IndexOf(":")..];
+                        else if (api.Config.Rewrites != null && api.Config.Rewrites.ContainsKey(from))
+                        {
+                            foreach (KeyValuePair<string, string> rule in api.Config.Rewrites[from])
+                            {
+                                if (ip.Contains(rule.Key))
+                                {
+                                    ip = ip.Replace(rule.Key, rule.Value);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     session.Write(new FindLotResponse
                     {
                         Status = find.Status,
                         LotId = find.LotId, //can be modified by job matchmaker
                         LotServerTicket = ticket.ticket_id,
-                        Address = find.Server.PublicHost,
+                        Address = ip,
                         User = session.AvatarId.ToString()
                     });
                 }

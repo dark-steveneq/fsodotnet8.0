@@ -15,34 +15,10 @@
     <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="MailTemplates\MailBan.html" />
-    <None Remove="MailTemplates\MailBase.html" />
-    <None Remove="MailTemplates\MailPasswordReset.html" />
-    <None Remove="MailTemplates\MailPasswordResetOK.html" />
-    <None Remove="MailTemplates\MailRegistrationOK.html" />
-    <None Remove="MailTemplates\MailRegistrationToken.html" />
-    <None Remove="MailTemplates\MailUnban.html" />
+    <None Remove="MailTemplates\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MailTemplates\MailBan.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailBase.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailPasswordReset.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailPasswordResetOK.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailRegistrationOK.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailRegistrationToken.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MailTemplates\MailUnban.html">
+    <Content Include="MailTemplates\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

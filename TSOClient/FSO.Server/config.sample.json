@@ -1,6 +1,6 @@
 ﻿{
   "gameLocation": "/game",
-  "secret": "YOUR SECRET GOES HERE, IT SHOULD BE 32 CHARS LONG AND RANDOM",
+  "secret": "YOUR SECRET GOES HERE, IT SHOULD BE 64 CHARS LONG AND RANDOM",
   "simNFS": "/simNFS",
 
   "database": {
@@ -47,12 +47,6 @@
 			}
 		}
 	},
-
-    "api": {
-      "enabled": true,
-      "bindings": [ "https://auth.east.ea.com:443/", "http://localhost:80/" ],
-      "controllers": [ "auth", "citySelector" ]
-    },
 
     "userApi": {
       "enabled": true,
