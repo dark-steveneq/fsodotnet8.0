@@ -163,9 +163,11 @@ namespace FSO.LotView.Utils
                     {
                         foreach (var dgrpSprite in image.Sprites)
                         {
-                            if (dgrpSprite == null) continue;
+                            if (dgrpSprite == null)
+                                continue;
                             var texture = world._2D.GetWorldTexture(dgrpSprite);
-                            if (texture == null || texture.ZBuffer == null) { continue; }
+                            if (texture.Pixel == null)
+                                continue;
 
                             var isDynamic = dgrpSprite.SpriteID >= DynamicSpriteBaseID && dgrpSprite.SpriteID < (DynamicSpriteBaseID + NumDynamicSprites);
                             if (isDynamic)
@@ -175,9 +177,7 @@ namespace FSO.LotView.Utils
                                 var isVisible = (dynamicIndex > 63) ? ((DynamicSpriteFlags2 & ((ulong)0x1 << (dynamicIndex-64))) > 0):
                                     ((DynamicSpriteFlags & ((ulong)0x1 << dynamicIndex)) > 0);
                                 if (!isVisible)
-                                {
                                     continue;
-                                }
                             }
                             var sprite = new _2DStandaloneSprite(); //do not use sprite pool for DGRP, since we can reliably remember our own sprites.
                             sprite.Pixel = texture.Pixel;
@@ -212,10 +212,14 @@ namespace FSO.LotView.Utils
                             sprite.DestRect.X = (int)(pxX + pxOff.X);
                             sprite.DestRect.Y = (int)(pxY + pxOff.Y);
 
-                            if (sprite.DestRect.X < minX) minX = sprite.DestRect.X;
-                            if (sprite.DestRect.Y < minY) minY = sprite.DestRect.Y;
-                            if (sprite.DestRect.X + sprite.Pixel.Width > maxX) maxX = sprite.DestRect.X + sprite.Pixel.Width;
-                            if (sprite.DestRect.Y + sprite.Pixel.Height > maxY) maxY = sprite.DestRect.Y + sprite.Pixel.Height;
+                            if (sprite.DestRect.X < minX)
+                                minX = sprite.DestRect.X;
+                            if (sprite.DestRect.Y < minY)
+                                minY = sprite.DestRect.Y;
+                            if (sprite.DestRect.X + sprite.Pixel.Width > maxX)
+                                maxX = sprite.DestRect.X + sprite.Pixel.Width;
+                            if (sprite.DestRect.Y + sprite.Pixel.Height > maxY)
+                                maxY = sprite.DestRect.Y + sprite.Pixel.Height;
 
                             sprite.WorldPosition = centerRelative * 3f;
                             var y = sprite.WorldPosition.Z;

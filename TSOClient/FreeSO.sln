@@ -79,6 +79,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSO.SimAntics.JIT.Roslyn", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Linux", "FSO.Linux\FSO.Linux.csproj", "{A1068F63-DFE6-49B7-965E-7A6FE5B7FB0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSO.Content.TSO", "FSO.Content.TSO\FSO.Content.TSO.csproj", "{66A2EA11-69C5-41E1-A0BA-B19359A367FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Android|Any CPU = Android|Any CPU
@@ -468,6 +470,16 @@ Global
 		{A1068F63-DFE6-49B7-965E-7A6FE5B7FB0C}.ServerRelease|Any CPU.Build.0 = Release|Any CPU
 		{A1068F63-DFE6-49B7-965E-7A6FE5B7FB0C}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1068F63-DFE6-49B7-965E-7A6FE5B7FB0C}.Windows|Any CPU.Build.0 = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Android|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Android|Any CPU.Build.0 = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.ServerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.ServerRelease|Any CPU.Build.0 = Release|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A2EA11-69C5-41E1-A0BA-B19359A367FB}.Windows|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

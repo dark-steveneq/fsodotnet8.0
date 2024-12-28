@@ -164,7 +164,7 @@ namespace FSO.Client.UI.Panels
             this.Add(Queue);
 
             ObjectHolder = new UIObjectHolder(vm, World, this);
-            Touch = new UILotControlTouchHelper(this);
+            Touch = new UILotControlTouchHelper(this, true);
             Add(Touch);
             SetupQuery();
 

@@ -183,7 +183,8 @@
     <ProjectReference Include="..\FSO.UI\FSO.UI.csproj" />
     <ProjectReference Include="..\FSO.Common\FSO.Common.csproj" />
     <ProjectReference Include="..\FSO.Content\FSO.Content.csproj" />
-    <!--<ProjectReference Include="..\FSO.Debug\FSO.Debug.csproj" />-->
+	<ProjectReference Include="..\FSO.Content.TSO\FSO.Content.TSO.csproj" />
+	<!--<ProjectReference Include="..\FSO.Debug\FSO.Debug.csproj" />-->
     <ProjectReference Include="..\FSO.Files\FSO.Files.csproj" />
     <ProjectReference Include="..\FSO.SimAntics\FSO.SimAntics.csproj" />
     <ProjectReference Include="..\FSO.HIT\FSO.HIT.csproj" />

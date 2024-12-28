@@ -26,9 +26,7 @@ namespace FSO.Server.Api.Controllers.Admin
             {
                 var userModel = da.Users.GetById(user.UserID);
                 if (userModel == null)
-                {
                     throw new Exception("Unable to find user");
-                }
                 return ApiResponse.Json(HttpStatusCode.OK, userModel);
             }
         }
@@ -38,13 +36,15 @@ namespace FSO.Server.Api.Controllers.Admin
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            if (id == "current") return current();
+            if (id == "current")
+                return current();
             var api = Api.INSTANCE;
             api.DemandModerator(Request);
             using (var da = api.DAFactory.Get())
             {
                 var userModel = da.Users.GetById(uint.Parse(id));
-                if (userModel == null) { throw new Exception("Unable to find user"); }
+                if (userModel == null) 
+                    throw new Exception("Unable to find user");
                 return ApiResponse.Json(HttpStatusCode.OK, userModel);
             }
         }
@@ -66,17 +66,13 @@ namespace FSO.Server.Api.Controllers.Admin
             {
                 User userModel = da.Users.GetById(uint.Parse(user_id));
 
-                if(userModel.is_banned)
-                {
+                if (userModel.is_banned)
                     da.Users.UpdateBanned(uint.Parse(user_id), false);
-                }
 
                 var ban = da.Bans.GetByIP(userModel.last_ip);
 
-                if (ban!=null)
-                {
+                if (ban != null)
                     da.Bans.Remove(userModel.user_id);
-                }
 
                 return ApiResponse.Json(HttpStatusCode.OK, new
                 {
@@ -103,28 +99,22 @@ namespace FSO.Server.Api.Controllers.Admin
                 User recipient = da.Users.GetById(uint.Parse(mail.target_id));
 
                 if (recipient == null)
-                {
                     return ApiResponse.Json(HttpStatusCode.OK, new 
                     {
                         status = "invalid_target_id"
                     });
-                }
 
                 if (mail.subject.Trim() == "")
-                {
                     return ApiResponse.Json(HttpStatusCode.OK, new 
                     {
                         status = "subject_empty"
                     });
-                }
 
                 if (mail.body.Trim() == "")
-                {
                     return ApiResponse.Json(HttpStatusCode.OK, new 
                     {
                         status = "body_empty"
                     });
-                }
 
                 // Save mail in db
                 int message_id = da.Inbox.CreateMessage(new DbInboxMsg
@@ -188,30 +178,24 @@ namespace FSO.Server.Api.Controllers.Admin
                 User userModel = da.Users.GetById(uint.Parse(ban.user_id));
 
                 if (userModel == null)
-                {
                     return ApiResponse.Json(HttpStatusCode.OK, new
                     {
                         status = "invalid_id"
                     });
-                }
 
                 if (ban.ban_type == "ip")
                 {
                     if (da.Bans.GetByIP(userModel.last_ip) != null)
-                    {
                         return ApiResponse.Json(HttpStatusCode.OK, new
                         {
                             status = "already_banned"
                         });
-                    }
 
                     if (userModel.last_ip == "127.0.0.1")
-                    {
                         return ApiResponse.Json(HttpStatusCode.OK, new
                         {
                             status = "invalid_ip"
                         });
-                    }
 
                     da.Bans.Add(userModel.last_ip, userModel.user_id, ban.reason, int.Parse(ban.end_date), userModel.client_id);
 
@@ -227,12 +211,10 @@ namespace FSO.Server.Api.Controllers.Admin
                 else if (ban.ban_type == "user")
                 {
                     if (userModel.is_banned)
-                    {
                         return ApiResponse.Json(HttpStatusCode.NotFound, new
                         {
                             status = "already_banned"
                         });
-                    }
 
                     da.Users.UpdateBanned(userModel.user_id, true);
 
@@ -258,17 +240,16 @@ namespace FSO.Server.Api.Controllers.Admin
         [HttpGet]
         public IActionResult Get(int limit, int offset, string order)
         {
-            if (limit == 0) limit = 20;
-            if (order == null) order = "register_date";
+            if (limit == 0)
+                limit = 20;
+            if (order == null)
+                order = "register_date";
             var api = Api.INSTANCE;
             api.DemandModerator(Request);
             using (var da = api.DAFactory.Get())
             {
-
                 if (limit > 100)
-                {
                     limit = 100;
-                }
 
                 var result = da.Users.All((int)offset, (int)limit);
                 return ApiResponse.PagedList<User>(Request, HttpStatusCode.OK, result);
@@ -285,10 +266,8 @@ namespace FSO.Server.Api.Controllers.Admin
             api.DemandModerator(nuser);
 
             if (user.is_admin)
-            {
                 //I need admin claim to do this
                 api.DemandAdmin(nuser);
-            }
 
             using (var da = api.DAFactory.Get())
             {
@@ -301,10 +280,25 @@ namespace FSO.Server.Api.Controllers.Admin
                 userModel.register_date = Epoch.Now;
                 userModel.is_banned = false;
 
+                var ip = ApiUtils.GetIP(Request);
+                userModel.register_ip = ip;
+                userModel.last_ip = ip;
+                userModel.client_id = "0";
+                userModel.last_login = 0;
+                var passhash = PasswordHasher.Hash(user.password);
+                var authSettings = new UserAuthenticate();
+                authSettings.scheme_class = passhash.scheme;
+                authSettings.data = passhash.data;
+
                 var userId = da.Users.Create(userModel);
 
+                authSettings.user_id = userId;
+                da.Users.CreateAuth(authSettings);
+
+
                 userModel = da.Users.GetById(userId);
-                if (userModel == null) { throw new Exception("Unable to find user"); }
+                if (userModel == null)
+                    throw new Exception("Unable to find user");
                 return ApiResponse.Json(HttpStatusCode.OK, userModel);
             }
         }

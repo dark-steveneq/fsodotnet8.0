@@ -22,6 +22,39 @@ namespace FSO.Client.Rendering.City
         private UILotControlTouchHelper Touch;
         public CityCameraCenter CenterCam { get; set; }
 
+        // Set a center delta, then tween to 0 to smootly move to a target location.
+        public Vector2 CenterDelta;
+        public float TweenDeltaX
+        {
+            get
+            {
+                return CenterDelta.X;
+            }
+            set
+            {
+                if (CenterDelta.X != 0)
+                {
+                    CenterTile.X -= value - CenterDelta.X;
+                }
+                CenterDelta.X = value;
+            }
+        }
+        public float TweenDeltaY
+        {
+            get
+            {
+                return CenterDelta.Y;
+            }
+            set
+            {
+                if (CenterDelta.Y != 0)
+                {
+                    CenterTile.Y -= value - CenterDelta.Y;
+                }
+                CenterDelta.Y = value;
+            }
+        }
+
         public float FarUIFade
         {
             get { return Math.Max(0, Math.Min(1, 6.5f - Zoom3D)); }
@@ -102,7 +135,7 @@ namespace FSO.Client.Rendering.City
         public CityCamera3D() : base(GameFacade.GraphicsDevice, new Vector3(256, 0, 256), new Vector3(256, 0, 256), Vector3.Up)
         {
             NearPlane = 0.25f;
-            Touch = new UILotControlTouchHelper(this);
+            Touch = new UILotControlTouchHelper(this, false);
             Touch.MinZoom = 0.25f;
             Touch.MaxZoom = 2.5f;
             InvalidateCamera();
@@ -398,7 +431,7 @@ namespace FSO.Client.Rendering.City
 
                 if (_Zoomed != TerrainZoomMode.Lot && UserModZoom)
                 {
-                    var zoom = (Zoom3D > 4.5f) ? TerrainZoomMode.Far : TerrainZoomMode.Near;
+                    var zoom = (city.Plugin?.ForceNear != true && Zoom3D > 4.5f) ? TerrainZoomMode.Far : TerrainZoomMode.Near;
                     if (_Zoomed != zoom)
                     {
                         _Zoomed = zoom;

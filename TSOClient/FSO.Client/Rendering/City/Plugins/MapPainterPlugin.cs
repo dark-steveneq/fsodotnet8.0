@@ -116,6 +116,7 @@ namespace FSO.Client.Rendering.City.Plugins
 
         private bool MouseDown;
         private bool MouseClicked;
+        private int MouseFloatTimer;
 
         public Color[] TerrainTypes = new Color[] {
             new Color(0, 255, 0), //grass
@@ -124,6 +125,15 @@ namespace FSO.Client.Rendering.City.Plugins
             new Color(255, 255, 255), //snow
             new Color(255, 255, 0) //sand
         };
+
+        public byte[] TerrainTypeIndices = new byte[] {
+            0, //grass
+            4, //water
+            2, //rock
+            3, //snow
+            1 //sand
+        };
+
         public string[] TerrainTypeNames = new string[] {
             "Grass",
             "Water",
@@ -157,6 +167,7 @@ namespace FSO.Client.Rendering.City.Plugins
 
         public MapPainterPlugin(Terrain city) : base(city)
         {
+            ForceNear = true;
         }
 
         private void AddChange(Point pos)
@@ -219,7 +230,7 @@ namespace FSO.Client.Rendering.City.Plugins
                     City.Draw2DPoly(false);
                     break;
                 case PainterMode.ELEVATION_CIRCLE:
-                    
+
                     BrushFunc(BrushSize, (x, y, strength) =>
                     {
                         //if (strength <= 0) return;
@@ -266,7 +277,8 @@ namespace FSO.Client.Rendering.City.Plugins
 
         public override void TileHover(Vector2? tile)
         {
-            if (tile != null && MouseDown) {
+            if (tile != null && MouseDown)
+            {
                 var wallPos = new Point((int)Math.Round(tile.Value.X), (int)Math.Round(tile.Value.Y));
                 var newPt = tile.Value.ToPoint();
                 switch (Mode)
@@ -281,8 +293,16 @@ namespace FSO.Client.Rendering.City.Plugins
                             WallDir = (int)DirectionUtils.PosMod(Math.Round(Math.Atan2(yd, xd) / (Math.PI / 2)), 4);
 
                             Array.Copy(OriginalData, City.MapData.RoadData, OriginalData.Length);
-                            if (Erasing) EraseWall(City.MapData.RoadData, WallBase, WallLength, WallDir);
-                            else DrawWall(City.MapData.RoadData, WallBase, WallLength, WallDir);
+
+                            try
+                            {
+                                if (Erasing) EraseWall(City.MapData.RoadData, WallBase, WallLength, WallDir);
+                                else DrawWall(City.MapData.RoadData, WallBase, WallLength, WallDir);
+                            }
+                            catch (IndexOutOfRangeException)
+                            {
+                                Array.Copy(OriginalData, City.MapData.RoadData, OriginalData.Length);
+                            }
 
                             City.GenerateCityMesh(GameFacade.GraphicsDevice, ChangeBounds);
                         }
@@ -292,10 +312,22 @@ namespace FSO.Client.Rendering.City.Plugins
                         {
                             BrushFunc(BrushSize, (x, y, strength) =>
                             {
-                                if (strength > 0) City.MapData.TerrainTypeColorData[newPt.X+x + (newPt.Y+y) * 512] = TerrainTypes[SelectedModifier];
+                                int targetX = newPt.X + x;
+                                int targetY = newPt.Y + y;
+
+                                if (targetX < 0 || targetX >= 512 || targetY < 0 || targetY >= 512)
+                                {
+                                    return;
+                                }
+
+                                if (strength > 0)
+                                {
+                                    City.MapData.TerrainTypeColorData[targetX + targetY * 512] = TerrainTypes[SelectedModifier];
+                                    City.MapData.TerrainType[targetX + targetY * 512] = TerrainTypeIndices[SelectedModifier];
+                                }
                             });
 
-                            AddChange(new Rectangle(newPt.X - (1+BrushSize), newPt.Y - (1+BrushSize), 3+BrushSize*2, 3+BrushSize*2));
+                            AddChange(new Rectangle(newPt.X - (1 + BrushSize), newPt.Y - (1 + BrushSize), 3 + BrushSize * 2, 3 + BrushSize * 2));
                             City.GenerateCityMesh(GameFacade.GraphicsDevice, ChangeBounds);
                             MouseClicked = false;
                             break;
@@ -303,13 +335,14 @@ namespace FSO.Client.Rendering.City.Plugins
                         break;
                     case PainterMode.ELEVATION_CIRCLE:
                         if (OriginalData == null) return;
-                        
+
                         BrushFunc(BrushSize, (x, y, strength) =>
                         {
                             var multiplier = (Accelerate) ? 2 : 1;
-                            if (strength > 0) {
+                            if (strength > 0)
+                            {
                                 var loc = new Point(wallPos.X + x, wallPos.Y + y);
-                                if (ElevationMod.ContainsKey(loc)) ElevationMod[loc] += ((Erasing)?-1:1)* strength * multiplier / 5;
+                                if (ElevationMod.ContainsKey(loc)) ElevationMod[loc] += ((Erasing) ? -1 : 1) * strength * multiplier / 5;
                                 else ElevationMod[loc] = ((Erasing) ? -1 : 1) * strength * multiplier / 5;
                             }
                         });
@@ -354,7 +387,15 @@ namespace FSO.Client.Rendering.City.Plugins
                         {
                             BrushFunc(BrushSize, (x, y, strength) =>
                             {
-                                if (strength > 0) City.MapData.ForestDensityData[newPt.X + x + (newPt.Y + y) * 512] = ForestDensities[SelectedModifier];
+                                int targetX = newPt.X + x;
+                                int targetY = newPt.Y + y;
+
+                                if (targetX < 0 || targetX >= 512 || targetY < 0 || targetY >= 512)
+                                {
+                                    return;
+                                }
+
+                                if (strength > 0) City.MapData.ForestDensityData[targetX + targetY * 512] = ForestDensities[SelectedModifier];
                             });
 
                             AddChange(new Rectangle(newPt.X - (1 + BrushSize), newPt.Y - (1 + BrushSize), 3 + BrushSize * 2, 3 + BrushSize * 2));
@@ -368,7 +409,15 @@ namespace FSO.Client.Rendering.City.Plugins
                         {
                             BrushFunc(BrushSize, (x, y, strength) =>
                             {
-                                if (strength > 0) City.MapData.ForestTypeData[newPt.X + x + (newPt.Y + y) * 512] = ForestTypes[SelectedModifier];
+                                int targetX = newPt.X + x;
+                                int targetY = newPt.Y + y;
+
+                                if (targetX < 0 || targetX >= 512 || targetY < 0 || targetY >= 512)
+                                {
+                                    return;
+                                }
+
+                                if (strength > 0) City.MapData.ForestTypeData[targetX + targetY * 512] = ForestTypes[SelectedModifier];
                             });
 
                             AddChange(new Rectangle(newPt.X - (1 + BrushSize), newPt.Y - (1 + BrushSize), 3 + BrushSize * 2, 3 + BrushSize * 2));
@@ -410,6 +459,7 @@ namespace FSO.Client.Rendering.City.Plugins
 
             MouseDown = true;
             MouseClicked = true;
+            MouseFloatTimer = 0;
         }
 
         public override void TileMouseUp(Vector2? tile)
@@ -450,21 +500,21 @@ namespace FSO.Client.Rendering.City.Plugins
                 {
                     var index = mod.Key.X + mod.Key.Y * 512;
                     if (index < 0 || index > City.MapData.ElevationData.Length) continue;
-                    City.MapData.ElevationData[index] = (byte)Math.Max(0, Math.Min(255, Math.Round(City.MapData.ElevationData[index]+mod.Value)));
+                    City.MapData.ElevationData[index] = (byte)Math.Max(0, Math.Min(255, Math.Round(City.MapData.ElevationData[index] + mod.Value)));
                 }
                 City.GenerateCityMesh(GameFacade.GraphicsDevice, ChangeBounds);
                 ElevationFrames = 5;
             }
-            
+
             var pressed = state.NewKeys;
             Erasing = state.CtrlDown;
             Accelerate = state.ShiftDown;
 
 
-            for (int i = 2; i<11; i++)
+            for (int i = 2; i < 11; i++)
             {
                 Keys key;
-                if (Enum.TryParse("F"+i, out key))
+                if (Enum.TryParse("F" + i, out key))
                 {
                     var dir = Path.Combine(FSOEnvironment.UserDir, "CityPainterSave" + i + "/");
                     if (pressed.Contains(key))
@@ -490,8 +540,12 @@ namespace FSO.Client.Rendering.City.Plugins
 
             if (state.MouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
-                if (MouseDown) RestoreOld();
-                MouseDown = false;
+                if (MouseFloatTimer++ >= 1)
+                {
+                    if (MouseDown) RestoreOld();
+                    MouseDown = false;
+                    MouseFloatTimer = 0;
+                }
             }
             var keys = state.KeyboardState;
             if (keys.IsKeyDown(Keys.R)) SwitchMode(PainterMode.ROAD);
@@ -509,7 +563,7 @@ namespace FSO.Client.Rendering.City.Plugins
             if (keys.IsKeyDown(Keys.NumPad4)) SelectedModifier = 4;
 
             if (pressed.Contains(Keys.Up)) BrushSize += 1;
-            if (pressed.Contains(Keys.Down)) BrushSize = Math.Max(0, BrushSize - 1);    
+            if (pressed.Contains(Keys.Down)) BrushSize = Math.Max(0, BrushSize - 1);
         }
 
         private Texture2D LoadTex(string Path)
@@ -540,13 +594,16 @@ namespace FSO.Client.Rendering.City.Plugins
             {
                 for (int x = 0; x < boxWidth; x++)
                 {
-                    var dist = Math.Sqrt((x-width)*(x-width) + (y-width)*(y-width)) / (width + 0.5);
-                    callback(x-width, y-width, (float)Math.Max(0, Math.Cos(dist * Math.PI / 2)));
+                    var dist = Math.Sqrt((x - width) * (x - width) + (y - width) * (y - width)) / (width + 0.5);
+                    int targetX = x - width;
+                    int targetY = y - width;
+
+                    callback(targetX, targetY, (float)Math.Max(0, Math.Cos(dist * Math.PI / 2)));
                 }
             }
         }
 
-        public void RestoreOld ()
+        public void RestoreOld()
         {
             if (OriginalData != null)
             {

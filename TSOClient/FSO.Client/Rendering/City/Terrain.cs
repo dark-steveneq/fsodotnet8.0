@@ -23,6 +23,7 @@ using FSO.Common.Rendering.Framework.IO;
 using FSO.Client.UI.Panels;
 using FSO.Common.Rendering;
 using FSO.LotView.Utils.Camera;
+using FSO.Common.Utils;
 
 namespace FSO.Client.Rendering.City
 {
@@ -54,7 +55,9 @@ namespace FSO.Client.Rendering.City
         public Dictionary<Vector2, LotTileEntry> LotTileLookup = new Dictionary<Vector2, LotTileEntry>();
 
         public bool HandleMouse = false;
-        public CityMapData MapData { get
+        public CityMapData MapData
+        {
+            get
             {
                 return Content.MapData;
             }
@@ -83,7 +86,7 @@ namespace FSO.Client.Rendering.City
         };
 
         //TODO: NEW 3D
-        public ICityCamera Camera = (GraphicsModeControl.Mode == GlobalGraphicsMode.Full3D)?new CityCamera3D():(ICityCamera)new CityCamera2D();
+        public ICityCamera Camera = (GraphicsModeControl.Mode == GlobalGraphicsMode.Full3D) ? new CityCamera3D() : (ICityCamera)new CityCamera2D();
 
         public static float NEAR_ZOOM_SIZE = 288;
         public TerrainZoomMode m_Zoomed
@@ -132,7 +135,7 @@ namespace FSO.Client.Rendering.City
         private int[] m_SelTile = new int[] { -1, -1 };
         private Vector2? m_VecSelTile;
         private Matrix m_MovMatrix;
-        private int[][] m_SurTileOffs = new int[][] 
+        private int[][] m_SurTileOffs = new int[][]
         {
             new int[] {0, -1},
             new int[] {1, -1},
@@ -275,7 +278,7 @@ namespace FSO.Client.Rendering.City
             double length = Math.Sqrt(Math.Pow(End.X - Start.X, 2) + Math.Pow(End.Y - Start.Y, 2));
             float direction = (float)Math.Atan2(End.Y - Start.Y, End.X - Start.X);
             Color tint = new Color(1f, 1f, 1f, 1f) * opacity;
-            spriteBatch.Draw(Fill, new Rectangle((int)Start.X, (int)Start.Y-(int)(lineWidth/2), (int)length, lineWidth), null, tint, direction, new Vector2(0, 0.5f), SpriteEffects.None, 0); //
+            spriteBatch.Draw(Fill, new Rectangle((int)Start.X, (int)Start.Y - (int)(lineWidth / 2), (int)length, lineWidth), null, tint, direction, new Vector2(0, 0.5f), SpriteEffects.None, 0); //
         }
 
         public void SwitchToMode(GlobalGraphicsMode mode)
@@ -300,13 +303,27 @@ namespace FSO.Client.Rendering.City
             Geometry.MapData = Content.MapData;
             SubdivGeometry.MapData = Content.MapData;
             Foliage.MapData = Content.MapData;
-            Geometry.RegenMeshVerts(gd, range);
+
+            if (range == null)
+            {
+                Geometry.RegenMeshVerts(gd, false);
+            }
+            else
+            {
+                var pos = Camera.CalculateR();
+                var slicex = Math.Max(0, Math.Min(30, (int)Math.Round(pos.X / 16f) - 1));
+                var slicey = Math.Max(0, Math.Min(30, (int)Math.Round(pos.Y / 16f) - 1));
+                var slice = slicex + slicey * 32;
+
+                Geometry.RegenMeshVerts(gd, true);
+                SubdivGeometry.SubRegenMeshVerts(m_GraphicsDevice, new Rectangle(slicex * 16, slicey * 16, 32, 32), 4, slice);
+            }
         }
 
         private Vector3 GetNormalAt(int x, int y)
         {
             var sum = new Vector3();
-            var rotToNormalXY = Matrix.CreateRotationZ((float)(Math.PI/2));
+            var rotToNormalXY = Matrix.CreateRotationZ((float)(Math.PI / 2));
             var rotToNormalZY = Matrix.CreateRotationX(-(float)(Math.PI / 2));
 
             if (x < 511)
@@ -322,7 +339,7 @@ namespace FSO.Client.Rendering.City
             {
                 var vec = new Vector3();
                 vec.X = 1;
-                vec.Y = GetElevationPoint(x, y) - GetElevationPoint(x-1, y);
+                vec.Y = GetElevationPoint(x, y) - GetElevationPoint(x - 1, y);
                 vec = Vector3.Transform(vec, rotToNormalXY);
                 sum += vec;
             }
@@ -379,25 +396,25 @@ namespace FSO.Client.Rendering.City
 
             var isoScale = GetIsoScale();
             double width = m_ScrWidth;
-            float iScale = (float)(1/(isoScale*2));
-            
+            float iScale = (float)(1 / (isoScale * 2));
+
             Vector2 mid = Camera.CalculateR();
             mid.X -= 6;
             mid.Y += 6;
-            if (bounds == null) bounds = new double[] {Math.Round(mid.X-19), Math.Round(mid.Y-19), Math.Round(mid.X+19), Math.Round(mid.Y+19)};
+            if (bounds == null) bounds = new double[] { Math.Round(mid.X - 19), Math.Round(mid.Y - 19), Math.Round(mid.X + 19), Math.Round(mid.Y + 19) };
             double[] pos = new double[] { m_MouseState.X, m_MouseState.Y };
 
             Vector2? best = null;
             float bestZ = float.MaxValue;
 
-            for (int y=(int)bounds[3]; y>bounds[1]; y--) 
+            for (int y = (int)bounds[3]; y > bounds[1]; y--)
             {
                 if (y < 0 || y > 511) continue;
-                for (int x=(int)bounds[0]; x<bounds[2]; x++) 
+                for (int x = (int)bounds[0]; x < bounds[2]; x++)
                 {
                     if (x < 0 || x > 511) continue;
                     //get the 4 points of this tile, and check if the mouse cursor is inside them.
-                    var xy = transformSpr3(new Vector3(x+0, MapData.ElevationData[(y*512+x)]/12.0f, y+0));
+                    var xy = transformSpr3(new Vector3(x + 0, MapData.ElevationData[(y * 512 + x)] / 12.0f, y + 0));
                     var xy2 = transformSpr3(new Vector3(x + 1, MapData.ElevationData[(y * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 0));
                     var xy3 = transformSpr3(new Vector3(x + 1, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 1));
                     var xy4 = transformSpr3(new Vector3(x + 0, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + x)] / 12.0f, y + 1));
@@ -407,16 +424,16 @@ namespace FSO.Client.Rendering.City
                         bestZ = minZ;
                         //find closest point as well, it can be used by plugins
                         var vPos = new Vector2((float)pos[0], (float)pos[1]);
-                        
+
                         var uv1 = GetUVInTri(vxy(xy), vxy(xy2), vxy(xy4), vPos);
                         if (uv1.X + uv1.Y < 1)
                         {
-                            best = new Vector2(x,y) + uv1;
+                            best = new Vector2(x, y) + uv1;
                         }
                         else
                         {
                             var uv2 = GetUVInTri(vxy(xy3), vxy(xy4), vxy(xy2), vPos);
-                            best = new Vector2(x+1, y+1) - uv2;
+                            best = new Vector2(x + 1, y + 1) - uv2;
                         }
                     }
                 }
@@ -564,28 +581,28 @@ namespace FSO.Client.Rendering.City
         private bool IsInsidePoly(double[] Poly, double[] Pos)
         {
             if (Poly.Length % 2 != 0) return false; //invalid polygon
-		    int n = Poly.Length / 2;
-		    bool result = false;
-		    
-            for (int i=0; i<n; i++)
+            int n = Poly.Length / 2;
+            bool result = false;
+
+            for (int i = 0; i < n; i++)
             {
-			    double x1 = Poly[i*2];
+                double x1 = Poly[i * 2];
                 double y1 = Poly[i * 2 + 1];
                 double x2 = Poly[((i + 1) * 2) % Poly.Length];
                 double y2 = Poly[((i + 1) * 2 + 1) % Poly.Length];
                 double slope = (y2 - y1) / (x2 - x1);
                 double c = y1 - (slope * x1);
-                if ((Pos[1] < (slope * Pos[0]) + c) && (Pos[0] >= Math.Min(x1, x2)) && (Pos[0] < Math.Max(x1, x2))) 
+                if ((Pos[1] < (slope * Pos[0]) + c) && (Pos[0] >= Math.Min(x1, x2)) && (Pos[0] < Math.Max(x1, x2)))
                     result = !(result);
-		    }
+            }
 
-		    return result;
+            return result;
         }
 
         private void drawBorderSide(Vector2 xy, Vector2 xy2, Vector2 xy3, Vector2 xy4, SpriteBatch spriteBatch, float opacity)
         {
-            double o = (17.0/144.0); //used for border segments
-            double p = (1-o);
+            double o = (17.0 / 144.0); //used for border segments
+            double p = (1 - o);
 
             double[] int1 = new double[] { xy.X * p + xy2.X * o, xy.Y * p + xy2.Y * o };
             double[] int2 = new double[] { xy4.X * p + xy3.X * o, xy4.Y * p + xy3.Y * o };
@@ -593,25 +610,25 @@ namespace FSO.Client.Rendering.City
             double[] int4 = new double[] { xy4.X * o + xy3.X * p, xy4.Y * o + xy3.Y * p };
 
             DrawLine(Content.stpWhiteLine, new Vector2((float)(int1[0]), (float)(int1[1])), new Vector2((float)(int1[0] * p + int2[0] * o), (float)(int1[1] * p + int2[1] * o)), spriteBatch, 2, opacity);
-            DrawLine(Content.stpWhiteLine, new Vector2((float)(int1[0] * p + int2[0] * o), (float)(int1[1] * p + int2[1] * o)), new Vector2((float)(int3[0] * p + int4[0] * o), (float)(int3[1] * p + int4[1] * o)), spriteBatch, 2,opacity);
+            DrawLine(Content.stpWhiteLine, new Vector2((float)(int1[0] * p + int2[0] * o), (float)(int1[1] * p + int2[1] * o)), new Vector2((float)(int3[0] * p + int4[0] * o), (float)(int3[1] * p + int4[1] * o)), spriteBatch, 2, opacity);
             DrawLine(Content.stpWhiteLine, new Vector2((float)(int3[0] * p + int4[0] * o), (float)(int3[1] * p + int4[1] * o)), new Vector2((float)(int3[0]), (float)(int3[1])), spriteBatch, 2, opacity);
         }
 
         private void drawPartLine(Vector2 xy, Vector2 xy2, SpriteBatch spriteBatch, float opacity)
         {
-            double o = (17.0/144.0); //used for border segments
-            double p = (1-o);
+            double o = (17.0 / 144.0); //used for border segments
+            double p = (1 - o);
 
             DrawLine(Content.stpWhiteLine, new Vector2((float)(xy.X * p + xy2.X * o), (float)(xy.Y * p + xy2.Y * o)), new Vector2((float)(xy2.X * p + xy.X * o), (float)(xy2.Y * p + xy.Y * o)), spriteBatch, 2, opacity);
         }
 
         private void drawTileCorner(Vector2 xy, Vector2 xy2, Vector2 xy3, SpriteBatch spriteBatch, float opacity)
         {
-		    double o = (17.0/144.0); //used for border segments
-		    double p = (1-o);
+            double o = (17.0 / 144.0); //used for border segments
+            double p = (1 - o);
             DrawLine(Content.stpWhiteLine, new Vector2((float)(xy2.X * p + xy.X * o), (float)(xy2.Y * p + xy.Y * o)), new Vector2((float)(xy2.X), (float)(xy2.Y)), spriteBatch, 2, opacity);
             DrawLine(Content.stpWhiteLine, new Vector2((float)(xy2.X), (float)(xy2.Y)), new Vector2((float)(xy2.X * p + xy3.X * o), (float)(xy2.Y * p + xy3.Y * o)), spriteBatch, 2, opacity);
-	    }
+        }
 
         private void DrawTileBorders(float iScale, SpriteBatch spriteBatch)
         {
@@ -625,9 +642,9 @@ namespace FSO.Client.Rendering.City
                     {
                         if (y < 0 || y > 511) continue;
 
-                        Vector2 mousedist = m_VecSelTile.Value - new Vector2(x+0.5f, y+0.5f);
+                        Vector2 mousedist = m_VecSelTile.Value - new Vector2(x + 0.5f, y + 0.5f);
 
-                        var vxy = transformSpr3(new Vector3(x+0, MapData.ElevationData[(y * 512 + x)] / 12.0f, y + 0));
+                        var vxy = transformSpr3(new Vector3(x + 0, MapData.ElevationData[(y * 512 + x)] / 12.0f, y + 0));
                         var vxy2 = transformSpr3(new Vector3(x + 1, MapData.ElevationData[(y * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 0));
                         var vxy3 = transformSpr3(new Vector3(x + 1, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 1));
                         var vxy4 = transformSpr3(new Vector3(x + 0, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + x)] / 12.0f, y + 1));
@@ -642,7 +659,8 @@ namespace FSO.Client.Rendering.City
                         var xy4 = new Vector2(vxy4.X, vxy4.Y);
 
                         bool[] surTile = new bool[8];
-                        for (int i=0; i<m_SurTileOffs.Length; i++) { //check 8 adjacent tiles to determine what combination of border lines to use. (road border draws between two buildable tiles)
+                        for (int i = 0; i < m_SurTileOffs.Length; i++)
+                        { //check 8 adjacent tiles to determine what combination of border lines to use. (road border draws between two buildable tiles)
                             surTile[i] = (isLandBuildable(x + m_SurTileOffs[i][0], y + m_SurTileOffs[i][1]));
                         }
 
@@ -671,8 +689,8 @@ namespace FSO.Client.Rendering.City
                             DrawLine(Content.stpWhiteLine, xy2, xy3, spriteBatch, 2, opacity);
                         }
 
-                        double o = (17.0/144.0); //used for border segments
-                        double p = (1-o);
+                        double o = (17.0 / 144.0); //used for border segments
+                        double p = (1 - o);
 
                         if (x == m_SelTile[0] && y == m_SelTile[1])
                         {
@@ -686,16 +704,16 @@ namespace FSO.Client.Rendering.City
             }
         }
 
-        private bool isLandBuildable(int x, int y) 
+        private bool isLandBuildable(int x, int y)
         {
             return FindController<TerrainController>().IsPurchasable(x, y);
         }
 
         private void DrawSpotlights(float HB)
         {
-            float iScale = (float)m_ScrWidth/(HB*2.0f);
-		
-            float spotlightScale = (float)(iScale*(2.0*Math.Sqrt(0.5*0.5*2)/5.10));
+            float iScale = (float)m_ScrWidth / (HB * 2.0f);
+
+            float spotlightScale = (float)(iScale * (2.0 * Math.Sqrt(0.5 * 0.5 * 2) / 5.10));
             LotTileEntry[] lots = LotTileData;
 
             for (int i = 0; i < lots.Length; i++)
@@ -722,10 +740,10 @@ namespace FSO.Client.Rendering.City
 
         public Vector2 Get2DFromTile(int x, int y)
         {
-            float iScale = (float)(1/(m_LastIsoScale * 2));
+            float iScale = (float)(1 / (m_LastIsoScale * 2));
             if (x < 0 || y < 0 || x >= 512 || y >= 512) return new Vector2();
             var transform = transformSpr3(new Vector3(x, MapData.ElevationData[(y * 512 + x)] / 12.0f, y));
-            return (transform.Z > 0)?new Vector2(transform.X, transform.Y):new Vector2(float.MaxValue, 0);
+            return (transform.Z > 0) ? new Vector2(transform.X, transform.Y) : new Vector2(float.MaxValue, 0);
         }
 
         public Vector2 GetFar2DFromTile(int x, int y)
@@ -744,15 +762,16 @@ namespace FSO.Client.Rendering.City
             spriteBatch.Begin(sortMode: SpriteSortMode.Texture);
             float iScale = (float)m_ScrWidth / (HB * 2);
             LotTileEntry[] lots = LotTileData;
-            for (int i=0; i<lots.Length; i++) {
-				short x = lots[i].x;
-				short y = lots[i].y;
-				Vector2 xy = transformSpr(iScale, new Vector3(x+0.5f, MapData.ElevationData[(y*512+x)]/12.0f, y+0.5f));
+            for (int i = 0; i < lots.Length; i++)
+            {
+                short x = lots[i].x;
+                short y = lots[i].y;
+                Vector2 xy = transformSpr(iScale, new Vector3(x + 0.5f, MapData.ElevationData[(y * 512 + x)] / 12.0f, y + 0.5f));
                 bool online = ((lots[i].flags & LotTileFlags.Online) > 0);
                 Texture2D img = (online) ? Content.LotOnline : Content.LotOffline; //if house is online, use red house instead of gray one
-				double alpha = online?(0.5+Math.Sin(4*Math.PI*(m_SpotOsc%1))/2.0):1; //if house is online, flash the opacity using the oscillator variable.
-				spriteBatch.Draw(img, new Rectangle((int)Math.Round(xy.X-1), (int)Math.Round(xy.Y-2), 4, 3), Color.White*(float)alpha);
-			}
+                double alpha = online ? (0.5 + Math.Sin(4 * Math.PI * (m_SpotOsc % 1)) / 2.0) : 1; //if house is online, flash the opacity using the oscillator variable.
+                spriteBatch.Draw(img, new Rectangle((int)Math.Round(xy.X - 1), (int)Math.Round(xy.Y - 2), 4, 3), Color.White * (float)alpha);
+            }
             spriteBatch.End();
         }
 
@@ -802,7 +821,8 @@ namespace FSO.Client.Rendering.City
                     LotOfflineInds = new IndexBuffer(m_GraphicsDevice, IndexElementSize.ThirtyTwoBits, offindices.Count, BufferUsage.None);
                     LotOfflineVerts.SetData(offverts.ToArray());
                     LotOfflineInds.SetData(offindices.ToArray());
-                } else
+                }
+                else
                 {
                     LotOfflineVerts = null;
                     LotOfflineInds = null;
@@ -830,7 +850,7 @@ namespace FSO.Client.Rendering.City
             VertexShader.CurrentTechnique = VertexShader.Techniques[3];
             PixelShader.CurrentTechnique = PixelShader.Techniques[1];
 
-            VertexShader.Parameters["DepthBias"].SetValue(-0.4f*Camera.DepthBiasScale);
+            VertexShader.Parameters["DepthBias"].SetValue(-0.4f * Camera.DepthBiasScale);
             VertexShader.Parameters["ObjModel"].SetValue(Matrix.Identity);
             VertexShader.CurrentTechnique.Passes[passIndex].Apply();
 
@@ -856,20 +876,35 @@ namespace FSO.Client.Rendering.City
             PixelShader.Parameters["LightCol"].SetValue(new Vector4(m_TintColor.R / 255.0f, m_TintColor.G / 255.0f, m_TintColor.B / 255.0f, 1) * 1.25f);
         }
 
-        internal void PathTile(int x, int y, float iScale, Color color) { //quick and dirty function to fill a tile with white using the 2DVerts system. Used in near view for online houses.
+        internal void PathTile(int x, int y, float iScale, Color color)
+        { //quick and dirty function to fill a tile with white using the 2DVerts system. Used in near view for online houses.
+            if (x < 0 || y < 0 || x >= 512 || y >= 512)
+            {
+                return;
+            }
+
             Vector4 vxy = transformSpr4(new Vector3(x + 0, MapData.ElevationData[(y * 512 + x)] / 12.0f, y + 0));
             Vector4 vxy2 = transformSpr4(new Vector3(x + 1, MapData.ElevationData[(y * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 0));
             Vector4 vxy3 = transformSpr4(new Vector3(x + 1, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + Math.Min(x + 1, 511))] / 12.0f, y + 1));
             Vector4 vxy4 = transformSpr4(new Vector3(x + 0, MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + x)] / 12.0f, y + 1));
 
+            if (Camera is CityCamera2D)
+            {
+                vxy.Z = 1;
+                vxy2.Z = 1;
+                vxy3.Z = 1;
+                vxy4.Z = 1;
+            }
+
             var zOff = -0.12f;
-            var xy = new Vector3(vxy.X, vxy.Y, (vxy.Z+zOff/vxy.Z)/ vxy.W);
+            var xy = new Vector3(vxy.X, vxy.Y, (vxy.Z + zOff / vxy.Z) / vxy.W);
             var xy2 = new Vector3(vxy2.X, vxy2.Y, (vxy2.Z + zOff / vxy2.Z) / vxy2.W);
             var xy3 = new Vector3(vxy3.X, vxy3.Y, (vxy3.Z + zOff / vxy3.Z) / vxy3.W);
             var xy4 = new Vector3(vxy4.X, vxy4.Y, (vxy4.Z + zOff / vxy4.Z) / vxy4.W);
 
             var minZ = Math.Min(xy.Z, Math.Min(xy2.Z, Math.Min(xy3.Z, xy4.Z)));
-            if (minZ > 0)
+            var maxZ = Math.Max(xy.Z, Math.Max(xy2.Z, Math.Max(xy3.Z, xy4.Z)));
+            if (minZ > 0 && maxZ <= 1)
             {
                 m_2DVerts.Add(new VertexPositionColor(xy, color));
                 m_2DVerts.Add(new VertexPositionColor(xy2, color));
@@ -879,7 +914,7 @@ namespace FSO.Client.Rendering.City
                 m_2DVerts.Add(new VertexPositionColor(xy3, color));
                 m_2DVerts.Add(new VertexPositionColor(xy4, color));
             }
-	    }
+        }
 
         private void DrawSprites(float HB, float VB)
         {
@@ -894,7 +929,7 @@ namespace FSO.Client.Rendering.City
                 DrawLine(Content.WhiteLine, new Vector2(m_MouseState.X + 15, m_MouseState.Y + 11), new Vector2(m_MouseState.X + 15, m_MouseState.Y - 11), spriteBatch, 2, 1);
                 DrawLine(Content.WhiteLine, new Vector2(m_MouseState.X + 16, m_MouseState.Y - 10), new Vector2(m_MouseState.X - 16, m_MouseState.Y - 10), spriteBatch, 2, 1);
             }
-            
+
             if (m_ZoomProgress < 0.5)
             {
                 spriteBatch.End();
@@ -903,16 +938,16 @@ namespace FSO.Client.Rendering.City
 
             float iScale = (float)m_ScrWidth / (HB * 2);
 
-		    float treeWidth = (float)(Math.Sqrt(2)*(128.0/144.0));
-		    float treeHeight = treeWidth*(80/128);
+            float treeWidth = (float)(Math.Sqrt(2) * (128.0 / 144.0));
+            float treeHeight = treeWidth * (80 / 128);
 
-		    Vector2 mid = Camera.CalculateR(); //determine approximate tile position at center of screen
-		    mid.X -= 6;
-		    mid.Y += 6;
+            Vector2 mid = Camera.CalculateR(); //determine approximate tile position at center of screen
+            mid.X -= 6;
+            mid.Y += 6;
             float[] bounds = new float[] { (float)Math.Round(mid.X - 19), (float)Math.Round(mid.Y - 19), (float)Math.Round(mid.X + 19), (float)Math.Round(mid.Y + 19) };
-    		
-		    Texture2D img = Content.Forest;
-		    float fade = Math.Max(0, Math.Min(1, (m_ZoomProgress - 0.4f) * 2));
+
+            Texture2D img = Content.Forest;
+            float fade = Math.Max(0, Math.Min(1, (m_ZoomProgress - 0.4f) * 2));
 
             var scrollVel = 0;// (new Vector2(m_TargVOffX, m_TargVOffY) - LastTargOff).Length();
 
@@ -921,7 +956,7 @@ namespace FSO.Client.Rendering.City
             for (short y = (short)bounds[1]; y < bounds[3]; y++) //iterate over tiles close to the approximate tile position at the center of the screen and draw any trees/houses on them
             {
                 if (y < 0 || y > 511) continue;
-                for(short x = (short)bounds[0]; x < bounds[2]; x++)
+                for (short x = (short)bounds[0]; x < bounds[2]; x++)
                 {
                     if (x < 0 || x > 511) continue;
 
@@ -932,7 +967,7 @@ namespace FSO.Client.Rendering.City
                     if (xy.X > -64 && xy.X < m_ScrWidth + 64 && xy.Y > -40 && xy.Y < m_ScrHeight + 40) //is inside screen
                     {
 
-                        Vector2 loc = new Vector2( x, y );
+                        Vector2 loc = new Vector2(x, y);
                         LotTileEntry house;
 
                         if (LotTileLookup.ContainsKey(loc))
@@ -945,9 +980,10 @@ namespace FSO.Client.Rendering.City
                         }
                         if (house != null) //if there is a house here, draw it
                         {
-                            if ((house.flags & LotTileFlags.Online) > 0) {
-							    PathTile(x, y, iScale, new Color(1.0f, 1.0f, 1.0f, (float)(0.3+Math.Sin(4*Math.PI*(m_SpotOsc%1))*0.15)));
-						    }
+                            if ((house.flags & LotTileFlags.Online) > 0)
+                            {
+                                PathTile(x, y, iScale, new Color(1.0f, 1.0f, 1.0f, (float)(0.3 + Math.Sin(4 * Math.PI * (m_SpotOsc % 1)) * 0.15)));
+                            }
 
                             Texture2D lotImg = null;
                             if (scrollVel > 0.2f) lotImg = Content.DefaultHouse;
@@ -961,9 +997,9 @@ namespace FSO.Client.Rendering.City
                             var lotImgWidth = lotImg.Width / resMultiplier;
                             var lotImgHeight = lotImg.Height / resMultiplier;
 
-                            double scale = Math.Round((treeWidth * iScale / 128.0)*1000)/1000;
+                            double scale = Math.Round((treeWidth * iScale / 128.0) * 1000) / 1000;
 
-                            spriteBatch.Draw(lotImg, new Rectangle((int)(xy.X - (lotImgWidth/2) * scale), (int)(xy.Y - (lotImgHeight/2) * scale), (int)(scale * lotImgWidth), (int)(scale * lotImgHeight)), m_TintColor);
+                            spriteBatch.Draw(lotImg, new Rectangle((int)(xy.X - (lotImgWidth / 2) * scale), (int)(xy.Y - (lotImgHeight / 2) * scale), (int)(scale * lotImgWidth), (int)(scale * lotImgHeight)), m_TintColor);
                         }
                         else //if there is no house, draw the forest that's meant to be here.
                         {
@@ -984,7 +1020,7 @@ namespace FSO.Client.Rendering.City
             spriteBatch.End();
         }
 
-        public Vector2 transformSpr(float iScale, Vector3 pos) 
+        public Vector2 transformSpr(float iScale, Vector3 pos)
         { //transform 3d position to view.
             Vector4 temp = Vector4.Transform(pos, m_MovMatrix);
             temp.X /= temp.W;
@@ -1074,9 +1110,18 @@ namespace FSO.Client.Rendering.City
 
                         //((CityCamera2D)Camera).m_TargVOffX = (float)(-hb + pt.X * isoScale * 2);
                         //((CityCamera2D)Camera).m_TargVOffY = (float)(vb - pt.Y * isoScale * 2); //zoom into approximate location of mouse cursor if not zoomed already
-                    } else
+                    }
+                    else
                     {
-                        if (currentTile != null) ((CityCamera3D)Camera).CenterTile = currentTile.Value;
+                        var camera = (CityCamera3D)Camera;
+                        if (currentTile != null)
+                        {
+                            camera.CenterDelta = currentTile.Value - camera.CenterTile;
+                            GameFacade.Screens.Tween.To(camera, 0.3f, new Dictionary<string, float>() {
+                                { "TweenDeltaX", 0f },
+                                { "TweenDeltaY", 0f },
+                            }, TweenQuad.EaseOut);
+                        }
                         ((CityCamera3D)Camera).TargetZoom = 1.7f;
                     }
                 }
@@ -1117,7 +1162,8 @@ namespace FSO.Client.Rendering.City
                     ParticleCamera.Position = new Vector3(0, 0.5f, 0.86602540f) * scale * 10000 + new Vector3(c2d.m_ViewOffX * 4 + 2000, 0, (c2d.m_ViewOffY * -5 + 2000));
                     ParticleCamera.Target = ParticleCamera.Position - new Vector3(0, 0.5f, 0.86602540f);
                     ParticleCamera.ProjectionDirty();
-                } else
+                }
+                else
                 {
                     ParticleCamera = (BasicCamera)Camera;
                 }
@@ -1141,7 +1187,7 @@ namespace FSO.Client.Rendering.City
                     if (Camera.Zoomed == TerrainZoomMode.Near)
                     {
                         var currentTile = GetHoverSquare(null);
-                        var curTileInt = (currentTile == null) ? new int[] { -1, -1 } : new int[] { (int)currentTile.Value.X, (int)currentTile.Value.Y};
+                        var curTileInt = (currentTile == null) ? new int[] { -1, -1 } : new int[] { (int)currentTile.Value.X, (int)currentTile.Value.Y };
 
                         if (Plugin == null)
                         {
@@ -1195,10 +1241,9 @@ namespace FSO.Client.Rendering.City
         }
 
         private float Time;
-        public void SetTimeOfDay(double time) 
+        public void SetTimeOfDay(double time)
         {
             time = Math.Min(0.999999999, time);
-            Time = (float)time;
             m_TintColor = TimeOfDayConfig.ColorFromTime(time);
 
             if (Weather.Darken > 0)
@@ -1218,16 +1263,18 @@ namespace FSO.Client.Rendering.City
             if (time < DayOffset)
             {
                 modTime = (offStart + time) * 0.5 / (1 - DayDuration);
-            } else if (time > DayOffset+DayDuration)
+            }
+            else if (time > DayOffset + DayDuration)
             {
-                modTime = (time - (1-offStart)) * 0.5 / (1 - DayDuration);
-            } else
+                modTime = (time - (1 - offStart)) * 0.5 / (1 - DayDuration);
+            }
+            else
             {
                 modTime = (time - DayOffset) * 0.5 / DayDuration;
             }
 
-            Transform *= Matrix.CreateRotationY((float)((modTime+0.5) * Math.PI * 2.0)); //Controls the rotation of the sun/moon around the city. 
-            Transform *= Matrix.CreateRotationZ((float)(Math.PI*(45.0/180.0))); //Sun is at an angle of 45 degrees to horizon at it's peak. idk why, it's winter maybe? looks nice either way
+            Transform *= Matrix.CreateRotationY((float)((modTime + 0.5) * Math.PI * 2.0)); //Controls the rotation of the sun/moon around the city. 
+            Transform *= Matrix.CreateRotationZ((float)(Math.PI * (45.0 / 180.0))); //Sun is at an angle of 45 degrees to horizon at it's peak. idk why, it's winter maybe? looks nice either way
             Transform *= Matrix.CreateRotationY((float)(Math.PI * 0.3)); //Offset from front-back a little. This might need some adjusting for the nicest sunset/sunrise locations.
             Transform *= Matrix.CreateTranslation(new Vector3(256, 0, 256)); //Move pivot center to center of mesh.
 
@@ -1237,7 +1284,7 @@ namespace FSO.Client.Rendering.City
 
             if (Math.Abs(modTime) < 0.05) //Near the horizon, shadows should gracefully fade out into the opposite shadows (moonlight/sunlight)
             {
-                m_ShadowMult = (float)(1-(Math.Abs(modTime)*20))*0.75f+0.25f;
+                m_ShadowMult = (float)(1 - (Math.Abs(modTime) * 20)) * 0.75f + 0.25f;
             }
             else
             {
@@ -1256,14 +1303,14 @@ namespace FSO.Client.Rendering.City
 
         public float GetElevationVert(int x, int y)
         {
-            x = ((x % 512) + 512)%512;
-            y = ((y % 512) + 512)%512;
+            x = ((x % 512) + 512) % 512;
+            y = ((y % 512) + 512) % 512;
             return MapData.ElevationData[(y * 512 + x)] / 12.0f;
         }
 
         public float GetElevationAt(int x, int y)
         {
-            return(MapData.ElevationData[(y * 512 + x)] + MapData.ElevationData[(y * 512 + Math.Min(x + 1, 511))] +
+            return (MapData.ElevationData[(y * 512 + x)] + MapData.ElevationData[(y * 512 + Math.Min(x + 1, 511))] +
                         MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + Math.Min(x + 1, 511))] +
                         MapData.ElevationData[(Math.Min(y + 1, 511) * 512 + x)]) / 4f; //elevation of sprite is the average elevation of the 4 vertices of the tile
         }
@@ -1299,12 +1346,13 @@ namespace FSO.Client.Rendering.City
         private void FixedTimeUpdate(UpdateState state)
         {
             var rScale = 60f / FSOEnvironment.RefreshRate;
-            m_SpotOsc = (m_SpotOsc + 0.01f*rScale) % 1; //spotlight oscillation. Cycles fully every 100 frames.
+            m_SpotOsc = (m_SpotOsc + 0.01f * rScale) % 1; //spotlight oscillation. Cycles fully every 100 frames.
         }
 
         private Texture2D DrawDepth()
         {
-            if (ShadowTarget == null || OldShadowRes != ShadowRes) {
+            if (ShadowTarget == null || OldShadowRes != ShadowRes)
+            {
                 if (ShadowTarget != null) ShadowTarget.Dispose();
                 ShadowTarget = new RenderTarget2D(m_GraphicsDevice, ShadowRes, ShadowRes, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
                 OldShadowRes = ShadowRes;
@@ -1324,7 +1372,7 @@ namespace FSO.Client.Rendering.City
         public void Draw2DPoly(bool depth)
         {
             if (m_2DVerts.Count == 0) return;
-            m_GraphicsDevice.DepthStencilState = depth?DepthStencilState.Default:DepthStencilState.None;
+            m_GraphicsDevice.DepthStencilState = depth ? DepthStencilState.Default : DepthStencilState.None;
 
             VertexPositionColor[] Vert2D = new VertexPositionColor[m_2DVerts.Count];
             m_2DVerts.CopyTo(Vert2D);
@@ -1342,7 +1390,7 @@ namespace FSO.Client.Rendering.City
 
             Shader2D.CurrentTechnique.Passes[0].Apply();
 
-            m_GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, Vert2D, 0, Vert2D.Length/3); //draw 2d coloured triangle array (for spotlights etc)
+            m_GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, Vert2D, 0, Vert2D.Length / 3); //draw 2d coloured triangle array (for spotlights etc)
 
             m_GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             m_2DVerts.Clear();
@@ -1383,7 +1431,7 @@ namespace FSO.Client.Rendering.City
 
             float HB = m_ScrWidth * IsoScale;
             float VB = m_ScrHeight * IsoScale;
-            
+
             if ((Camera is CityCamera3D && m_Zoomed == TerrainZoomMode.Lot) || (Camera is CityCamera2D && m_LotZoomProgress == 1f)) return;
 
             Matrix ProjectionMatrix = Camera.Projection;
@@ -1399,10 +1447,10 @@ namespace FSO.Client.Rendering.City
             VertexShader.Parameters["MV"].SetValue(mv);
 
             PixelShader.CurrentTechnique = PixelShader.Techniques[2];
-            PixelShader.Parameters["LightCol"].SetValue(new Vector4(m_TintColor.R / 255.0f, m_TintColor.G / 255.0f, m_TintColor.B / 255.0f, 1)*1.25f);
+            PixelShader.Parameters["LightCol"].SetValue(new Vector4(m_TintColor.R / 255.0f, m_TintColor.G / 255.0f, m_TintColor.B / 255.0f, 1) * 1.25f);
             var lightVec = Vector3.Normalize(m_LightPosition - new Vector3(256, 0, 256));
             PixelShader.Parameters["LightVec"].SetValue(lightVec);
-            PixelShader.Parameters["Time"].SetValue(ITime/(float)FSOEnvironment.RefreshRate);
+            PixelShader.Parameters["Time"].SetValue(ITime / (float)FSOEnvironment.RefreshRate);
 
             var invView = Matrix.Invert(mv);
             if (Camera is CityCamera3D) invView.Translation = Vector3.Zero;
@@ -1413,12 +1461,12 @@ namespace FSO.Client.Rendering.City
             PixelShader.Parameters["InvView"].SetValue(invView);
             var dist = 0.3f + lightVec.Y;
             dist *= dist;
-            PixelShader.Parameters["SunStrength"].SetValue(((1 - 0.6f * Weather.Darken) / dist) * (1.0f-m_ShadowMult) * 2);
+            PixelShader.Parameters["SunStrength"].SetValue(((1 - 0.6f * Weather.Darken) / dist) * (1.0f - m_ShadowMult) * 2);
 
             PixelShader.Parameters["BigWTex"].SetValue(Content.BigWNormal);
             PixelShader.Parameters["SmallWTex"].SetValue(Content.SmallWNormal);
 
-            PixelShader.Parameters["WavePow"].SetValue(5/2f);
+            PixelShader.Parameters["WavePow"].SetValue(5 / 2f);
             PixelShader.Parameters["RealNormalPct"].SetValue(2f);
             PixelShader.Parameters["ShadowMult"].SetValue(m_ShadowMult);
             var fog = true; //(Camera is CityCamera3D) || Weather.WeatherIntensity > 0.01f;
@@ -1426,7 +1474,7 @@ namespace FSO.Client.Rendering.City
             {
                 var fogColor = Weather.FogColor;
                 var weatherMult = (Camera is CityCamera3D) ? (1 + Weather.Darken) : 1;
-                PixelShader.Parameters["FogMaxDist"].SetValue(fogColor.W*Camera.FogMultiplier * weatherMult);
+                PixelShader.Parameters["FogMaxDist"].SetValue(fogColor.W * Camera.FogMultiplier * weatherMult);
                 fogColor.W = 1f;
                 PixelShader.Parameters["FogColor"].SetValue(fogColor);
             }
@@ -1476,7 +1524,8 @@ namespace FSO.Client.Rendering.City
                     SubdivGeometry.Ready = -1;
                     SubdivGeometry.CurrentSlice = -1;
                 }
-            } else
+            }
+            else
             {
                 var pos = Camera.CalculateR();
                 var slicex = Math.Max(0, Math.Min(30, (int)Math.Round(pos.X / 16f) - 1));
@@ -1524,7 +1573,7 @@ namespace FSO.Client.Rendering.City
                     DrawFacades(Camera.CalculateR(), pass, false, frustum);
                 }
             }
-            
+
             if (Camera.Zoomed != TerrainZoomMode.Lot) NeighGeom.DrawHover(m_GraphicsDevice, m_Batch, VertexShader, PixelShader, Content);
             if (Plugin is NeighbourhoodEditPlugin) NeighGeom.Draw(m_GraphicsDevice, VertexShader, PixelShader, Content);
 
@@ -1570,7 +1619,8 @@ namespace FSO.Client.Rendering.City
         public uint StencilLotID;
         public VertexBuffer StencilVertices;
 
-        public void DrawSurrounding(GraphicsDevice gfx, ICamera camera, Vector4 fogColor, int surroundNumber) {
+        public void DrawSurrounding(GraphicsDevice gfx, ICamera camera, Vector4 fogColor, int surroundNumber)
+        {
             if (!GlobalSettings.Default.CitySkybox)
             {
                 if (camera is CameraControllers)
@@ -1608,11 +1658,11 @@ namespace FSO.Client.Rendering.City
                     Matrix ViewMatrix = Camera.View;
 
                     ViewMatrix = Matrix.Invert(world) * ViewMatrix;
-                    
+
                     dummy.Projection = ProjectionMatrix;
                     dummy.View = ViewMatrix;
-                    ViewMatrixN = Matrix.CreateScale(new Vector3(1, 1/3f, 1)) * ViewMatrix;
-                    
+                    ViewMatrixN = Matrix.CreateScale(new Vector3(1, 1 / 3f, 1)) * ViewMatrix;
+
                 }
             }
 
@@ -1642,12 +1692,12 @@ namespace FSO.Client.Rendering.City
             VertexShader.Parameters["BaseMatrix"].SetValue(mvp);
             VertexShader.Parameters["MV"].SetValue(mv);
             var frustum = new BoundingFrustum(mvp);
-                
+
             PixelShader.CurrentTechnique = PixelShader.Techniques[2];
             PixelShader.Parameters["LightCol"].SetValue(new Vector4(m_TintColor.R / 255.0f, m_TintColor.G / 255.0f, m_TintColor.B / 255.0f, 1) * 1.25f);
             var lightVec = Vector3.Normalize(m_LightPosition - new Vector3(256, 0, 256));
             PixelShader.Parameters["LightVec"].SetValue(lightVec);
-            
+
             var invView = Matrix.Invert(mv);
             invView.Translation = Vector3.Zero;
             PixelShader.Parameters["InvView"].SetValue(invView);
@@ -1664,7 +1714,7 @@ namespace FSO.Client.Rendering.City
             PixelShader.Parameters["Time"].SetValue(ITime / (float)FSOEnvironment.RefreshRate);
 
             var weatherMult = (Camera is CityCamera3D) ? (1 + Weather.Darken) : 1;
-            PixelShader.Parameters["FogMaxDist"].SetValue(m_LotZoomProgress*fogColor.W + (1- m_LotZoomProgress)* fogColor.W*weatherMult*Camera.FogMultiplier);
+            PixelShader.Parameters["FogMaxDist"].SetValue(m_LotZoomProgress * fogColor.W + (1 - m_LotZoomProgress) * fogColor.W * weatherMult * Camera.FogMultiplier);
             fogColor.W = 1f;
             PixelShader.Parameters["FogColor"].SetValue(fogColor);
 
@@ -1721,7 +1771,8 @@ namespace FSO.Client.Rendering.City
                 gfx.SetVertexBuffer(StencilVertices);
                 //gfx.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
                 gfx.DepthStencilState = StencilOnly;
-            } else
+            }
+            else
             {
                 gfx.DepthStencilState = DepthStencilState.Default;
             }
@@ -1731,19 +1782,19 @@ namespace FSO.Client.Rendering.City
 
             //Geometry.DrawAll(m_GraphicsDevice, Content, VertexShader, PixelShader, 3, 3);
 
-            if (SubdivGeometry.Ready != -1) SubdivGeometry.DrawAll(m_GraphicsDevice, Content, VertexShader, PixelShader, 3,3);
-            Geometry.DrawSlice(m_GraphicsDevice, Content, VertexShader, PixelShader, 3,3, SubdivGeometry.Ready, 16);
+            if (SubdivGeometry.Ready != -1) SubdivGeometry.DrawAll(m_GraphicsDevice, Content, VertexShader, PixelShader, 3, 3);
+            Geometry.DrawSlice(m_GraphicsDevice, Content, VertexShader, PixelShader, 3, 3, SubdivGeometry.Ready, 16);
 
             Foliage.Draw(this, m_GraphicsDevice, Content, VertexShader, PixelShader, 3, 1, frustum);
             DrawFacades(new Vector2(id >> 16, id & 0xFFFF), 3, true, frustum);
             gfx.DepthStencilState = DepthStencilState.Default;
 
-            
+
             if (m_LotZoomProgress != 1)
             {
                 foreach (var particle in Particles)
                 {
-                    var tint = m_TintColor * (1- m_LotZoomProgress);
+                    var tint = m_TintColor * (1 - m_LotZoomProgress);
                     particle.GenericDraw(gfx, ParticleCamera, tint, false);
                 }
             }
@@ -1753,7 +1804,7 @@ namespace FSO.Client.Rendering.City
         {
             if (fsof == null) return;
             var b = 1 / 77f;
-            var mat = Matrix.CreateScale(b, b*Camera.LotSquish, b) * Matrix.CreateRotationY((float)Math.PI / -2f) * Matrix.CreateTranslation(position + new Vector3(1, 0, 0)) ;
+            var mat = Matrix.CreateScale(b, b * Camera.LotSquish, b) * Matrix.CreateRotationY((float)Math.PI / -2f) * Matrix.CreateTranslation(position + new Vector3(1, 0, 0));
             var gfx = m_GraphicsDevice;
             VertexShader.Parameters["ObjModel"].SetValue(mat);
             VertexShader.Parameters["DepthBias"].SetValue(-0.18f * Camera.DepthBiasScale);
@@ -1803,10 +1854,10 @@ namespace FSO.Client.Rendering.City
 
             PixelShader.CurrentTechnique = PixelShader.Techniques[1];
             PixelShader.CurrentTechnique.Passes[passIndex].Apply();
-            
+
             VertexShader.CurrentTechnique = VertexShader.Techniques[1];
             VertexShader.CurrentTechnique.Passes[passIndex].Apply();
-            var night = Time < 0.25f || Time > 0.75f;
+
 
             if (!useLocked || NearFacades == null)
             {
@@ -1855,12 +1906,14 @@ namespace FSO.Client.Rendering.City
                                     Location = loc
                                 };
                                 NearFacades.Entries.Add(facade);
-                            } else {
+                            }
+                            else
+                            {
                                 lotImg = controller.RequestLotFacade((uint)house.packed_pos);
 
                                 if (lotImg != null)
                                 {
-                                    DrawFacade(lotImg, new Vector3(x, elev / 12.0f, y), passIndex, night && online);
+                                    DrawFacade(lotImg, new Vector3(x, elev / 12.0f, y), passIndex, online);
                                 }
                             }
                         }
@@ -1886,7 +1939,7 @@ namespace FSO.Client.Rendering.City
                         if (LotTileLookup.ContainsKey(house.Location)) lhouse = LotTileLookup[house.Location];
                         var online = ((lhouse?.flags ?? 0) & LotTileFlags.Online) > 0;
 
-                        DrawFacade(house.LotImg.LotFacade, house.Position, passIndex, night && online);
+                        DrawFacade(house.LotImg.LotFacade, house.Position, passIndex, online);
                     }
                 }
             }
@@ -1896,7 +1949,7 @@ namespace FSO.Client.Rendering.City
         }
     }
 
- 
+
 
     public enum TerrainZoomMode
     {

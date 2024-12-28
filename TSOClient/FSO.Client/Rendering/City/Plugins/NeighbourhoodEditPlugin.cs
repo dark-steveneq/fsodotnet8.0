@@ -18,10 +18,12 @@ namespace FSO.Client.Rendering.City.Plugins
         public CityNeighbourhood Selected;
 
         private Texture2D PxBlack;
+        private Texture2D PxWhite;
 
         public NeighbourhoodEditPlugin(Terrain city) : base(city)
         {
             PxBlack = TextureUtils.TextureFromColor(GameFacade.GraphicsDevice, Color.Black);
+            PxWhite = TextureUtils.TextureFromColor(GameFacade.GraphicsDevice, Color.White);
             EditTarget = city.NeighGeom.Data;
         }
 
@@ -34,6 +36,7 @@ namespace FSO.Client.Rendering.City.Plugins
             {
                 var onScreen = City.Get2DFromTile(neigh.Location.X, neigh.Location.Y);
                 City.DrawLine(PxBlack, onScreen + new Vector2(0, -8), onScreen + new Vector2(0, 8), sb, 16, 100);
+                City.DrawLine(PxWhite, onScreen + new Vector2(0, -8), onScreen + new Vector2(0, 2), sb, 10, 100);
             }
 
             if (Selected != null)
@@ -45,7 +48,7 @@ namespace FSO.Client.Rendering.City.Plugins
                 }
                 City.NeighGeom.Generate(GameFacade.GraphicsDevice);
             }
-            
+
             /* raycasting debug
 
             var hits = new List<Point>();
@@ -126,7 +129,8 @@ namespace FSO.Client.Rendering.City.Plugins
                 MouseWasDown = md;
             }
 
-            if (state.NewKeys.Contains(Keys.R)) {
+            if (state.NewKeys.Contains(Keys.R))
+            {
                 var proj = City.EstTileAtPosWithScroll(state.MouseState.Position.ToVector2(), null);
                 var near = City.NeighGeom.NhoodNearest(proj);
 
@@ -164,7 +168,7 @@ namespace FSO.Client.Rendering.City.Plugins
                         if (result)
                         {
                             var col = int.Parse(alert.ResponseText);
-                            nhood.Color = new Color(col>>16, (col>>8)&0xFF, col&0xFF);
+                            nhood.Color = new Color(col >> 16, (col >> 8) & 0xFF, col & 0xFF);
                         }
                     });
                 }
@@ -177,7 +181,8 @@ namespace FSO.Client.Rendering.City.Plugins
                     using (var file = System.IO.File.Open("Content/edit_neigh.json", System.IO.FileMode.Create, System.IO.FileAccess.Write))
                     using (var writer = new System.IO.StreamWriter(file))
                         writer.Write(Newtonsoft.Json.JsonConvert.SerializeObject(EditTarget, Newtonsoft.Json.Formatting.Indented));
-                } else
+                }
+                else
                 {
                     using (var file = System.IO.File.Open("Content/edit_neigh.json", System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     using (var reader = new System.IO.StreamReader(file))
