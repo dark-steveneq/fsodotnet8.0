@@ -40,9 +40,9 @@ namespace MSDFExtension
 
         public int AddChar(char c, Stream imageData)
         {
-            var image = Image.Load(imageData);
+            var image = Image.Load<Rgba32>(imageData);
             var buf = new Rgba32[image.Width * image.Height];
-            image.SavePixelData(buf);
+            image.CopyPixelDataTo(buf);
             return AddChar(c, buf);
         }
 
