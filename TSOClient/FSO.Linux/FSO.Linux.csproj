@@ -3,7 +3,7 @@
     <OutputType>WinExe</OutputType>
     <AssemblyName>FreeSO</AssemblyName>
     <TargetFramework>net8.0</TargetFramework>
-    <PublishSingleFile>true</PublishSingleFile>
+	<PublishSingleFile>true</PublishSingleFile>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>

@@ -1,17 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>TargetFramework</TargetFramework>
     <OutputType>Library</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
@@ -49,25 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="ContentSrc\obj\**" />
-    <EmbeddedResource Remove="ContentSrc\obj\**" />
-    <None Remove="ContentSrc\obj\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ContentSrc\Effects\2DWorldBatchiOS.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ContentSrc\Effects\LightingCommon.fx" />
-    <Content Include="ContentSrc\Effects\ParticleShader.fx" />
-    <Content Include="ContentSrc\Effects\SSAA.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ContentSrc\Effects\GrassShaderiOS.fx" />
-    <Content Include="ContentSrc\Effects\GrassShader.fx" />
-    <Content Include="ContentSrc\Effects\LightMap2D.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ContentSrc\Effects\VitaboyiOS.fx" />
-    <Content Include="ContentSrc\Effects\RCObject.fx" />
+    <EmbeddedResource Remove="ContentSrc\**" />
+    <None Remove="ContentSrc\**" />
+	<Content Remove="ContentSrc\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Other\libs\TargaImagePCL\TargaImagePCL.csproj" />
@@ -76,162 +50,9 @@
     <ProjectReference Include="..\FSO.Vitaboy\FSO.Vitaboy.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ContentSrc\Effects\gradpoly2D.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\2DWorldBatch.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\colorpoly2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\GrassShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\PixShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\VerShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\Vitaboy.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\2DWorldBatch.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\colorpoly2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\GrassShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\PixShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\VerShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\Vitaboy.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ContentSrc\Effects\2DWorldBatch.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Update="ContentSrc\Effects\2dWorldBatch.mgfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="ContentSrc\Effects\colorpoly2D.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Update="ContentSrc\Effects\colorpoly2D.mgfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ContentSrc\Effects\compileForMono.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="ContentSrc\Effects\PixShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Update="ContentSrc\Effects\PixShader.mgfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="ContentSrc\Effects\VerShader.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Update="ContentSrc\Effects\VerShader.mgfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="ContentSrc\Effects\Vitaboy.fx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ContentSrc\TSOClientContent.mgcb" />
-    <Content Include="Content\iOS\Effects\2DWorldBatch.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\2DWorldBatchiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\colorpoly2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\Effects.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\GrassShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\GrassShaderiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\PixShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\VerShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\Vitaboy.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\gradpoly2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\gradpoly2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\LightMap2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\LightMap2D.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\iOS\Effects\VitaboyiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\RCObject.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\RCObject.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\SSAA.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\SSAA.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\ParticleShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\RCObjectiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\MSDFFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\DX\Effects\SpriteEffects.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\2DWorldBatchiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\GrassShaderiOS.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\ParticleShader.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\MSDFFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\OGL\Effects\SpriteEffects.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ContentSrc\Fonts\" />
-    <Folder Include="Content\DX\Textures\" />
-    <Folder Include="Content\OGL\Textures\" />
+	<Content Include="Content\**">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

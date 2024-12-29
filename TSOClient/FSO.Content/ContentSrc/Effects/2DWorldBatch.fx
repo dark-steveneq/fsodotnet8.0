@@ -105,7 +105,7 @@ technique drawSimple {
 #else
         VertexShader = compile vs_3_0 vsSimple();
         PixelShader = compile ps_3_0 psSimple();
-#endif;
+#endif
 
    }
 }
@@ -124,7 +124,7 @@ technique drawSimpleID {
 #else
         VertexShader = compile vs_3_0 vsSimple();
         PixelShader = compile ps_3_0 psIDSimple();
-#endif;
+#endif
 
    }
 }
@@ -286,7 +286,7 @@ technique drawZSprite {
 #else
         VertexShader = compile vs_3_0 vsZSprite();
         PixelShader = compile ps_3_0 psZSprite();
-#endif;
+#endif
 
    }
 }
@@ -300,7 +300,7 @@ technique drawZWall {
 #else
         VertexShader = compile vs_3_0 vsZSprite();
         PixelShader = compile ps_3_0 psZWall();
-#endif;
+#endif
         
    }
 }
@@ -419,7 +419,7 @@ technique drawZSpriteDepthChannel {
 #else
 		VertexShader = compile vs_3_0 vsZSprite();
 		PixelShader = compile ps_3_0 psZDepthSpriteSimple();
-#endif;
+#endif
 	}
 
     pass advLighting {
@@ -429,7 +429,7 @@ technique drawZSpriteDepthChannel {
 #else
         VertexShader = compile vs_3_0 vsZSprite();
         PixelShader = compile ps_3_0 psZDepthSprite();
-#endif;
+#endif
     }
 
 	/*
@@ -496,7 +496,7 @@ technique drawZWallDepthChannel {
 #else
 		VertexShader = compile vs_3_0 vsZSprite();
 		PixelShader = compile ps_3_0 psZDepthWallSimple();
-#endif;
+#endif
 
 	}
 
@@ -507,7 +507,7 @@ technique drawZWallDepthChannel {
 #else
         VertexShader = compile vs_3_0 vsZSprite();
         PixelShader = compile ps_3_0 psZDepthWall();
-#endif;
+#endif
         
     }
 }

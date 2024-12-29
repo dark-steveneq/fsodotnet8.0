@@ -3,8 +3,7 @@
     <OutputType>WinExe</OutputType>
     <AssemblyName>FreeSO</AssemblyName>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <PublishUrl>publish\</PublishUrl>
-    <MapFileExtensions>true</MapFileExtensions>
+	<MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
