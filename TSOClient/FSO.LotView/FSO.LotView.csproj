@@ -16,7 +16,6 @@
     <OutputPath>bin\WindowsGL\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup />
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
@@ -41,6 +40,11 @@
     <Optimize>true</Optimize>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <ItemGroup>
+	<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105">
+	  <PrivateAssets>All</PrivateAssets>
+	</PackageReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Lidgren.Network.dll</HintPath>

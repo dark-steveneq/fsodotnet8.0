@@ -1063,7 +1063,7 @@ namespace FSO.Client.UI.Framework
         {
             try
             {
-                return Content.Content.Get().UIGraphics.Get(id).Get(GameFacade.GraphicsDevice);
+                return Content.Content.Get().UIGraphics.Get(id)?.Get(GameFacade.GraphicsDevice);
             }
             catch (Exception e)
             {

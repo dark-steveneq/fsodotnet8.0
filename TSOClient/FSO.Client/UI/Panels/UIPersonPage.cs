@@ -362,8 +362,11 @@ namespace FSO.Client.UI.Panels
                     var lbl = ((UILabel)x);
                     lbl.Y -= 5;
                     if (x.NumericId != 606)
-                    {
                         lbl.Alignment = TextAlignment.Right;
+                    else
+                    {
+                        lbl.Alignment = TextAlignment.Left;
+                        x.X += 24;
                     }
                 }
                 x.X -= 8;
