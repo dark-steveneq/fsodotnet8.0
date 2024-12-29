@@ -41,7 +41,7 @@ namespace FSO.Server.Servers.Tasks
 
         public void Start()
         {
-            LOG.Info("starting task engine");
+            LOG.Info("Starting Task Engine");
             Timer.Start();
 
             Task.Delay(30000).ContinueWith(x =>
@@ -56,52 +56,49 @@ namespace FSO.Server.Servers.Tasks
             {
                 foreach (var task in _Schedule)
                 {
-                    if (!task.Run_If_Missed) continue;
+                    if (!task.Run_If_Missed)
+                        continue;
 
                     DbTaskType type;
-                    if (!Enum.TryParse(task.Task, out type)) continue;
+                    if (!Enum.TryParse(task.Task, out type))
+                        continue;
 
                     var rangeEnd = task.CronSchedule.GetLastValidTime();
                     var rangeStart = task.CronSchedule.GetStartOfRange(rangeEnd);
 
                     var lastRun = db.Tasks.CompletedAfter(type, rangeStart);
 
-                    if (lastRun == null) Run(task);
+                    if (lastRun == null)
+                        Run(task);
                 }
             }
         }
 
         public void Stop()
         {
-            LOG.Info("stopping task engine");
+            LOG.Info("Stopping Task Engine");
             Timer.Stop();
-            foreach(var task in Running){
+            foreach(var task in Running)
                 task.Abort();
-            }
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var time = DateTime.Now;
-            if(time.Minute == Last.Minute){
+            if (time.Minute == Last.Minute)
                 return;
-            }
             Last = time;
 
-            foreach(var task in _Schedule)
-            {
-                if (task.CronSchedule.isTime(time)){
+            foreach (var task in _Schedule)
+                if (task.CronSchedule.isTime(time))
                     Run(task);
-                }
-            }
         }
 
         public void Schedule(ScheduledTaskRunOptions options)
         {
             options.CronSchedule = new CronSchedule(options.Cron);
-            if (!options.CronSchedule.isValid()){
+            if (!options.CronSchedule.isValid())
                 throw new Exception("Invalid cron expression: " + options.Cron);
-            }
             
            _Schedule.Add(options);
         }
@@ -171,19 +168,17 @@ namespace FSO.Server.Servers.Tasks
 
                 Task.Run(() =>
                 {
-                    LOG.Info(entry.Name + " task running");
+                    LOG.Info("Running task '" + entry.Name + "'");
                     instance.Run(context);
                 }, cts.Token).ContinueWith(x =>
                 {
                     Running.Remove(instance);
                     var endStatus = DbTaskStatus.failed;
                     if (x.IsFaulted)
-                    {
-                        LOG.Error(x.Exception, entry.Name + " task failed: "+x.Exception.ToString());
-                    }
+                        LOG.Error(x.Exception, "Task '" + entry.Name + "' failed: "+x.Exception.ToString());
                     else
                     {
-                        LOG.Info(entry.Name + " task complete");
+                        LOG.Info("Task '" + entry.Name + "' finished!");
                         endStatus = DbTaskStatus.completed;
                     }
 
@@ -194,8 +189,10 @@ namespace FSO.Server.Servers.Tasks
                 });
 
                 return taskId;
-            }catch(Exception ex){
-                LOG.Error(ex, "unknown error starting task " + name);
+            }
+            catch (Exception ex)
+            {
+                LOG.Error(ex, "Unknown error occured when starting task " + name);
                 return -1;
             }
         }
