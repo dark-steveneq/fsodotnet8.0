@@ -30,7 +30,7 @@ on:
       - Other/libs/MSDFData
       - Other/libs/VoronoiLib
       - Other/libs/FSOMina.NET
-      - Others/libs/TargaImgePCL
+      - Other/libs/TargaImgePCL
   pull_request:
     branches: [ "master" ]
     paths:
@@ -59,7 +59,7 @@ on:
       - Other/libs/MSDFData
       - Other/libs/VoronoiLib
       - Other/libs/FSOMina.NET
-      - Others/libs/TargaImgePCL
+      - Other/libs/TargaImgePCL
 
 jobs:
   build-win-x64:
