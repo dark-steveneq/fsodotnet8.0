@@ -1,0 +1,33 @@
+name: Reusable - Build Server
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+
+jobs:
+  reusable-server-git:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build server
+        working-directory: ./TSOClient/FSO.Server/
+        run: dotnet publish FSO.Server.csproj -r ${{ inputs.platform }} --sc true -c Release -o ./out
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fsodotnet8.0server-${{ inputs.platform }}-${{ github.sha }}
+          path: ./TSOClient/FSO.Server/out
+  

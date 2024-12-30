@@ -6,6 +6,7 @@ on:
     branches: [ "master" ]
     paths:
       - .github/workflows/server-git.yml
+      - .github/workflows/reusable-server-git.yml
       - TSOClient/FSO.Server
       - TSOClient/FSO.Common
       - TSOClient/FSO.Common.DatabaseService
@@ -24,7 +25,8 @@ on:
   pull_request:
     branches: [ "master" ]
     paths:
-      - .github/workflows/docker-git.yml
+      - .github/workflows/server-git.yml
+      - .github/workflows/reusable-server-git.yml
       - TSOClient/FSO.Server
       - TSOClient/FSO.Common
       - TSOClient/FSO.Common.DatabaseService
@@ -42,63 +44,23 @@ on:
       - Others/libs/TargaImgePCL
 
 jobs:
-  build-windows:
-    name: Build for Windows
-    runs-on: windows-latest
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4.2.2
-      with:
-        fetch-depth: 1
+  build-win-x64:
+    name: Build for Windows x64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    with:
+      platform: win-x64
 
-    - name: Setup .NET 8.0
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.x'
-      
-    - name: Restore NuGet packages
-      working-directory: ./TSOClient/FSO.Server/
-      run: dotnet restore
+  build-linux-x64:
+    name: Build for Linux x64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    with:
+      platform: linux-x64
 
-    - name: Build server
-      working-directory: ./TSOClient/FSO.Server/
-      run: dotnet publish FSO.Server.csproj -c Release -o ./out
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: fsodotnet8.0server-windows-${{ github.sha }}
-        path: ./TSOClient/FSO.Server/out
-
-  build-linux:
-    name: Build for Linux
-    runs-on: ubuntu-24.04
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4.2.2
-      with:
-        fetch-depth: 1
-
-    - name: Setup .NET 8.0
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.x'
-      
-    - name: Restore NuGet packages
-      working-directory: ./TSOClient/FSO.Server/
-      run: dotnet restore
-
-    - name: Build server
-      working-directory: ./TSOClient/FSO.Server/
-      run: dotnet publish FSO.Server.csproj -c Release -o ./out
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: fsodotnet8.0server-linux-${{ github.sha }}
-        path: ./TSOClient/FSO.Server/out
+  build-linux-arm64:
+    name: Build for Linux Arm64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    with:
+      platform: linux-arm64
 
   build-docker:
     name: Build Docker images
