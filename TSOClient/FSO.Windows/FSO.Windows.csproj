@@ -3,17 +3,16 @@
     <OutputType>WinExe</OutputType>
     <AssemblyName>FreeSO</AssemblyName>
     <TargetFramework>net8.0-windows</TargetFramework>
-	<MapFileExtensions>true</MapFileExtensions>
+	  <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Configurations>Android;Debug;Release;ServerRelease;Windows</Configurations>
     <UseWindowsForms>true</UseWindowsForms>
-    <EnableWindowsTargetting>true</EnableWindowsTargetting>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+  <PropertyGroup>
+    <EnableWindowsTargetting>true</EnableWindowsTargetting>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
