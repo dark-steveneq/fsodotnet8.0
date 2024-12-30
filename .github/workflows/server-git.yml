@@ -12,6 +12,7 @@ on:
       - TSOClient/FSO.Common.DatabaseService
       - TSOClient/FSO.Common.Domain
       - TSOClient/FSO.Content
+      - TSOClient/FSO.Content.TSO
       - TSOClient/FSO.Files
       - TSOClient/FSO.LotView
       - TSOClient/FSO.Server.Api
@@ -22,6 +23,7 @@ on:
       - TSOClient/FSO.SimAntics
       - TSOClient/FSO.Vitaboy
       - Others/libs/TargaImgePCL
+      - Other/libs/FSOMina.NET
   pull_request:
     branches: [ "master" ]
     paths:
@@ -32,6 +34,7 @@ on:
       - TSOClient/FSO.Common.DatabaseService
       - TSOClient/FSO.Common.Domain
       - TSOClient/FSO.Content
+      - TSOClient/FSO.Content.TSO
       - TSOClient/FSO.Files
       - TSOClient/FSO.LotView
       - TSOClient/FSO.Server.Api
@@ -42,6 +45,7 @@ on:
       - TSOClient/FSO.SimAntics
       - TSOClient/FSO.Vitaboy
       - Others/libs/TargaImgePCL
+      - Other/libs/FSOMina.NET
 
 jobs:
   build-win-x64:

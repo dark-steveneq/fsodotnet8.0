@@ -1,0 +1,84 @@
+name: Build Client (Git)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+    paths:
+      - .github/workflows/client-git.yml
+      - .github/workflows/reusable-client-git.yml
+      - TSOClient/FSO.Windows
+      - TSOClient/FSO.Linux
+      - TSOClient/FSO.Client
+      - TSOClient/FSO.Common
+      - TSOClient/FSO.Files
+      - TSOClient/FSO.Content
+      - TSOClient/FSO.Content.TSO
+      - TSOClient/FSO.Common.DatabaseService
+      - TSOClient/FSO.Common.DataService
+      - TSOClient/FSO.Common.Domain
+      - TSOClient/FSO.HIT
+      - TSOClient/FSO.LotView
+      - TSOClient/FSO.Server.Clients
+      - TSOClient/FSO.Server.Protocol
+      - TSOClient/FSO.Server.Common
+      - TSOClient/FSO.SimAntics
+      - TSOClient/FSO.UI
+      - TSOClient/FSO.Vitaboy
+      - TSOClient/FSO.Vitaboy.Engine
+      - Other/libs/Mp3Sharp
+      - Other/libs/MSDFData
+      - Other/libs/VoronoiLib
+      - Other/libs/FSOMina.NET
+      - Others/libs/TargaImgePCL
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - .github/workflows/client-git.yml
+      - .github/workflows/reusable-client-git.yml
+      - TSOClient/FSO.Windows
+      - TSOClient/FSO.Linux
+      - TSOClient/FSO.Client
+      - TSOClient/FSO.Common
+      - TSOClient/FSO.Files
+      - TSOClient/FSO.Content
+      - TSOClient/FSO.Content.TSO
+      - TSOClient/FSO.Common.DatabaseService
+      - TSOClient/FSO.Common.DataService
+      - TSOClient/FSO.Common.Domain
+      - TSOClient/FSO.HIT
+      - TSOClient/FSO.LotView
+      - TSOClient/FSO.Server.Clients
+      - TSOClient/FSO.Server.Protocol
+      - TSOClient/FSO.Server.Common
+      - TSOClient/FSO.SimAntics
+      - TSOClient/FSO.UI
+      - TSOClient/FSO.Vitaboy
+      - TSOClient/FSO.Vitaboy.Engine
+      - Other/libs/Mp3Sharp
+      - Other/libs/MSDFData
+      - Other/libs/VoronoiLib
+      - Other/libs/FSOMina.NET
+      - Others/libs/TargaImgePCL
+
+jobs:
+  build-win-x64:
+    name: Build for Windows x64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-client-git.yml@master
+    with:
+      platform: win-x64
+      project: FSO.Windows
+
+  build-linux-x64:
+    name: Build for Linux x64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-client-git.yml@master
+    with:
+      platform: linux-x64
+      project: FSO.Linux
+
+  build-linux-arm64:
+    name: Build for Linux Arm64
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-client-git.yml@master
+    with:
+      platform: linux-arm64
+      project: FSO.Linux

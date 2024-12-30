@@ -1,0 +1,37 @@
+name: Reusable - Build Client
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+      project:
+        required: true
+        type: string
+
+jobs:
+  reusable-client-git:
+    name: Build client
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build client
+        working-directory: ./TSOClient/${{ inputs.project }}/
+        run: dotnet publish ${{ inputs.project }}.csproj -r ${{ inputs.platform }} --sc true -c Release -o ./out
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fsodotnet8.0client-${{ inputs.platform }}-${{ github.sha }}
+          path: ./TSOClient/${{ inputs.project }}/out
+  
