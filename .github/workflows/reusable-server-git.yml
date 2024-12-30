@@ -9,6 +9,7 @@ on:
 
 jobs:
   reusable-server-git:
+    name: Build server
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
