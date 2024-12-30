@@ -46,19 +46,19 @@ on:
 jobs:
   build-win-x64:
     name: Build for Windows x64
-    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@master
     with:
       platform: win-x64
 
   build-linux-x64:
     name: Build for Linux x64
-    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@master
     with:
       platform: linux-x64
 
   build-linux-arm64:
     name: Build for Linux Arm64
-    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@main
+    uses: dark-steveneq/fsodotnet8.0/.github/workflows/reusable-server-git.yml@master
     with:
       platform: linux-arm64
 
