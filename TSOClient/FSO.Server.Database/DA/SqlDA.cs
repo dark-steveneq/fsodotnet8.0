@@ -46,7 +46,7 @@ namespace FSO.Server.Database.DA
         {
             get
             {
-                if(_users == null)
+                if (_users == null)
                 {
                     _users = new SqlUsers(Context);
                 }

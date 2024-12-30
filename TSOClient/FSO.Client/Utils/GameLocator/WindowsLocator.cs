@@ -14,7 +14,8 @@ namespace FSO.Client.Utils.GameLocator
 
             // Search relative directory similar to how macOS and Linux works; allows portability
             string localDir = @"../The Sims Online/TSOClient/";
-            if (File.Exists(Path.Combine(localDir, "tuning.dat"))) return localDir;
+            if (File.Exists(Path.Combine(localDir, "tuning.dat")))
+                return localDir;
 
             using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
             {

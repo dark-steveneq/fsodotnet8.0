@@ -599,7 +599,7 @@ namespace FSO.Common.DataService
             {
                 structDef = new Struct();
                 structDef.ID = 0;
-                LOG.Info("Failed to find structDef " + type.Name + ", replacing with dummy data - " + ex.ToString());
+                LOG.Warn(ex, "Failed to find structDef " + type.Name + ", replacing with dummy data - ");
             }
 
             ProviderByTypeId.Add(structDef.ID, provider);

@@ -21,14 +21,21 @@ namespace FSO.Server.Servers.Api.JsonWebToken
 
         public JWTUser DecodeToken(string token)
         {
-            //var payload = JWT.JsonWebToken.Decode(token, Config.Key, true);
-            var payload = JWT.Builder.JwtBuilder.Create()
-                .WithAlgorithm(new JWT.Algorithms.HMACSHA384Algorithm())
-                .WithSecret(Config.Key)
-                .MustVerifySignature()
-                .Decode(token);
-            Dictionary<string, string> payloadParsed = JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);
-            return JsonConvert.DeserializeObject<JWTUser>(payloadParsed["data"]);     
+            try
+            {
+                //var payload = JWT.JsonWebToken.Decode(token, Config.Key, true);
+                var payload = JWT.Builder.JwtBuilder.Create()
+                    .WithAlgorithm(new JWT.Algorithms.HMACSHA384Algorithm())
+                    .WithSecret(Config.Key)
+                    .MustVerifySignature()
+                    .Decode(token);
+                Dictionary<string, string> payloadParsed = JsonConvert.DeserializeObject<Dictionary<string, string>>(payload);
+                return JsonConvert.DeserializeObject<JWTUser>(payloadParsed["data"]);     
+            }
+            catch
+            {
+                return default;
+            }
         }
 
         public JWTInstance CreateToken(JWTUser data)

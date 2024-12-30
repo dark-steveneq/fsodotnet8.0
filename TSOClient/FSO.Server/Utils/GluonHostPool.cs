@@ -63,7 +63,7 @@ namespace FSO.Server.Utils
         /// </summary>
         public void Start()
         {
-            LOG.Info("starting gluon host pool");
+            LOG.Info("Starting...");
 
             PoolRunning = true;
             PoolHealthWatcher = new Thread(HealthCheckLoop);
@@ -75,7 +75,7 @@ namespace FSO.Server.Utils
         /// </summary>
         public void Stop()
         {
-            LOG.Info("stopping gluon host pool");
+            LOG.Info("Stopping...");
 
             PoolRunning = false;
             StoppedEvent.Set();
@@ -201,8 +201,9 @@ namespace FSO.Server.Utils
                         return false;
                     }
                 }
-            }catch(Exception ex){
             }
+            catch
+            {}
 
             return true;
         }

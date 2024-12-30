@@ -17,7 +17,7 @@ namespace FSO.Server.Servers.Lot.Handlers
 
         public void Handle(IGluonSession session, TransferClaim request)
         {
-            LOG.Info("Recieved lot host request... ");
+            LOG.Debug("Recieved lot host request... ");
 
             if (request.Type != Protocol.Gluon.Model.ClaimType.LOT)
             {
@@ -31,7 +31,7 @@ namespace FSO.Server.Servers.Lot.Handlers
             }
 
             var lot = Lots.TryHost(request.EntityId, session);
-            if(lot == null)
+            if (lot == null)
             {
                 session.Write(new TransferClaimResponse
                 {
@@ -43,7 +43,7 @@ namespace FSO.Server.Servers.Lot.Handlers
                 return;
             }
 
-            if(Lots.TryAcceptClaim((int)request.EntityId, request.ClaimId, request.SpecialId, request.FromOwner, request.Action))
+            if (Lots.TryAcceptClaim((int)request.EntityId, request.ClaimId, request.SpecialId, request.FromOwner, request.Action))
             {
                 session.Write(new TransferClaimResponse
                 {

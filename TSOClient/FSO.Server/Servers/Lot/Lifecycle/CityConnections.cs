@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using FSO.Common.Security;
+using FSO.Common.Domain.Shards;
 
 namespace FSO.Server.Servers.Lot.Lifecycle
 {
@@ -38,17 +39,13 @@ namespace FSO.Server.Servers.Lot.Lifecycle
                 CpuCounter.InstanceName = "_Total";
 
                 if (PerformanceCounterCategory.Exists("Processor"))
-                {
-                    var firstValue = CpuCounter.NextValue();
-                }
+                    CpuCounter.NextValue();
             }
             else
-            {
-                LOG.Info("Performance counters are not supported on this platform, running without.");
-            }
+                LOG.Debug("Performance counters are not supported on this platform, running without.");
 
             Connections = new Dictionary<LotServerConfigurationCity, CityConnection>();
-            foreach(var city in config.Cities)
+            foreach (var city in config.Cities)
             {
                 var connection = new CityConnection(kernel, city, config);
                 Connections.Add(city, connection);
@@ -58,10 +55,8 @@ namespace FSO.Server.Servers.Lot.Lifecycle
 
         private void Connection_OnDisconnected(CityConnection connection)
         {
-            if(OnCityDisconnected != null)
-            {
+            if (OnCityDisconnected != null)
                 OnCityDisconnected(connection);
-            }
         }
 
         public IGluonSession GetByShardId(int shard_id)
@@ -106,11 +101,11 @@ namespace FSO.Server.Servers.Lot.Lifecycle
                 {
                     if (!connection.Connected)
                     {
-                        LOG.Info("Attempting connection!");
+                        LOG.Debug("Attempting connection!");
                         connection.Connect();
-                    }else{
-                        connection.Write(capacity);
                     }
+                    else
+                        connection.Write(capacity);
                 }
 
                 if (nextSleep)
@@ -123,7 +118,7 @@ namespace FSO.Server.Servers.Lot.Lifecycle
 
     public class CityConnection : IAriesEventSubscriber, IAriesMessageSubscriber, IGluonSession
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
         
         private AriesClient Client;
         public LotServerConfigurationCity CityConfig;
@@ -142,12 +137,16 @@ namespace FSO.Server.Servers.Lot.Lifecycle
         private DateTime _ConnectingStart;
         private IAriesPacketRouter _Router;
         private LotServerConfiguration LotServerConfig;
+        private IKernel Kernel;
 
         public event CityConnectionEvent OnConnected;
         public event CityConnectionEvent OnDisconnected;
 
         public CityConnection(IKernel kernel, LotServerConfigurationCity config, LotServerConfiguration lotServerConfig)
         {
+            LOG = LogManager.GetLogger("CityConnection[" + lotServerConfig.Call_Sign + "]");
+
+            Kernel = kernel;
             LotServerConfig = lotServerConfig;
             CityConfig = config;
             Client = new AriesClient(kernel);
@@ -163,7 +162,7 @@ namespace FSO.Server.Servers.Lot.Lifecycle
 
             if (_Connecting)
             {
-                if(DateTime.UtcNow - _ConnectingStart > TimeSpan.FromSeconds(30)){
+                if (DateTime.UtcNow - _ConnectingStart > TimeSpan.FromSeconds(30)){
                     _Connecting = false;
                 }
                 return;
@@ -176,7 +175,6 @@ namespace FSO.Server.Servers.Lot.Lifecycle
 
             //TODO: Fix TLS support
             var endpoint = CityConfig.Host.Replace("100", "101");
-            LOG.Info("Lot server connecting to city server: " + endpoint);
             Client.Connect(endpoint);
         }
 
@@ -185,13 +183,13 @@ namespace FSO.Server.Servers.Lot.Lifecycle
             Connected = true;
             _Connecting = false;
 
-            var endpoint = CityConfig.Host.Replace("100", "101");
-            LOG.Info("Lot server connected to city server: " + endpoint);
+            var shards = Kernel.Get<IShardsDomain>();
+            var shard = shards?.GetById(CityConfig.ID);
 
-            if(OnConnected != null)
-            {
+            LOG.Info("Successfully connected to {0} (ID: {1})", shard.Name ?? "[Unknown]", CityConfig.ID);
+
+            if (OnConnected != null)
                 OnConnected(this);
-            }
         }
 
         public void MessageReceived(AriesClient client, object message)
@@ -205,29 +203,25 @@ namespace FSO.Server.Servers.Lot.Lifecycle
 
         public void SessionOpened(AriesClient client)
         {
-
         }
 
         public void SessionClosed(AriesClient client)
         {
-            LOG.Info("Lot Server "+LotServerConfig.Call_Sign+" disconnected!");
+            LOG.Info("Disconnected from city server!");
             Connected = false;
             _Connecting = false;
 
-            if(OnDisconnected != null)
-            {
+            if (OnDisconnected != null)
                 OnDisconnected(this);
-            }
         }
 
         public void SessionIdle(AriesClient client)
         {
-
         }
 
         public void InputClosed(AriesClient session)
         {
-            LOG.Info("Lot Server " + LotServerConfig.Call_Sign + " disconnected! (input closed)");
+            LOG.Info("Disconnected from city server! (input closed)");
         }
 
         public void Write(params object[] messages)

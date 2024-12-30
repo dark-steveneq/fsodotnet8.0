@@ -48,7 +48,7 @@ namespace FSO.Content.Interfaces
                     Entries.TryGetValue(id, out reference);
                     if (reference == null)
                     {
-                        Console.WriteLine("Failed to get Object ID: " + id.ToString() + " (no resource)");
+                        //Console.WriteLine("Failed to get Object ID: " + id.ToString() + " (no resource)");
                         return null;
                     }
                     /*
@@ -76,7 +76,7 @@ namespace FSO.Content.Interfaces
                         return item; //found it!
                     }
                 }
-                Console.WriteLine("Failed to get Object ID: " + id.ToString() + " from resource " + resource.Name);
+                //Console.WriteLine("Failed to get Object ID: " + id.ToString() + " from resource " + resource.Name);
                 return null;
             });
         }

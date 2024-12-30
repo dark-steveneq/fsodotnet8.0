@@ -23,14 +23,16 @@ namespace FSO.Server.Servers.City
 {
     public class CityServer : AbstractAriesServer
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
         private CityServerConfiguration Config;
         private ISessionGroup VoltronSessions;
         private CityLivenessEngine Liveness;
-        public bool ShuttingDown;
+        public bool ShuttingDown; 
 
         public CityServer(CityServerConfiguration config, IKernel kernel) : base(config, kernel)
         {
+            LOG = LogManager.GetLogger("CityServer[" + config.Call_Sign + "]");
+
             this.UnexpectedDisconnectWaitSeconds = 30;
             this.TimeoutIfNoAuth = config.Timeout_No_Auth;
             this.Config = config;
@@ -39,7 +41,16 @@ namespace FSO.Server.Servers.City
 
         public override void Start()
         {
-            LOG.Info("Starting city server for city: " + Config.ID);
+            var shards = Kernel.Get<IShardsDomain>();
+            var shard = shards.GetById(Config.ID);
+
+            if (shard == null)
+            {
+                LOG.Fatal("Failed to start a city server: City with ID {0} doesn't exist in the database! Double-check the database!");
+                Environment.Exit(1);
+            }
+
+            LOG.Info("Starting with city {0}...", shard.Name);
             base.Start();
 
             Liveness.Start();
@@ -49,12 +60,6 @@ namespace FSO.Server.Servers.City
         {
             var shards = Kernel.Get<IShardsDomain>();
             var shard = shards.GetById(Config.ID);
-            if (shard == null)
-            {
-                throw new Exception("Unable to find a shard with id " + Config.ID + ", check it exists in the database");
-            }
-
-            LOG.Info("City identified as " + shard.Name);
 
             var context = new CityServerContext();
             context.ShardId = shard.Id;
@@ -79,16 +84,16 @@ namespace FSO.Server.Servers.City
                 ((Shards)shards).Update();
 
                 var oldClaims = db.LotClaims.GetAllByOwner(context.Config.Call_Sign).ToList();
-                if(oldClaims.Count > 0)
+                if (oldClaims.Count > 0)
                 {
-                    LOG.Warn("Detected " + oldClaims.Count + " previously allocated lot claims, perhaps the server did not shut down cleanly. Lot consistency may be affected.");
+                    LOG.Warn("Detected {0} previously allocated lot claims, perhaps the server did not shut down cleanly. Lot consistency may be affected.", oldClaims.Count);
                     db.LotClaims.RemoveAllByOwner(context.Config.Call_Sign);
                 }
 
                 var oldAvatarClaims = db.AvatarClaims.GetAllByOwner(context.Config.Call_Sign).ToList();
-                if(oldAvatarClaims.Count > 0)
+                if (oldAvatarClaims.Count > 0)
                 {
-                    LOG.Warn("Detected " + oldAvatarClaims.Count + " avatar claims, perhaps the server did not shut down cleanly. Avatar consistency may be affected.");
+                    LOG.Warn("Detected {0} avatar claims, perhaps the server did not shut down cleanly. Avatar consistency may be affected.", oldAvatarClaims.Count);
                     db.AvatarClaims.DeleteAll(context.Config.Call_Sign);
                 }
             }

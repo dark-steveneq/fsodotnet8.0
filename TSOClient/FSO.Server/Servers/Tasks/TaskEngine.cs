@@ -16,7 +16,7 @@ namespace FSO.Server.Servers.Tasks
 {
     public class TaskEngine
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
 
         private IKernel Kernel;
         private IDAFactory DAFactory;
@@ -27,8 +27,9 @@ namespace FSO.Server.Servers.Tasks
         private DateTime Last;
         private List<ScheduledTaskRunOptions> _Schedule;
 
-        public TaskEngine(IKernel kernel, IDAFactory daFactory)
+        public TaskEngine(TaskServerConfiguration config, IKernel kernel, IDAFactory daFactory)
         {
+            LOG = LogManager.GetLogger("TaskEngine[" + config.Call_Sign + "]");
             Last = DateTime.Now;
             Kernel = kernel;
             DAFactory = daFactory;
@@ -41,7 +42,7 @@ namespace FSO.Server.Servers.Tasks
 
         public void Start()
         {
-            LOG.Info("Starting Task Engine");
+            LOG.Info("Starting...");
             Timer.Start();
 
             Task.Delay(30000).ContinueWith(x =>
@@ -76,7 +77,7 @@ namespace FSO.Server.Servers.Tasks
 
         public void Stop()
         {
-            LOG.Info("Stopping Task Engine");
+            LOG.Info("Stopping...");
             Timer.Stop();
             foreach(var task in Running)
                 task.Abort();

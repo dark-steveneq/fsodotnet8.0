@@ -64,13 +64,17 @@ namespace FSO.Server
 
             if (Config.Services == null)
             {
-                LOG.Warn("No services found in the configuration file, exiting");
+                LOG.Fatal("No services configured! Check config.json and the documentation!");
                 return 1;
             }
-
-            if (!Directory.Exists(Config.GameLocation))
+            else if (!Directory.Exists(Config.GameLocation))
             {
-                LOG.Fatal("The directory specified as gameLocation in config.json does not exist");
+                LOG.Fatal("gameLocation folder specified in config.json doesn't exist! Double-check it!");
+                return 1;
+            }
+            else if (!File.Exists(Path.Combine(Config.GameLocation, "tuning.dat")))
+            {
+                LOG.Fatal("TSO files not found! Double-check gameLocation in config.json!");
                 return 1;
             }
 
@@ -94,13 +98,12 @@ namespace FSO.Server
             {
                 var stringID = File.ReadAllText("updateID.txt");
                 int id;
-                if (int.TryParse(stringID, out id)) {
+                if (int.TryParse(stringID, out id))
                     Config.UpdateID = id;
-                }
             }
 
             //TODO: Some content preloading
-            LOG.Info("Scanning content");
+            LOG.Info("Initial content loading");
             VMContext.InitVMConfig(false);
             Content.Content.Init(Config.GameLocation, Content.ContentMode.SERVER);
             Kernel.Bind<Content.Content>().ToConstant(Content.Content.Get());
@@ -200,7 +203,8 @@ namespace FSO.Server
             LOG.Info("Starting services");
             foreach (AbstractServer server in Servers)
             {
-                LOG.Info("Starting " + server.GetType().ToString() + "...");
+                var type = server.GetType().ToString();
+                LOG.Info("Starting {0} service...", type[(type.LastIndexOf(".") + 1)..]);
                 server.Start();
             }
 
@@ -223,11 +227,11 @@ namespace FSO.Server
                     {
                         if (Servers.Count == 0)
                         {
-                            LOG.Info("All servers shut down, shutting down program...");
+                            LOG.Info("All services shut down, shutting down program...");
 
                             Kernel.Get<IGluonHostPool>().Stop();
 
-                            LOG.Info("(pre-close) checking for scheduled updates...");
+                            LOG.Info("Checking for scheduled updates...");
                             if (AutoUpdateUtility.QueueUpdateIfRequired(Kernel, Config.UpdateBranch))
                             {
                                 LOG.Info("An update was scheduled, and has been queued for the watchdog to apply on restart.");
@@ -251,8 +255,8 @@ namespace FSO.Server
             return 1;
         }
 
-        private int[] ShutdownAlertTimings = new int[]
-        {
+        private int[] ShutdownAlertTimings =
+        [
             30*60, //30 mins
             15*60, //15 mins
             10*60,
@@ -262,7 +266,7 @@ namespace FSO.Server
             2*60,
             60,
             30
-        };
+        ];
 
         private void BroadcastMessage(string sender, string title, string message)
         {
@@ -338,7 +342,8 @@ namespace FSO.Server
                             Messages = new Files.Formats.tsodata.MessageItem[] { messageItem }
                         });
                     }
-                    catch { }
+                    catch
+                    {}
                 }
             }
         }
@@ -352,7 +357,8 @@ namespace FSO.Server
             var remaining = (int)time;
             foreach (var alertTime in ShutdownAlertTimings)
             {
-                if (remaining < alertTime) continue;
+                if (remaining < alertTime)
+                    continue;
                 //wait until this alert time and display an announcement
                 var waitTime = remaining - alertTime;
                 await Task.Delay((int)waitTime * 1000);
@@ -368,9 +374,7 @@ namespace FSO.Server
             LOG.Info("Shutdown commencing.");
             List<Task<bool>> ShutdownTasks = new List<Task<bool>>();
             foreach (var city in CityServers)
-            {
                 ShutdownTasks.Add(city.Shutdown(type));
-            }
             await Task.WhenAll(ShutdownTasks.ToArray());
             LOG.Info("Successfully shut down all city servers!");
             lock (Servers)

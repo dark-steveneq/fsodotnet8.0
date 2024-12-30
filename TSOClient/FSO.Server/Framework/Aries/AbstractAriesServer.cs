@@ -112,7 +112,7 @@ namespace FSO.Server.Framework.Aries
                     Acceptor.Handler = this;
 
                     Acceptor.Bind(IPEndPointUtils.CreateIPEndPoint(Config.Binding));
-                    LOG.Info("Listening on " + Acceptor.LocalEndPoint + " with TLS");
+                    LOG.Debug("Listening on " + Acceptor.LocalEndPoint + " with TLS");
                 }
 
                 //Bind in the plain too as a workaround until we can get Mina.NET to work nice for TLS in the AriesClient
@@ -124,11 +124,11 @@ namespace FSO.Server.Framework.Aries
                 PlainAcceptor.FilterChain.AddLast("protocol", new ProtocolCodecFilter(Kernel.Get<AriesProtocol>()));
                 PlainAcceptor.Handler = this;
                 PlainAcceptor.Bind(IPEndPointUtils.CreateIPEndPoint(Config.Binding.Replace("100", "101")));
-                LOG.Info("Listening on " + PlainAcceptor.LocalEndPoint + " in the plain");
+                LOG.Debug("Listening on " + PlainAcceptor.LocalEndPoint + " in the plain");
             }
             catch (Exception ex)
             {
-                LOG.Error("Unknown error bootstrapping server: "+ex.ToString(), ex);
+                LOG.Error(ex, "Unknown error bootstrapping server");
             }
         }
 
@@ -167,21 +167,26 @@ namespace FSO.Server.Framework.Aries
 
         public void SessionCreated(IoSession session)
         {
-            LOG.Info("[SESSION-CREATE (" + Config.Call_Sign +")]");
+            LOG.Debug("[SESSION-CREATE (" + Config.Call_Sign +")]");
 
             //Setup session
             var ariesSession = new AriesSession(session);
             session.SetAttribute("s", ariesSession);
             _Sessions.Add(ariesSession);
 
-            foreach(var interceptor in _SessionInterceptors){
-                try{
+            foreach (var interceptor in _SessionInterceptors)
+            {
+                try
+                {
                     interceptor.SessionCreated(ariesSession);
-                }catch(Exception ex){
-                    LOG.Error(ex);
+                }
+                catch (Exception ex)
+                {
+                    LOG.Error(ex, "Failed to run Aries session interceptor!");
                 }
             }
-            if (TimeoutIfNoAuth) ariesSession.TimeoutIfNoAuth(20000);
+            if (TimeoutIfNoAuth)
+                ariesSession.TimeoutIfNoAuth(20000);
 
             //Ask for session info
             session.Write(new RequestClientSession());
@@ -203,10 +208,11 @@ namespace FSO.Server.Framework.Aries
             if (!ariesSession.IsAuthenticated)
             {
                 /** You can only use aries packets when anon **/
-                if(!(message is IAriesPacket) && !(message is ClientByePDU))
+                if (!(message is IAriesPacket) && !(message is ClientByePDU))
                 {
-                    throw new Exception($"Voltron packets are forbidden before aries authentication has completed. \n" +
+                    LOG.Error($"Voltron packets are forbidden before aries authentication has completed. \n" +
                         $"(got {message.GetType().ToString()} on connection for {Config.Call_Sign})");
+                    return;
                 }
             }
 
@@ -231,19 +237,19 @@ namespace FSO.Server.Framework.Aries
             uint avatarID;
             if (!uint.TryParse(userID, out avatarID))
             {
-                LOG.Info($"Rejected migration: could not parse userID {userID}");
+                LOG.Debug($"Rejected migration: could not parse userID {userID}");
                 return false;
             }
             var session = _Sessions.GetByAvatarId(avatarID);
             if (session == null)
             {
-                LOG.Info($"Rejected migration: could not find session for userID {userID}");
+                LOG.Debug($"Rejected migration: could not find session for userID {userID}");
                 return false;
             }
             if ((string)session.GetAttribute("sessionKey") != password)
             {
                 var nullified = (session.GetAttribute("sessionKey") == null) ? "null" : "non-null";
-                LOG.Info($"Rejected migration: incorrect session key for user {userID}. (session key is {nullified})");
+                LOG.Debug($"Rejected migration: incorrect session key for user {userID}. (session key is {nullified})");
                 return false;
             }
             LOG.Info($"Migrating session for user {userID}...");
@@ -293,7 +299,7 @@ namespace FSO.Server.Framework.Aries
             var ariesSession = session.GetAttribute<IAriesSession>("s");
             if (ariesSession == null)
             {
-                LOG.Info("[SESSION-REPLACED (" + Config.Call_Sign + ")]");
+                LOG.Debug("[SESSION-REPLACED (" + Config.Call_Sign + ")]");
                 return;
             }
 
@@ -303,7 +309,7 @@ namespace FSO.Server.Framework.Aries
                 if (UnexpectedDisconnectWaitSeconds > 0)
                 {
                     //close this session after the timeout, if it isn't migrated.
-                    LOG.Info("[SESSION-INTERRUPTED (" + Config.Call_Sign + ")]");
+                    LOG.Debug("[SESSION-INTERRUPTED (" + Config.Call_Sign + ")]");
 
                     Task.Run(async () =>
                     {
@@ -315,11 +321,11 @@ namespace FSO.Server.Framework.Aries
                         if (session.GetAttribute("migrated") != null)
                         {
                             //this session has been migrated to another connection - it no longer needs to be closed
-                            LOG.Info("[SESSION-REPLACED (" + Config.Call_Sign + ")]");
+                            LOG.Debug("[SESSION-REPLACED (" + Config.Call_Sign + ")]");
                             return;
                         }
                         _Sessions.Remove(ariesSession);
-                        LOG.Info("[SESSION-TIMEOUT (" + Config.Call_Sign + ")]");
+                        LOG.Debug("[SESSION-TIMEOUT (" + Config.Call_Sign + ")]");
 
                         foreach (var interceptor in _SessionInterceptors)
                         {
@@ -338,7 +344,7 @@ namespace FSO.Server.Framework.Aries
             }
             
             _Sessions.Remove(ariesSession);
-            LOG.Info("[SESSION-CLOSED (" + Config.Call_Sign + ")]");
+            LOG.Debug("[SESSION-CLOSED (" + Config.Call_Sign + ")]");
 
             foreach (var interceptor in _SessionInterceptors)
             {
@@ -403,7 +409,8 @@ namespace FSO.Server.Framework.Aries
             var sessionClone = _Sessions.Clone();
             foreach (var session in sessionClone)
             {
-                if (sendBye) session.Write(new ServerByePDU());
+                if (sendBye)
+                    session.Write(new ServerByePDU());
                 session.Close();
             }
 
@@ -429,12 +436,8 @@ namespace FSO.Server.Framework.Aries
             var result = new List<ISocketSession>();
             var sessions = _Sessions.RawSessions;
             lock (sessions)
-            {
                 foreach (var item in sessions)
-                {
                     result.Add(item);
-                }
-            }
             return result;
         }
     }

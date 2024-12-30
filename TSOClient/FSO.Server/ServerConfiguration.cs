@@ -5,12 +5,16 @@ using FSO.Server.Servers.City;
 using FSO.Server.Servers.Lot;
 using FSO.Server.Servers.Tasks;
 using FSO.Server.Servers.UserApi;
+using Microsoft.Win32;
 using Ninject.Activation;
 using Ninject.Modules;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace FSO.Server
 {
@@ -72,24 +76,60 @@ namespace FSO.Server
     /// </summary>
     public class ServerConfigurationModule : NinjectModule
     {
+        private static Logger LOG = LogManager.GetCurrentClassLogger();
+
         private ServerConfiguration GetConfiguration(IContext context)
         {
             //TODO: Allow config path to be overriden in a switch
             var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.json");
             if (!File.Exists(configPath))
             {
-                Console.WriteLine("Configuration file path: " + configPath);
-                throw new Exception("Configuration file, config.json, missing");
+                if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.sample.json")))
+                    LOG.Fatal("File config.json doesn't exist, rename config.sample.json to config.json and edit it!");
+                else
+                    LOG.Fatal("File config.json doesn't exist, refer to documentation!");
+                Environment.Exit(1);
             }
 
             var data = File.ReadAllText(configPath);
 
             try
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<ServerConfiguration>(data);
-            }catch(Exception ex)
+                var parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<ServerConfiguration>(data);
+
+                var parentPath = Path.GetDirectoryName(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+                if (File.Exists(Path.Combine(parentPath, "game", "tuning.dat")))
+                {
+                    parsed.GameLocation = Path.Combine(parentPath, "game");
+                    LOG.Info("Found a valid TSO instalation in {0}, using it instead!", parsed.GameLocation);
+                }
+                else if (File.Exists(Path.Combine(parentPath, "The Sims Online", "TSOClient", "tuning.dat")))
+                {
+                    parsed.GameLocation = Path.Combine(parentPath, "The Sims Online", "TSOClient");
+                    LOG.Info("Found a valid TSO instalation in {0}, using it instead!", parsed.GameLocation);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+                    {
+                        RegistryKey softwareKey = hklm.OpenSubKey("SOFTWARE");
+                        if (Array.Exists(softwareKey.GetSubKeyNames(), delegate (string s) { return s.Equals("Maxis", StringComparison.InvariantCultureIgnoreCase); }))
+                        {
+                            RegistryKey maxisKey = softwareKey.OpenSubKey("Maxis");
+                            if (Array.Exists(maxisKey.GetSubKeyNames(), delegate (string s) { return s.Equals("The Sims Online", StringComparison.InvariantCultureIgnoreCase); }))
+                            {
+                                parsed.GameLocation = Path.Combine((string)maxisKey.OpenSubKey("The Sims Online").GetValue("InstallDir"), "TSOClient");
+                                LOG.Info("Found a valid TSO instalation in {0}, using it instead!", parsed.GameLocation);
+                            }
+                        }
+                    }
+
+                return parsed;
+            }
+            catch (Exception ex)
             {
-                throw new Exception("Could not deserialize config.json", ex);
+                LOG.Fatal(ex, "Couldn't read config.json! Check config.json for formatting issues!");
+                Environment.Exit(1);
+                return null;
             }
         }
 

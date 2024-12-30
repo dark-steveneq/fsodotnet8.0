@@ -18,12 +18,14 @@ namespace FSO.Server.Servers.Tasks
     /// </summary>
     public class TaskServer : AbstractAriesServer
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
         private TaskEngine Engine;
         private TaskServerConfiguration Config;
 
         public TaskServer(TaskServerConfiguration config, IKernel kernel, TaskEngine engine) : base(config, kernel)
         {
+            LOG = LogManager.GetLogger("TaskServer[" + config.Call_Sign + "]");
+
             Engine = engine;
             Config = config;
 
@@ -37,7 +39,7 @@ namespace FSO.Server.Servers.Tasks
 
         public override void Start()
         {
-            LOG.Info("starting task server");
+            LOG.Info("Starting...");
 
             foreach(var task in Config.Schedule){
                 Engine.Schedule(task);

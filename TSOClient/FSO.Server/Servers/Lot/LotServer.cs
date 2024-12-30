@@ -23,7 +23,7 @@ namespace FSO.Server.Servers.Lot
     /// </summary>
     public class LotServer : AbstractAriesServer
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
         private LotServerConfiguration Config;
         private CityConnections Connections;
         private System.Timers.Timer LotLivenessTimer = new System.Timers.Timer(60000);
@@ -32,6 +32,8 @@ namespace FSO.Server.Servers.Lot
 
         public LotServer(LotServerConfiguration config, Ninject.IKernel kernel) : base(config, kernel)
         {
+            LOG = LogManager.GetLogger("LotServer[" + config.Call_Sign + "]");
+
             this.Config = config;
             this.UnexpectedDisconnectWaitSeconds = 30;
             this.TimeoutIfNoAuth = config.Timeout_No_Auth;
@@ -54,7 +56,7 @@ namespace FSO.Server.Servers.Lot
 
         public override void Start()
         {
-            LOG.Info("Starting lot hosting server");
+            LOG.Info("Starting...");
             LotLivenessTimer.Start();
             base.Start();
         }
@@ -69,14 +71,14 @@ namespace FSO.Server.Servers.Lot
                 var oldClaims = db.LotClaims.GetAllByOwner(Config.Call_Sign).ToList();
                 if (oldClaims.Count > 0)
                 {
-                    LOG.Warn("Detected " + oldClaims.Count + " previously allocated lot claims, perhaps the server did not shut down cleanly. Lot consistency may be affected.");
+                    LOG.Warn("Detected {0} previously allocated lot claims, perhaps the server did not shut down cleanly. Lot consistency may be affected.", oldClaims.Count);
                     db.LotClaims.RemoveAllByOwner(Config.Call_Sign);
                 }
 
                 var oldAvatarClaims = db.AvatarClaims.GetAllByOwner(Config.Call_Sign).ToList();
                 if (oldAvatarClaims.Count > 0)
                 {
-                    LOG.Warn("Detected " + oldAvatarClaims.Count + " avatar claims, perhaps the server did not shut down cleanly. Avatar consistency may be affected.");
+                    LOG.Warn("Detected {0} avatar claims, perhaps the server did not shut down cleanly. Avatar consistency may be affected.", oldAvatarClaims.Count);
                     db.AvatarClaims.DeleteAll(Config.Call_Sign);
                 }
             }
@@ -88,16 +90,14 @@ namespace FSO.Server.Servers.Lot
 
         private async void Connections_OnCityDisconnected(CityConnection connection)
         {
-            LOG.Warn("City connection lost... if it's not back in 30 seconds all its lots will be closed!");
+            LOG.Warn("Lost connection to city server... if it's not back in 30 seconds all its lots will be closed!");
             await Task.Delay(30000);
             try
             {
                 if (!connection.Connected)
                     Lots.ShutdownByShard(connection.CityConfig.ID);
             } catch
-            {
-
-            }
+            {}
         }
 
         protected override void HandleVoltronSessionResponse(IAriesSession session, object message)
@@ -189,7 +189,7 @@ namespace FSO.Server.Servers.Lot
 
         protected override void RouteMessage(IAriesSession session, object message)
         {
-            if(session is IVoltronSession)
+            if (session is IVoltronSession)
             {
                 //Route to a specific lot
                 Lots.RouteMessage(session as IVoltronSession, message);

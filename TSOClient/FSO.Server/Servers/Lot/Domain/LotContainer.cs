@@ -38,16 +38,13 @@ using System.Threading;
 
 namespace FSO.Server.Servers.Lot.Domain
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class LotContainer
     {
         private const bool TIME_DILATION_ENABLED = true;
         private const int TIME_DILATION_THRESHOLD_MS = 500; // Accelerate through half second pauses.
         private const int TIME_DILATION_SKIP_THRESHOLD_MS = 5000; // 5 seconds, or 1 ingame minute
 
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
 
         private IDAFactory DAFactory;
         private LotContext Context;
@@ -155,6 +152,8 @@ namespace FSO.Server.Servers.Lot.Domain
 
         public LotContainer(IDAFactory da, LotContext context, ILotHost host, IKernel kernel, LotServerConfiguration config, IRealestateDomain realestate)
         {
+            LOG = LogManager.GetLogger("LotContainer[" + config.Call_Sign + "]");
+
             VM.UseWorld = false;
             DAFactory = da;
             Host = host;
@@ -195,7 +194,9 @@ namespace FSO.Server.Servers.Lot.Domain
                         Terrain.Roads[x, y] = 0xF; //crossroads everywhere
                     }
                 }
-            } else {
+            }
+            else
+            {
                 using (var db = DAFactory.Get())
                 {
                     LotPersist = db.Lots.Get(context.DbId);
@@ -296,7 +297,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
         public void LoadAdj()
         {
-            LOG.Info("Loading adj lots for lot with dbid = " + Context.DbId);
+            LOG.Debug("Loading adjacent lots to lot ID {0}...", Context.DbId);
             HollowLots = new byte[9][];
             var myPos = MapCoordinates.Unpack(LotPersist.location);
             foreach (var lot in LotAdj)
@@ -309,7 +310,8 @@ namespace FSO.Server.Servers.Lot.Domain
                     var pos = MapCoordinates.Unpack(lot.location);
                     var x = (pos.X - myPos.X) + 1;
                     var y = (pos.Y - myPos.Y) + 1;
-                    if (x < 0 || x > 2 || y < 0 || y > 2) continue; //out of range (why does this happen?)
+                    if (x < 0 || x > 2 || y < 0 || y > 2)
+                        continue;
                     using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         int numBytesToRead = Convert.ToInt32(fs.Length);
@@ -318,10 +320,9 @@ namespace FSO.Server.Servers.Lot.Domain
                         HollowLots[y * 3 + x] = file;
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    LOG.Warn("Failed to load adjacent lot :(");
-                    LOG.Warn(e.ToString());
+                    LOG.Error(ex, "Failed to load adjacent lots to lot ID {0}!", Context.DbId);
                     //don't bother
                 }
             }
@@ -335,7 +336,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
             while (++attempts < Config.RingBufferSize)
             {
-                LOG.Info("Checking ring "+attempts+" for lot with dbid = " + Context.DbId);
+                LOG.Debug("Checking ring {0} for lot ID {1}...", attempts, Context.DbId);
                 try
                 {
                     var path = Path.Combine(Config.SimNFS, "Lots/" + lotStr + "/state_"+LotPersist.ring_backup_num.ToString()+".fsov");
@@ -359,9 +360,7 @@ namespace FSO.Server.Servers.Lot.Domain
                         Lot.Reset();
 
                         if (File.GetCreationTimeUtc(path) < new DateTime(2018, 10, 23, 12, 00, 00))
-                        {
                             ResetObjectValues();
-                        } 
                     }
 
                     using (var db = DAFactory.Get())
@@ -369,29 +368,27 @@ namespace FSO.Server.Servers.Lot.Domain
 
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    LOG.Info("Ring load failed with exception: " + e.ToString() + " for lot with dbid = " + Context.DbId);
+                    LOG.Error(ex, "Ring load failed for lot ID {0}!", Context.DbId);
                     LotPersist.ring_backup_num--;
                     if (LotPersist.ring_backup_num < 0) LotPersist.ring_backup_num += (sbyte)Config.RingBufferSize;
                 }
             }
             
-            LOG.Error("FAILED to load all backups for lot with dbid = " + Context.DbId + "! Forcing lot close");
+            LOG.Error("Failed to load all backups for lot ID {0}, closing lot!", Context.DbId);
             var backupPath = Path.Combine(Config.SimNFS, "Lots/" + lotStr + "/failedRestore" + (DateTime.Now.ToBinary().ToString()) + "/");
             Directory.CreateDirectory(backupPath);
             foreach (var file in Directory.EnumerateFiles(Path.Combine(Config.SimNFS, "Lots/" + lotStr + "/")))
-            {
                 File.Copy(file, backupPath + Path.GetFileName(file));
-            }
 
-            throw new Exception("failed to load lot!");
             return false;
         }
 
         public bool SaveRing()
         {
-            if (JobLot) return true; //job lots never get saved.
+            if (JobLot)
+                return true; //job lots never get saved.
             var newBackup = (sbyte)((LotPersist.ring_backup_num + 1) % Config.RingBufferSize);
             var lotStr = LotPersist.lot_id.ToString("x8");
             Directory.CreateDirectory(Path.Combine(Config.SimNFS, "Lots/" + lotStr + "/"));
@@ -411,28 +408,23 @@ namespace FSO.Server.Servers.Lot.Domain
 
                         path = Path.Combine(Config.SimNFS, "Lots/" + lotStr + "/hollow.fsoh");
                         using (var output = new FileStream(path, FileMode.Create))
-                        {
                             hmarshal.SerializeInto(new BinaryWriter(output));
-                        }
 
                         LotPersist.ring_backup_num = newBackup;
                         using (var db = DAFactory.Get())
-                        {
                             db.Lots.UpdateRingBackup(LotPersist.lot_id, newBackup);
                             //db.Flush();
-                        }
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        LOG.Warn(e, "Failed to save lot (to disk/db) with dbid = " + Context.DbId);
-                        LOG.Warn(e.StackTrace);
+                        LOG.Error(ex, "Failed to save lot ID {0}!", Context.DbId);
                     }
                 });
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception ex)
             {
-                LOG.Warn(e, "Failed to save lot with dbid = " + Context.DbId);
-                LOG.Warn(e.StackTrace);
+                LOG.Error(ex, "Failed to save lot ID {0}!", Context.DbId);
                 return false;
             }
         }
@@ -480,9 +472,7 @@ namespace FSO.Server.Servers.Lot.Domain
             ents.AddRange(Lot.Entities.Where(x => x.MultitileGroup.Objects.Any(y => InvalidGUIDs.Contains(y.Object.OBJ.GUID))));
 
             foreach (var ent in ents)
-            {
                 ent.Delete(false, Lot.Context);
-            }
         }
 
         private void ReturnInvalidObjects()
@@ -494,9 +484,7 @@ namespace FSO.Server.Servers.Lot.Domain
             var persists = Lot.Context.ObjectQueries.MultitileByPersist.Keys.ToList();
             Dictionary<uint, DbObject> ownerInfo;
             using (var da = DAFactory.Get())
-            {
                 ownerInfo = da.Objects.GetObjectOwners(persists).ToDictionary(x => x.object_id);
-            }
 
             var ents = new List<VMEntity>(Lot.Entities);
             var needToCreate = new HashSet<uint>(RequiredGUIDs);
@@ -547,7 +535,8 @@ namespace FSO.Server.Servers.Lot.Domain
 
                         foreach (var delE in sendback)
                         {
-                            if (delE.MultitileGroup.Objects.Count == 0) continue;
+                            if (delE.MultitileGroup.Objects.Count == 0)
+                                continue;
                             if (delE.PersistID >= 16777216 && delE is VMGameObject)
                             {
                                 total++;
@@ -562,7 +551,8 @@ namespace FSO.Server.Servers.Lot.Domain
                                         delE.Delete(true, Lot.Context);
                                         complete++;
                                     }, true);
-                                } else
+                                }
+                                else
                                 {
 
                                     //object is already elsewhere... do not save its state.
@@ -578,16 +568,11 @@ namespace FSO.Server.Servers.Lot.Domain
             }
             
             if (objectsOnLot.Count != 0 && !JobLot)
-            {
                 using (var da = DAFactory.Get())
-                {
                     da.Objects.ReturnLostObjects((uint)Context.DbId, objectsOnLot);
-                }
-            }
 
-            foreach (var obj in needToCreate) {
+            foreach (var obj in needToCreate)
                 Lot.Context.CreateObjectInstance(obj, LotTilePos.OUT_OF_WORLD, Direction.NORTH);
-            }
 
             if ((LotPersist.move_flags & 2) > 0)
             {
@@ -598,8 +583,9 @@ namespace FSO.Server.Servers.Lot.Domain
 
         private void ObjListAllContained(List<VMEntity> ents, VMEntity ent, int depth)
         {
-            if (depth > 50) throw new Exception("slot depth too high!");
-            for (int i=0; i<ent.TotalSlots(); i++)
+            if (depth > 50)
+                throw new Exception("slot depth too high!");
+            for (int i=0; i < ent.TotalSlots(); i++)
             {
                 var slotE = ent.GetSlot(i);
                 if (slotE != null)
@@ -612,7 +598,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
         private void CleanLot()
         {
-            LOG.Info("Cleaning lot with dbid = " + Context.DbId);
+            LOG.Debug("Cleaning lot ID {0}...", Context.DbId);
             var avatars = new List<VMEntity>(Lot.Entities.Where(x => x is VMAvatar && x.PersistID != 0));
             //step 1, force everyone to leave.
             foreach (var avatar in avatars)
@@ -627,11 +613,13 @@ namespace FSO.Server.Servers.Lot.Domain
             {
                 for (int i = 0; i < 30 * TICKRATE && Lot.Entities.FirstOrDefault(x => x is VMAvatar && x.PersistID > 0) != null; i++)
                 {
-                    if (i == 30 * TICKRATE - 1) LOG.Warn("Failed to clean lot with dbid = " + Context.DbId);
+                    if (i == 30 * TICKRATE - 1)
+                        LOG.Warn("Failed to clean lot ID {0}!", Context.DbId);
                     Lot.Tick();
                 }
             }
-            catch (Exception) { } //if something bad happens just immediately try to delete everyone
+            catch
+            {} //if something bad happens just immediately try to delete everyone
 
             avatars = new List<VMEntity>(Lot.Entities.Where(x => x is VMAvatar && (x.PersistID != 0 || (!(x as VMAvatar).IsPet))));
             foreach (var avatar in avatars) avatar.Delete(true, Lot.Context);
@@ -687,7 +675,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
         public void ResetVM()
         {
-            LOG.Info("Resetting VM for lot with dbid = " + Context.DbId);
+            LOG.Debug("Resetting VM for lot ID {0}...", Context.DbId);
             VMGlobalLink = Kernel.Get<LotServerGlobalLink>();
             VMDriver = new VMServerDriver(VMGlobalLink);
             VMDriver.OnTickBroadcast += TickBroadcast;
@@ -715,9 +703,7 @@ namespace FSO.Server.Servers.Lot.Domain
             bool isMoved = (LotPersist.move_flags > 0);
             LoadAdj();
             if (!JobLot && LotPersist.ring_backup_num > -1 && AttemptLoadRing())
-            {
-                LOG.Info("Successfully loaded and cleaned fsov for dbid = " + Context.DbId);
-            }
+                LOG.Debug("Successfully loaded and cleaned fsov for lot ID {0}!", Context.DbId);
             else
             {
                 isNew = true;
@@ -776,9 +762,11 @@ namespace FSO.Server.Servers.Lot.Domain
             if (!JobLot) ReturnOOWObjects();
 
             var restoreType = isCommunity ? RestoreLotType.Community : RestoreLotType.Normal;
-            if (isMoved || isNew) VMLotTerrainRestoreTools.RestoreTerrain(Lot, restoreType);
+            if (isMoved || isNew)
+                VMLotTerrainRestoreTools.RestoreTerrain(Lot, restoreType);
             VMLotTerrainRestoreTools.EnsureCoreObjects(Lot, restoreType);
-            if (isNew) VMLotTerrainRestoreTools.PopulateBlankTerrain(Lot);
+            if (isNew)
+                VMLotTerrainRestoreTools.PopulateBlankTerrain(Lot);
 
             ResyncTime();
 
@@ -859,14 +847,13 @@ namespace FSO.Server.Servers.Lot.Domain
         public void UpdateTuning(IEnumerable<DynTuningEntry> tuning)
         {
             Tuning = new DynamicTuning(tuning);
-            if (Lot == null || JobLot) return;
+            if (Lot == null || JobLot)
+                return;
             if (Lot.Tuning == null || (Lot.Tuning.GetTuning("forcedTuning", 0, 0) ?? 0f) == 0f)
-            {
                 Lot.ForwardCommand(new VMNetTuningCmd()
                 {
                     Tuning = Tuning
                 });
-            }
         }
 
         private void ResyncTime()
@@ -892,7 +879,6 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             var payphones = Lot.Context.ObjectQueries.GetObjectsByGUID(PAYPHONE_GUID)?.ToList(); //clone as we will be removing them
             if (payphones != null)
-            {
                 foreach (var phone in payphones)
                 {
                     var pos = phone.Position;
@@ -901,7 +887,6 @@ namespace FSO.Server.Servers.Lot.Domain
 
                     Lot.Context.CreateObjectInstance(NHOOD_PAYPHONE_GUID, pos, dir);
                 }
-            }
 
             var bulletin = Lot.Context.ObjectQueries.GetObjectsByGUID(NHOOD_BULLETIN_SMART_GUID)?.FirstOrDefault();
             if (bulletin == null)
@@ -916,9 +901,7 @@ namespace FSO.Server.Servers.Lot.Domain
         private void Lot_OnChatEvent(VMChatEvent evt)
         {
             if (evt.Type == VMChatEventType.Debug)
-            {
-                LOG.Info("LOT " + Context.DbId + ": " + evt.Text[0]);
-            }
+                LOG.Info("[Chat]Lot ID {0}: {1}", Context.DbId, evt.Text[0]);
         }
 
         private void DropClient(VMNetClient target)
@@ -975,14 +958,14 @@ namespace FSO.Server.Servers.Lot.Domain
                 {
                     ResetVM();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    LOG.Info("LOT " + Context.DbId + " LOAD EXECPTION:" + e.ToString());
+                    LOG.Error(ex, "Failed to reset VM for lot ID {0}!", Context.DbId);
                     Host.Shutdown();
                     DereferenceLot();
                     return;
                 }
-                LOG.Info("Starting to host lot with dbid = " + Context.DbId);
+                LOG.Info("Starting lot ID {0}!", Context.DbId);
                 Host.SetOnline(true);
 
                 var timeKeeper = new Stopwatch(); //todo: smarter timing
@@ -1160,9 +1143,9 @@ namespace FSO.Server.Servers.Lot.Domain
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex) 
             {
-                LOG.Info("Fatal exception on lot " + Context.DbId + ":" + e.ToString());
+                LOG.Error(ex, "Fatal exception on lot ID {0}!", Context.DbId);
                 Host.Shutdown();
                 DereferenceLot();
                 return;
@@ -1219,7 +1202,7 @@ namespace FSO.Server.Servers.Lot.Domain
                 var myRoomieLots = da.Roommates.GetAvatarsLots(session.AvatarId); //might want to use other entries to update the roomies table entirely.
                 var myIgnored = da.Bookmarks.GetAvatarIgnore(session.AvatarId);
                 var user = da.Users.GetById(avatar.user_id);
-                LOG.Info("Avatar " + avatar.name + " ("+session.AvatarId+") has joined lot "+Context.DbId);
+                LOG.Info("Avatar {0} (ID {1}) has joined lot ID {2}", avatar.name, avatar.avatar_id, Context.DbId);
 
                 //Load all the avatars data
                 var state = StateFromDB(avatar, user, rels, jobinfo, myRoomieLots, myIgnored);
@@ -1347,7 +1330,8 @@ namespace FSO.Server.Servers.Lot.Domain
                 using (var db = DAFactory.Get())
                 {
                     db.Avatars.UpdateAvatarLotSave(pid, dbState);
-                    if (jobLevel != null) db.Avatars.UpdateAvatarJobLevel(jobLevel);
+                    if (jobLevel != null)
+                        db.Avatars.UpdateAvatarJobLevel(jobLevel);
                 }
             });
         }
@@ -1549,10 +1533,9 @@ namespace FSO.Server.Servers.Lot.Domain
                     ReplaceUID = replace_id,
                     Verified = true,
                 });
-            } catch (Exception)
-            {
-
             }
+            catch
+            {}
         }
 
         public void ForceShutdown()
@@ -1565,7 +1548,7 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             //shut down this lot. Do a final save and close everything down.
             VMDriver.EndRecord();
-            LOG.Info("Lot with dbid = " + Context.DbId + " shutting down.");
+            LOG.Info("Stopping lot ID {0}!", Context.DbId);
             if ((LotPersist.move_flags & 4) > 0)
             {
                 //this lot is slated to be deleted from the database.
@@ -1580,7 +1563,8 @@ namespace FSO.Server.Servers.Lot.Domain
             {
                 ReturnInvalidObjects();
             }
-            catch (Exception e) { }
+            catch
+            {}
             SaveRing();
 
             //if we have a null owner, this lot needs to be deleted.
@@ -1612,7 +1596,7 @@ namespace FSO.Server.Servers.Lot.Domain
         public void AvatarLeave(IVoltronSession session)
         {
             //Exit lot, Persist the avatars data, remove avatar lock
-            LOG.Info("Avatar "+session.AvatarId+" left lot "+Context.DbId);
+            LOG.Info("Avatar ID {0} left lot ID {1}", session.AvatarId, Context.DbId);
 
             // defer the following so that the avatar save is queued, then their session's claim is released.
             lock (SessionsToRelease) SessionsToRelease.Add(session);
@@ -1624,7 +1608,7 @@ namespace FSO.Server.Servers.Lot.Domain
         public void AvatarRefresh(IVoltronSession session)
         {
             //Exit lot, Persist the avatars data, remove avatar lock
-            LOG.Info("Avatar " + session.AvatarId + " re-established connection to lot " + Context.DbId);
+            LOG.Debug("Avatar ID {0} re-established connection to lot ID {1}", session.AvatarId, Context.DbId);
 
             VMDriver.RefreshClient(session.AvatarId);
         }

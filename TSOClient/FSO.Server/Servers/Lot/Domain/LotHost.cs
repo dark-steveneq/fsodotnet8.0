@@ -23,7 +23,7 @@ namespace FSO.Server.Servers.Lot.Domain
 {
     public class LotHost
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
 
         private Dictionary<int, LotHostEntry> Lots = new Dictionary<int, LotHostEntry>();
         private LotServerConfiguration Config;
@@ -38,6 +38,8 @@ namespace FSO.Server.Servers.Lot.Domain
 
         public LotHost(LotServerConfiguration config, IDAFactory da, IKernel kernel, IDataServiceSyncFactory ds, CityConnections connections)
         {
+            LOG = LogManager.GetLogger("LotHost[" + config.Call_Sign + "]");
+
             this.Config = config;
             this.DAFactory = da;
             this.Kernel = kernel;
@@ -62,9 +64,10 @@ namespace FSO.Server.Servers.Lot.Domain
             bool noWaiting = true;
             lock (Lots)
             {
-                if (AwaitingShutdown) return false;
+                if (AwaitingShutdown)
+                    return false;
                 
-                LOG.Info("Lot server "+ Config.Call_Sign + " shutting down...");
+                LOG.Info("Lot server shutting down...");
                 AwaitingShutdown = true;
                 foreach (var lot in Lots)
                 {
@@ -77,7 +80,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
             if (noWaiting)
             {
-                LOG.Info("Lot server " + Config.Call_Sign + " was hosting nothing!");
+                LOG.Info("Lot server was hosting nothing!");
                 CityConnections.Stop();
                 return true;
             }
@@ -91,7 +94,7 @@ namespace FSO.Server.Servers.Lot.Domain
                 if (AwaitingShutdown && Lots.Count == 0)
                 {
                     //this lot server has completely shut down!
-                    LOG.Info("Lot server "+ Config.Call_Sign + " successfully shut down!");
+                    LOG.Info("Lot server successfully shut down!");
                     CityConnections.Stop();
                     ShutdownWait.SetResult(true);
                 }
@@ -144,27 +147,21 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             var lot = GetLot(session);
             if (lot != null)
-            {
                 lot.Leave(session);
-            }
         }
 
         public void SessionMigrated(IVoltronSession session)
         {
             var lot = GetLot(session);
             if (lot != null)
-            {
                 lot.Refresh(session);
-            }
         }
 
         public bool TryJoin(int lotId, IVoltronSession session)
         {
             var lot = GetLot(lotId);
             if (lot == null)
-            {
                 return false;
-            }
 
             return lot.TryJoin(session);
         }
@@ -187,7 +184,8 @@ namespace FSO.Server.Servers.Lot.Domain
         public bool TryDisconnectClient(int lot_id, uint avatar_id)
         {
             var lot = GetLot(lot_id);
-            if (lot == null) return false;
+            if (lot == null)
+                return false;
             lot.DropClient(avatar_id, false);
             return true;
         }
@@ -195,18 +193,20 @@ namespace FSO.Server.Servers.Lot.Domain
         public bool NotifyRoommateChange(int lot_id, uint avatar_id, uint replace_id, ChangeType change)
         {
             var lot = GetLot(lot_id);
-            if (lot == null) return false;
+            if (lot == null)
+                return false;
             lot.Container.NotifyRoommateChange(avatar_id, replace_id, change);
             return true;
         }
 
         public void UpdateTuning(bool immediately)
         {
-            LOG.Info("Updating tuning on lot server " + Config.Call_Sign + "...");
+            LOG.Info("Updating tuning...");
             using (var da = DAFactory.Get()) {
                 var tuning = da.Tuning.All().ToList();
                 List<LotHostEntry> lots;
-                lock (Lots) lots = Lots.Values.ToList();
+                lock (Lots)
+                    lots = Lots.Values.ToList();
                 foreach (var lot in lots)
                 {
                     var container = lot.Container;
@@ -222,16 +222,10 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             var lotId = (int?)session.GetAttribute("currentLot");
             if (lotId == null)
-            {
                 return null;
-            }
             lock (Lots)
-            {
                 if (Lots.ContainsKey(lotId.Value))
-                {
                     return Lots[lotId.Value];
-                }
-            }
             return null;
         }
 
@@ -239,11 +233,10 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             lock (Lots)
             {
-                if (AwaitingShutdown) return null;
+                if (AwaitingShutdown)
+                    return null;
                 if (Lots.ContainsKey(id))
-                {
                     return Lots[id];
-                }
             }
             return null;
         }
@@ -252,17 +245,13 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             lock (Lots)
             {
-                if (AwaitingShutdown) return null;
-                if (Lots.Values.Count >= Config.Max_Lots)
-                {
-                    //No room
+                if (AwaitingShutdown)
                     return null;
-                }
+                if (Lots.Values.Count >= Config.Max_Lots)
+                    return null;
 
                 if (Lots.ContainsKey(id))
-                {
                     return null;
-                }
 
                 var ctnr = Kernel.Get<LotHostEntry>();
                 var bind = Kernel.GetBindings(typeof(LotHostEntry));
@@ -276,7 +265,7 @@ namespace FSO.Server.Servers.Lot.Domain
         public bool TryAcceptClaim(int lotId, uint claimId, uint specialId, string previousOwner, ClaimAction openAction)
         {
             if (claimId == 0)
-            { //job lot
+            {
                 GetLot(lotId).Bootstrap(new LotContext
                 {
                     DbId = (int)specialId, //contains job type/grade
@@ -300,7 +289,6 @@ namespace FSO.Server.Servers.Lot.Domain
                 {
                     try
                     {
-                        LOG.Info("Checking out db... " + lotId + "...");
                         var claim = da.LotClaims.Get(claimId);
                         if (claim == null)
                         {
@@ -315,7 +303,6 @@ namespace FSO.Server.Servers.Lot.Domain
                             return false;
                         }
 
-                        LOG.Info("Starting claimed lot with dbid = " + lotId + "...");
                         GetLot(claim.lot_id).Bootstrap(new LotContext
                         {
                             DbId = lot.lot_id,
@@ -325,11 +312,12 @@ namespace FSO.Server.Servers.Lot.Domain
                             Action = openAction,
                             HighMax = lot.admit_mode > 4 || lot.category == FSO.Common.Enum.LotCategory.community
                         });
-                        LOG.Info("Bootstrapped lot with dbid = " + lotId + "!");
+                        LOG.Info("Started lot ID {0}!", lotId);
                         return true;
-                    } catch (Exception e)
+                    }
+                    catch (Exception ex)
                     {
-                        LOG.Info("Lot bootstrap error! EXCEPTION: " + e.ToString());
+                        LOG.Error(ex, "Failed to claim lot ID {0}!", lotId);
                         return false;
                     }
                 }
@@ -341,7 +329,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
     public class LotHostEntry : ILotHost
     {
-        private static Logger LOG = LogManager.GetCurrentClassLogger();
+        private static Logger LOG;
 
         //Partial model for syncing updates
         private FSO.Common.DataService.Model.Lot Model;
@@ -366,6 +354,7 @@ namespace FSO.Server.Servers.Lot.Domain
 
         public LotHostEntry(LotHost host, IKernel kernel, IDAFactory da, LotServerConfiguration config)
         {
+            LOG = LogManager.GetLogger("LotHostEntry[" + config.Call_Sign + "]");
             Host = host;
             DAFactory = da;
             Config = config;
@@ -378,10 +367,8 @@ namespace FSO.Server.Servers.Lot.Domain
         {
             get
             {
-                if(Context == null)
-                {
+                if (Context == null)
                     return null;
-                }
                 return Context.ShardId;
             }
         }
@@ -392,9 +379,7 @@ namespace FSO.Server.Servers.Lot.Domain
             {
                 IVoltronSession visitor = null;
                 if (_Visitors.TryGetValue(avatarID, out visitor))
-                {
                     visitor.Write(messages);
-                }
             }
         }
 
@@ -405,14 +390,14 @@ namespace FSO.Server.Servers.Lot.Domain
             {
                 foreach (var visitor in _Visitors.Values)
                 {
-                    if (ignoreIDs.Contains(visitor.AvatarId)) continue;
+                    if (ignoreIDs.Contains(visitor.AvatarId))
+                        continue;
                     try
                     {
                         visitor.Write(messages);
                     }
-                    catch (Exception ex)
-                    {
-                    }
+                    catch
+                    {}
                 }
             }
         }
@@ -465,7 +450,7 @@ namespace FSO.Server.Servers.Lot.Domain
             Model.Id = context.Id;
             Model.DbId = context.DbId;
 
-            LOG.Info("Bootstrapping lot with dbid = " + context.DbId + "...");
+            LOG.Debug("Starting lot ID {0}...", context.DbId);
 
             //Each lot gets its own set of bindings
             Kernel = new ChildKernel(
@@ -509,7 +494,8 @@ namespace FSO.Server.Servers.Lot.Domain
                     BackgroundTasks.Clear();
                 }
 
-                if (tasks.Count > 1000) LOG.Error("Surprising number of background tasks for lot with dbid = " + Context.DbId + ": " + tasks.Count);
+                if (tasks.Count > 1000)
+                    LOG.Error("Surprising number of background tasks for lot with dbid = " + Context.DbId + ": " + tasks.Count);
 
                 if (tasks.Count > 0) LastTaskRecv = Epoch.Now; //BgTimeoutExpiredCount = 0;
                 else if (Epoch.Now - LastTaskRecv > BACKGROUND_TIMEOUT_SECONDS) //++BgTimeoutExpiredCount > BACKGROUND_TIMEOUT_ABANDON_COUNT)
@@ -552,22 +538,21 @@ namespace FSO.Server.Servers.Lot.Domain
                     try
                     {
                         task?.Invoke();
-                        if (task == null) LastActivity = Epoch.Now;
+                        if (task == null)
+                            LastActivity = Epoch.Now;
                         if (BgKilled)
                         {
-                            LOG.Error("Background thread locked for lot with dbid = " + Context.DbId + "! TERMINATING! ");
-                            LOG.Error(Container.AbortVM());
+                            LOG.Error("Background thread locked for lot ID {0}, terminating!", Context.DbId);
+                            //LOG.Error(Container.AbortVM());
                             return;
                         }
                     }
                     catch (Exception ex)
                     {
-                        LOG.Info("Background task failed on lot with dbid = " + Context.DbId + "! (continuing)" + ex.ToString());
+                        LOG.Error(ex, "Background task failed for lot ID {0}, continuing", Context.DbId);
                     }
                     if (Epoch.Now - LastTaskRecv > 10)
-                    {
-                        LOG.Info("WARNING: Unusually long background task for dbid = " + Context.DbId + "! " + (Epoch.Now - LastTaskRecv) + "seconds");
-                    }
+                        LOG.Info("WARNING: Unusually long background task for lot ID {0}, {1} seconds", Context.DbId, Epoch.Now - LastTaskRecv);
                     LastTaskRecv = Epoch.Now;
                 }
             }
@@ -703,9 +688,10 @@ namespace FSO.Server.Servers.Lot.Domain
             ReleaseLotClaim();
             BgAlive = false;
             BackgroundNotify.Set();
-            if (Thread.CurrentThread != BackgroundThread) BackgroundThread.Join();
+            if (Thread.CurrentThread != BackgroundThread)
+                BackgroundThread.Join();
 
-            LOG.Info("Background Thread completely shut down for lot " + Context.DbId);
+            LOG.Debug("Background Thread completely shut down for lot ID {0}!", Context.DbId);
 
             Host.ShutdownComplete(this);
 
@@ -722,12 +708,14 @@ namespace FSO.Server.Servers.Lot.Domain
                 foreach (var visitor in copy)
                 {
                     try {
-                        if (!lotClosed) visitor.Value.SetAttribute("returnClaim", false);
+                        if (!lotClosed)
+                            visitor.Value.SetAttribute("returnClaim", false);
                         ReleaseAvatarClaim(visitor.Value);
                         visitor.Value.Close();
-                    }catch(Exception ex)
+                    }
+                    catch(Exception ex)
                     {
-                        LOG.Error(ex, "Error releasing avatar");
+                        LOG.Error(ex, "Error releasing avatar ID {0}", visitor.Value.AvatarId);
                     }
                 }
             }
@@ -751,9 +739,10 @@ namespace FSO.Server.Servers.Lot.Domain
                         EntityId = ((Context.Id & 0x40000000) > 0) ? (int)Context.Id : Context.DbId,
                         FromOwner = Config.Call_Sign
                     });
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    LOG.Error(ex, "Unable to inform city of lot " + Context.DbId + " claim release");
+                    LOG.Error(ex, "Unable to inform city of lot ID {0} claim release", Context.DbId);
                 }
             }
             //if this lot still has any avatar claims, kill them at least so the user's access to the game isn't limited until server restart.
