@@ -26,7 +26,7 @@ on:
       - TSOClient/FSO.UI
       - TSOClient/FSO.Vitaboy
       - TSOClient/FSO.Vitaboy.Engine
-      - Other/libs/Mp3Sharp
+      - Other/libs/mp3Sharp
       - Other/libs/MSDFData
       - Other/libs/VoronoiLib
       - Other/libs/FSOMina.NET
@@ -55,7 +55,7 @@ on:
       - TSOClient/FSO.UI
       - TSOClient/FSO.Vitaboy
       - TSOClient/FSO.Vitaboy.Engine
-      - Other/libs/Mp3Sharp
+      - Other/libs/mp3Sharp
       - Other/libs/MSDFData
       - Other/libs/VoronoiLib
       - Other/libs/FSOMina.NET
