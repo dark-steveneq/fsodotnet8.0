@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
-using System.Reflection;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace FSO.Server
@@ -81,10 +81,10 @@ namespace FSO.Server
         private ServerConfiguration GetConfiguration(IContext context)
         {
             //TODO: Allow config path to be overriden in a switch
-            var configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.json");
+            var configPath = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "config.json");
             if (!File.Exists(configPath))
             {
-                if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.sample.json")))
+                if (!File.Exists(Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "config.sample.json")))
                     LOG.Fatal("File config.json doesn't exist, rename config.sample.json to config.json and edit it!");
                 else
                     LOG.Fatal("File config.json doesn't exist, refer to documentation!");
@@ -97,7 +97,7 @@ namespace FSO.Server
             {
                 var parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<ServerConfiguration>(data);
 
-                var parentPath = Path.GetDirectoryName(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+                var parentPath = Path.GetDirectoryName(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName));
                 if (File.Exists(Path.Combine(parentPath, "game", "tuning.dat")))
                 {
                     parsed.GameLocation = Path.Combine(parentPath, "game");

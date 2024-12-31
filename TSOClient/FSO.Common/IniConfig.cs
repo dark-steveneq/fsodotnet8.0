@@ -30,7 +30,8 @@ namespace FSO.Common
                     }
                     else prop.SetValue(this, value);
                 }
-                catch (Exception) { }
+                catch
+                {}
             }
         }
 
@@ -44,22 +45,21 @@ namespace FSO.Common
         {
             //assume default values for all unset properties
             foreach (var pair in DefaultValues)
-            {
                 SetValue(pair.Key, pair.Value);
-            }
 
             if (!File.Exists(ActivePath))
-            {
                 Save();
-            } else
+            else
             {
                 var lines = File.ReadAllLines(ActivePath);
                 foreach (var line in lines)
                 {
                     var clean = line.Trim();
-                    if (clean.Length == 0 || clean[0] == '#' || clean[0] == '[') continue;
+                    if (clean.Length == 0 || clean[0] == '#' || clean[0] == '[')
+                        continue;
                     var split = clean.IndexOf('=');
-                    if (split == -1) continue; //?
+                    if (split == -1)
+                        continue; //?
                     var prop = clean.Substring(0, split).Trim();
                     var value = clean.Substring(split+1).Trim();
 
@@ -78,12 +78,17 @@ namespace FSO.Common
                     var props = this.GetType().GetProperties();
                     foreach (var prop in props)
                     {
-                        if (prop.Name == "Default" || prop.Name == "DefaultValues") continue;
+                        if (prop.Name == "Default" || prop.Name == "DefaultValues")
+                            continue;
                         stream.WriteLine(prop.Name + "=" + Convert.ToString(prop.GetValue(this), CultureInfo.InvariantCulture));
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to save config.ini!");
+                Console.WriteLine(ex);
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../FSO.Client/FSO.Client.csproj" />
+    <ProjectReference Include="../FSO.Common/FSO.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
 	  <EmbeddedResource Include="Icon.bmp">
@@ -17,5 +18,10 @@
 	  <EmbeddedResource Include="Icon.ico">
 		  <LogicalName>Icon.ico</LogicalName>
 	  </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

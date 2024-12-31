@@ -10,7 +10,8 @@ namespace FSO.Common.Utils
         public static List<Assembly> GetFreeSOLibs()
         {
             var map = new Dictionary<string, Assembly>();
-            if (Entry == null) Entry = Assembly.GetEntryAssembly();
+            if (Entry == null)
+                Entry = Assembly.GetEntryAssembly();
             RecurseAssembly(Entry, map);
             return map.Values.ToList();
         }

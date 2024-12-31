@@ -7,7 +7,7 @@ using FSO.Files.Formats.IFF.Chunks;
 using FSO.Files.Formats.OTF;
 using FSO.Files.FAR1;
 using FSO.Common.TS1;
-using System.Reflection;
+using System.Diagnostics;
 
 namespace FSO.Content
 {
@@ -195,7 +195,7 @@ namespace FSO.Content
                 }
                 else
                 { 
-                    var iff = new IffFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ContentManager.BasePath, "objectdata", "globals", filename + ".iff"));
+                    var iff = new IffFile(Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), ContentManager.BasePath, "objectdata", "globals", filename + ".iff"));
                     iff.InitHash();
                     OTFFile otf = null;
                     try

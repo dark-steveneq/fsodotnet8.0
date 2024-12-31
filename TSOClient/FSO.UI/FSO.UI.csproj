@@ -32,19 +32,17 @@
     <Folder Include="Screens\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\GOLDEngine.dll" />
-    <Content Include="Dependencies\Nuclex.Fonts.Content.TrueTypeImporter.dll" />
-    <Content Include="Dependencies\nunit.framework.dll" />
-    <Content Include="Dependencies\TargaImage.dll" />
     <Content Include="discord-rpc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GoldEngine" Version="1.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Debug\FSOExceptionDisplay.cs" />

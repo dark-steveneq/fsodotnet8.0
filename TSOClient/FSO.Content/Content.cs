@@ -14,7 +14,7 @@ using FSO.Content.Framework;
 using FSO.Vitaboy;
 using FSO.Content.Upgrades;
 using System;
-using System.Reflection;
+using System.Diagnostics;
 
 namespace FSO.Content
 {
@@ -203,19 +203,19 @@ namespace FSO.Content
         private void InitBasic()
         {
             var contentFiles = new List<string>();
-            _ScanFiles("Content/", contentFiles, Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Content/"));
+            _ScanFiles("Content/", contentFiles, Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "Content/"));
             ContentFiles = contentFiles.ToArray();
             CustomUI.Init();
             if (!TS1)
             {
                 var allFiles = new List<string>();
-                _ScanFiles(BasePath, allFiles, Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BasePath));
+                _ScanFiles(BasePath, allFiles, Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), BasePath));
                 AllFiles = allFiles.ToArray();
                 UIGraphics?.Init();
                 DataDefinition = new TSODataDefinition();
                 try
                 {
-                    using (var stream = File.Open(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Content/FSODataDefinition.dat"), FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (var stream = File.Open(Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), "Content/FSODataDefinition.dat"), FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         DataDefinition.Read(stream);
                     }
@@ -253,7 +253,7 @@ namespace FSO.Content
                 var allFiles = new List<string>();
                 if (Target != FSOEngineMode.TS1)
                 {
-                    _ScanFiles(BasePath, allFiles, Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BasePath));
+                    _ScanFiles(BasePath, allFiles, Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), BasePath));
                     AllFiles = allFiles.ToArray();
                 }
             }
@@ -262,7 +262,7 @@ namespace FSO.Content
             var oldBase = BasePath;
             if (TS1)
             {
-                _ScanFiles(TS1BasePath, ts1AllFiles, Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), TS1BasePath));
+                _ScanFiles(TS1BasePath, ts1AllFiles, Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), TS1BasePath));
                 TS1AllFiles = ts1AllFiles.ToArray();
             }
 
@@ -318,7 +318,7 @@ namespace FSO.Content
         /// <param name="fileList">The list of files to scan for.</param>
         private void _ScanFiles(string dir, List<string> fileList, string baseDir)
         {
-            var fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), dir);
+            var fullPath = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), dir);
             var files = Directory.GetFiles(fullPath);
             foreach (var file in files)
                 fileList.Add(file.Substring(baseDir.Length));
@@ -339,7 +339,7 @@ namespace FSO.Content
         {
             if (path.Length > 0 && (path[0] == '/' || path[0] == '\\'))
                 path = path.Substring(1);
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BasePath, path);
+            return Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), BasePath, path);
         }
 
         private Dictionary<string, FAR3Archive> Archives;

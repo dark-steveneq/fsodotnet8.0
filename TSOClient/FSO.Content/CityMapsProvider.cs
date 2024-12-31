@@ -5,7 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Diagnostics;
 
 namespace FSO.Content
 {
@@ -32,7 +32,7 @@ namespace FSO.Content
                 DirCache.Add(id, map);
             }
 
-            dir = Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FSOEnvironment.ContentDir), "Cities/");
+            dir = Path.Combine(Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), FSOEnvironment.ContentDir), "Cities/");
             foreach (var map in Directory.GetDirectories(dir))
             {
                 var id = int.Parse(Path.GetFileName(map).Replace("city_", ""));

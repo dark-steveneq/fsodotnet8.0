@@ -18,7 +18,9 @@
     <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.7.23375.6" />
     <PackageReference Include="MonoGame.Framework.Content.Pipeline" Version="3.8.2.1105" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="RoyT.TrueType" Version="0.1.1" />
     <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0008" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />

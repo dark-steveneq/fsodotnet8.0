@@ -2,6 +2,7 @@
 using System.IO;
 using FSO.Client;
 using FSO.Common.Rendering.Framework.IO;
+using FSO.Common;
 
 namespace FSO.Linux
 {
